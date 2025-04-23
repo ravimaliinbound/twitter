@@ -14,17 +14,46 @@ function signup() {
         type: "post",
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
         success: function (data) {
-            window.length = 'login.php';
+
             $("#msg").html(data);
             setTimeout(function () {
                 $('.msg').fadeOut('slow');
+                window.location = 'login.php';
             }, 3000);
             $('#signup')[0].reset();
         }
-    })
+    });
 }
 function login() {
-    console.log("Login")
+    var email = $("#login_email").val();
+    var password = $("#login_password").val();
+
+    if (!loginvalidate()) {
+        return false;
+    }
+
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "email": email, "password": password, "action": "login" },
+        success: function (response) {
+            var data = JSON.parse(response);
+            if (data.status == 'success') {
+                $("#msg").html("<p class='text-success border border-success p-2 rounded msg'>Login success please wait</p>")
+                setTimeout(function () {
+                    window.location = 'index.php';
+                    $('#login-form')[0].reset();
+
+                }, 3000);
+
+            } else {
+                $("#msg").html("<p class='text-danger border border-danger p-2 rounded msg'>Wrong credentials or no user found</p>")
+            }
+            setTimeout(function () {
+                $('.msg').fadeOut('slow');
+            }, 3000);
+        }
+    });
 }
 
 function validate(e) {
@@ -108,6 +137,30 @@ function validate(e) {
 }
 
 
+//-----------Login Validation-------------//
+
+function loginvalidate(e) {
+    let isValid = true;
+    var email = $("#login_email").val();
+    var emails = $("#login_email").val().trim();
+    var password = $("#login_password").val();
+
+    // ----------- Email Validation ------------
+    if (email == "") {
+        $("#errlogin_email").text("This field is required");
+        isValid = false;
+    }
+    else if (emails == "") {
+        $("#errlogin_email").text("Only spaces are not allowed")
+    }
+
+    if (password == "") {
+        $("#errlogin_password").text("Password field is required");
+        isValid = false;
+    }
+    return isValid;
+}
+
 
 $(document).ready(function () {
     $(".remove-btn").click(function () {
@@ -117,16 +170,7 @@ $(document).ready(function () {
 
     //------------------->> Validation <<----------------------//
 
-    $("input").blur(function (e) {
-        var isValid = true;
-        var inp_id = $(this).attr('id');
-        if ($(this).val() == "") {
-            $("#err" + inp_id).text(inp_id + " field is required");
-        }
-        if (!isValid) {
-            e.preventDefault();
-        }
-    });
+
     $("input").focus(function () {
         var inp_id = $(this).attr('id');
         if ($(this).val() == "") {
@@ -278,6 +322,27 @@ $(document).ready(function () {
         $("#errPassword").text("");
     })
 
+    //--------------Date of birth Validation---------------//
+    $("#dob").blur(function () {
+        if ($(this).val() == "") {
+            $("#errdob").text("Date of birth field is required");
+        }
+    });
 
+    //----------------Login Validation---------------//
+
+    $("#login_email").blur(function () {
+        if ($(this).val() == "") {
+            $("#errlogin_email").text("This field is required");
+        }
+    });
+    $("#login_password").blur(function () {
+        if ($(this).val() == "") {
+            $("#errlogin_password").text("Password field is required");
+        }
+        else if ($(this).val().trim() == "") {
+            $("#errlogin_password").text("Only spaces are not allowed");
+        }
+    });
 
 });

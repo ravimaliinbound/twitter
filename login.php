@@ -34,19 +34,19 @@ include_once 'header.php';
                         <p>OR</p>
                     </div>
                 </div>
-                <form action="#" method="post">
+                <form action="#" method="post" id="login-form">
                     <input type="hidden" name="" id="email_check" value="0">
                     <input type="hidden" name="" id="username_check" value="0">
 
 
                     <div class="form-group">
                         <input type="email" class="form-control" id="login_email" placeholder="Enter email or username" name="email">
-                        <p><span class="text-danger remove" id="erremail"></span></p>
+                        <p><span class="text-danger remove" id="errlogin_email"></span></p>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="login_password" placeholder="Enter password"
                             name="password">
-                        <p><span class="text-danger remove" id="errpassword"></span></p>
+                        <p><span class="text-danger remove" id="errlogin_password"></span></p>
                     </div>
 
                     <div class="button d-flex justify-content-center">
