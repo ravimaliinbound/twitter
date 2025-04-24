@@ -1,103 +1,272 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.parent{
+
+.parent {
     display: flex;
     margin-top: 200px;
 }
-.img{
-    padding: 80px ;
+
+.img {
+    padding: 80px;
     width: 40%;
 }
-.img img{
+
+.img img {
     width: 100%;
     height: 100%;
 }
-.forms{
+
+.forms {
     margin-left: 50px;
     width: 60%;
 }
-.forms h1{
+
+.forms h1 {
     font-size: 80px;
-    font-family:  sans-serif;
+    font-family: sans-serif;
     font-weight: 600;
 }
-.form-content{
+
+.form-content {
     width: 70%;
     margin-left: 20px;
 }
-.form-content h2{
+
+.form-content h2 {
     font-size: 30px;
     font-weight: 700;
 }
-.google, .apple, .create-account, .sign-in{
+
+.google,
+.apple,
+.create-account,
+.sign-in {
     border: 1px solid;
     padding: 10px;
     border-radius: 20px;
     margin-top: 10px;
     width: 70%;
-    
+
 
 }
-.google a, .apple a, .create-account a, .sign-in a{
+
+.google a,
+.apple a,
+.create-account a,
+.sign-in a {
     color: black;
     text-decoration: none;
 }
-.apple i, .google i{
+
+.apple i,
+.google i {
     font-size: 25px;
     margin: 0 8px;
 }
-.create-account{
+
+.create-account {
     background-color: deepskyblue;
     color: white;
     margin-top: 0;
 }
-.create-account a{
+
+.create-account a {
     font-weight: 700;
     width: 100%;
     margin-left: 110px;
 }
-.or{
+
+.or {
     width: 70%;
     margin-top: 10px;
 }
-.terms
-{
+
+.terms {
     margin-top: 5px;
     width: 70%;
 }
-.terms p{
+
+.terms p {
     font-size: 13px;
 }
-.terms p a{
+
+.terms p a {
     text-decoration: none;
 }
-.already p{
+
+.already p {
     font-weight: 600;
     font-size: 20px;
     margin-top: 20px;
 }
-.google:hover, .apple:hover{
+
+.google:hover,
+.apple:hover {
     background-color: rgb(220, 233, 238);
 }
-.create-account:hover{
+
+.create-account:hover {
     background-color: skyblue;
 }
-.sign-in a{
+
+.sign-in a {
     font-weight: 700;
     width: 100%;
     margin-left: 140px;
 }
-.sign-in:hover{
+
+.sign-in:hover {
     background-color: aliceblue;
 }
-.footer{
+
+.footer {
     margin-top: 185px;
     font-size: 11.9px;
 }
-.footer a{
+
+.footer a {
     color: black;
     text-decoration: none;
+}
+
+/* Header / Slider css */
+
+.slider {
+    width: 25%;
+    margin-top: 40px;
+    position: fixed;
+}
+
+
+.items li {
+    text-decoration: none;
+    list-style: none;
+    padding: 10px;
+    font-size: 22px;
+}
+
+.items li:hover {
+    background-color: rgb(235, 235, 235);
+    padding: 10px;
+    border-radius: 20px;
+    width: 50%;
+}
+
+.items li a {
+    color: black;
+    text-decoration: none;
+    margin: 0 0 0 30px;
+}
+
+.items i {
+    font-size: 20px;
+}
+
+.post {
+    border-radius: 25px;
+    width: 50%;
+    margin-top: 49px;
+    padding: 5px;
+}
+
+.post a {
+    text-decoration: none;
+    font-size: 25px;
+    margin-left: 95px;
+    
+}
+
+.user_profile {
+    display: flex;
+    margin-top: 30px;
+    border-radius: 40px;
+    width: 50%;
+}
+
+.user_profile:hover {
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+}
+
+.user_image {
+    margin: 17px 0;
+    margin-left: 15px;
+    padding: 5px;
+    height: 30px;
+}
+
+.user_data {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.profle_name {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.ellipsis{
+    margin: 25px;
+    margin-left: 50px;
+}
+.profile_model{
+    padding: 8px 10px;
+    margin-top: 8px;
+    border: 2px solid white;
+    border-radius: 5px;
+    width: 50%;
+    box-shadow: 2px 2px 2px 2px rgb(182, 182, 182);
+}
+.profile_model a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.for_logout{
+    margin: 0 auto;
+    margin-top: 151px;
+    width: 30%;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid white;
+    padding: 30px;
+    box-shadow: 2px 2px 2px 2px rgb(182, 182, 182);
+    display: none;
+
+}
+
+/* Main Footer css */
+.footers
+{
+    width: 20%;
+    margin-left: 1018px;
+    margin-top: 20px;
+    position: fixed;
+    padding: 20px;
+    border-left: 1px solid;
+}
+.footer-search-div{
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 20px;
+}
+.footer-search-input{
+    border: none;
+    margin-left: 10px;
+}
+
+
+/* Content Part css */
+.middle{
+    width: 40%;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 250px;
+    padding: 20px;
 }

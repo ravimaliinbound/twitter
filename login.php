@@ -1,18 +1,23 @@
 <?php
+session_start();
+if (isset($_SESSION['login'])) {
+    header('Location: index.php');
+}
 include_once 'header.php';
 ?>
-    <title>Login to X</title>
-    <link rel="stylesheet" href="sign-up.css">
+<title>Login to X</title>
+<link rel="stylesheet" href="sign-up.css">
 </head>
 
 <body>
 
     <div class="container">
-        <h3 id="msg"></h3>
 
-        <div class="form" style="margin: 99.5px auto;">
+        <div class="form" style="margin: 99.5px auto; height: 720px;">
 
-            <div class="container">
+            <img src="images/loader.gif" alt="" style="margin: 300px 220px; display:none" id="show">
+
+            <div class="container" id="hide">
                 <div class="cancel-logo" style="display: flex;">
                     <div class="cancel">
                         <a href="home.php"><i class="fa-solid fa-xmark"></i></a>
@@ -40,7 +45,8 @@ include_once 'header.php';
 
 
                     <div class="form-group">
-                        <input type="email" class="form-control" id="login_email" placeholder="Enter email or username" name="email">
+                        <input type="email" class="form-control" id="login_email" placeholder="Enter email or username"
+                            name="email">
                         <p><span class="text-danger remove" id="errlogin_email"></span></p>
                     </div>
                     <div class="form-group">
@@ -55,13 +61,15 @@ include_once 'header.php';
                 </form>
                 <div class="google d-flex justify-content-center forgot">
                     <a href="#">Forgot Password?</a>
-                    </div>
+                </div>
                 <div class="go-to-signup">
                     <span class="dont">Don't have an account ?
                         <a href="create-account.php">Sign up</a>
                     </span>
                 </div>
             </div>
+            <h3 id="msg"></h3>
+
         </div>
         <?php
         include_once 'footer.php';

@@ -39,15 +39,15 @@ function login() {
         success: function (response) {
             var data = JSON.parse(response);
             if (data.status == 'success') {
-                $("#msg").html("<p class='text-success border border-success p-2 rounded msg'>Login success please wait</p>")
+                $("#hide").hide();
+                $("#show").show();
+                $('#login-form')[0].reset();
                 setTimeout(function () {
                     window.location = 'index.php';
-                    $('#login-form')[0].reset();
-
-                }, 3000);
+                }, 300);
 
             } else {
-                $("#msg").html("<p class='text-danger border border-danger p-2 rounded msg'>Wrong credentials or no user found</p>")
+                $("#msg").html("<p class='p-2 rounded msg'>Incorrect, Please try again.</p>")
             }
             setTimeout(function () {
                 $('.msg').fadeOut('slow');
@@ -165,8 +165,18 @@ function loginvalidate(e) {
 $(document).ready(function () {
     $(".remove-btn").click(function () {
         $('.remove').text("");
-        $('#form')[0].reset();
     });
+
+    //-------------- Footer Search-------------//
+    $(".footer-search-input").focus(function(){
+        $(".footer-search-div").css("border", "2px solid deepskyblue");
+        $(this).css("outline"," none")
+    });
+    $(".footer-search-input").blur(function(){
+        $(".footer-search-div").css("border", "2px solid black");
+    });
+
+
 
     //------------------->> Validation <<----------------------//
 
@@ -344,5 +354,40 @@ $(document).ready(function () {
             $("#errlogin_password").text("Only spaces are not allowed");
         }
     });
+
+
+    //---------------Hide post button and show logout----------------//
+    $(".user_profile").click(function () {
+        if ($(".post").css("display") == "none") {
+            $(".post").css("display", "block")
+        } else {
+            $(".post").css("display", "none")
+        }
+        if ($(".profile_model").css("display") == "none") {
+            $(".profile_model").css("display", "block")
+        }
+        else {
+            $(".profile_model").css("display", "none")
+        }
+    });
+
+    //--------------Logout----------------//
+    $("#logout").click(function () {
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "action": "logout" },
+            success: function () {
+                $("#left-panel").hide();
+                $("#logout-loader").show();
+                $("body").css("background-color", "grey");
+                setTimeout(function () {
+                    window.location = 'login.php';
+                }, 300);
+            }
+        });
+    });
+
+    
 
 });

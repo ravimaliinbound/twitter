@@ -1,7 +1,10 @@
 <?php
+session_start();
+if (isset($_SESSION['login'])) {
+    header('Location: index.php');
+}
 include_once 'header.php';
 ?>
-
     <title>Sign up for X</title>
 
     <link rel="stylesheet" href="sign-up.css">

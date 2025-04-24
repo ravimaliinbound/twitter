@@ -1,6 +1,6 @@
 <?php
 $conn = new mysqli('localhost', 'root', '', 'project');
-
+session_start();
 //---------------Signup-------------------//
 
 if (isset($_POST['action']) && $_POST['action'] == 'signup') {
@@ -38,8 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'email_check' || $_POST['acti
 
 //-------------------------Login-------------------------//
 
-if(isset($_POST['action']) && $_POST['action']=="login")
-{
+if (isset($_POST['action']) && $_POST['action'] == "login") {
     $email = isset($_POST['email']) ? trim($_POST['email']) : "";
     $password = isset($_POST['password']) ? md5(trim($_POST['password'])) : "";
 
@@ -47,12 +46,15 @@ if(isset($_POST['action']) && $_POST['action']=="login")
     $run = $conn->query($sel);
     $email_check = '';
     $password_check = '';
+    $username_check = '';
     $res = '';
     while ($fetch = $run->fetch_object()) {
         $email_check = $fetch->email;
+        $username_check = $fetch->username;
         $password_check = $fetch->password;
     }
-    if ($email == $email_check && $password == $password_check) {
+    if ($email == $email_check || $email == $username_check && $password == $password_check) {
+        $_SESSION['login'] = 'Login';
         echo json_encode([
             'status' => 'success'
         ]);
@@ -61,5 +63,11 @@ if(isset($_POST['action']) && $_POST['action']=="login")
             'status' => 'failed'
         ]);
     }
+}
+
+//------------------Logout-----------------//
+if(isset($_POST['action']) && $_POST['action'] == "logout")
+{
+    unset($_SESSION['login']);
 }
 ?>

@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (isset($_SESSION['login'])) {
+    header('Location: index.php');
+}
 include_once 'header.php';
 ?>
 
@@ -34,7 +38,7 @@ include_once 'header.php';
                     <div class="or d-flex justify-content-center">
                         <p>OR</p>
                     </div>
-                    <div class="create-account d-flex justify-content-center">
+                    <div class="create-account d-flex justify-content-center bg-dark">
                         <a href="sign-up.php" class="text-white" id="create-account">Create Account</a>
                     </div>
                     <div class="terms">
@@ -49,7 +53,7 @@ include_once 'header.php';
                             <a href="login.php">Login</a>
                         </span>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
