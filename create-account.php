@@ -16,7 +16,7 @@ include_once 'header.php';
     <div class="container">
         <h3 id="msg"></h3>
 
-        <div class="form" style="margin: 157.5px auto;">
+        <div class="form" style="margin: 117.5px auto;">
 
             <div class="container">
                 <div class="cancel-logo" style="display: flex;">

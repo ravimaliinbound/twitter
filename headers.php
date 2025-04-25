@@ -28,37 +28,38 @@ if (!isset($_SESSION['login'])) {
 
     <!-- Logout Loader -->
 
-    <div class="for_logout" style="margin: 99.5px auto; height: 720px; " id="logout-loader">
-        <div style="margin-left: 240px">
-            <img src="images/logo-black.png" alt="" height="20px"><br>
-            <img src="images/loader.gif" alt="" style="margin: 280px auto;" height="30px" id="show">
+    <div class="for_logout" style="margin: 99.5px auto; height: 720px;" id="logout-loader">
+        <div style="margin-left: 220px">
+            <img src="images/logo-black.png" alt="" height="20px" style="margin-left: 20px;"><br>
+            <img src="images/loader.gif" alt="" style="margin-top: 260px; margin-left: 20px" id="show" height="30px">
+            <p class="show" style="margin-top: 20px;">Logging out</p>
         </div>
     </div>
     
     <!-- Left Panel -->
-      <div class="container all" style="display: flex; " id="left-panel">
+      <div class="container all" style="display: flex; " id="left-panel" >
         <div class="slider">
             <div class="logo">
                 <img src="images/logo-black.png" alt="" height="30px" width="30px" style="margin-left: 10px;">
             </div>
             <div class="items" style="margin-top: 10px;">
                 <li>
-                    <i class="fa-solid fa-house"></i><a href="#">Home</a>
+                    <i class="fa-solid fa-house"></i><a href="index.php">Home</a>
                 </li>
                 <li>
-                    <i class="fa-solid fa-magnifying-glass"></i><a href="#">Explore</a>
+                    <i class="fa-solid fa-magnifying-glass"></i><a href="explore.php">Explore</a>
                 </li>
                 <li>
-                    <i class="fa-solid fa-bell"></i><a href="#">Notifications</a>
+                    <i class="fa-solid fa-bell"></i><a href="notifications.php">Notifications</a>
                 </li>
                 <li>
-                    <i class="fa-solid fa-envelope"></i><a href="#">Messages</a>
+                    <i class="fa-solid fa-envelope"></i><a href="message.php">Messages</a>
                 </li>
                 <li>
                     <img src="images/grok.png" alt="" height="24px"><a href="#" style="margin-left: 25px;">Grok</a>
                 </li>
                 <li>
-                    <i class="fa-solid fa-bookmark"></i><a href="#" style="margin-left: 34px;">Bookmarks</a>
+                    <i class="fa-solid fa-bookmark"></i><a href="bookmark.php" style="margin-left: 34px;">Bookmarks</a>
                 </li>
                 <li>
                     <i class="fa-solid fa-briefcase"></i><a href="#">Jobs</a>
@@ -87,22 +88,21 @@ if (!isset($_SESSION['login'])) {
             </div>
             <div class="profile_model" style="display: none;">
                 <a href="#">Add an existing account</a>
-                <a href="#" id="logout">Log out @ravimali13</a>
+                <a href="#" id="logout">Log out @<?php echo $_SESSION['username']; ?></a>
             </div>
 
             <div class="user_profile">
-                <div class="user_image">
-                    <img src="images/logo-black.png" alt="" height="30px">
+                <div class="user_image" style="width: 20%;">
+                    <p class="show_first_name"><?php echo $_SESSION['firstname']; ?></p>
                 </div>
-                <div class="user_data">
-                    <p><span class="profle_name">Ravi Mali</span> <br>@ravimali13 </p>
+                <div class="user_data" style="width: 60%;">
+                    <p><span class="profle_name"><?php echo $_SESSION['name'];?></span> <br>@<?php echo $_SESSION['username']; ?> </p>
                 </div>
-                <div class="ellipsis">
+                <div class="ellipsis" style="width: 20%;">
                     <i class="fa-solid fa-ellipsis"></i>
                 </div>
             </div>
         </div>
-          
 
      <!-- </div>  -->
 

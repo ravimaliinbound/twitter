@@ -15,11 +15,12 @@ function signup() {
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
         success: function (data) {
 
-            $("#msg").html(data);
+           $(".show").show();
+           $(".hide").hide();
             setTimeout(function () {
                 $('.msg').fadeOut('slow');
-                window.location = 'login.php';
-            }, 3000);
+                window.location = 'index.php';
+            }, 300);
             $('#signup')[0].reset();
         }
     });
@@ -41,6 +42,7 @@ function login() {
             if (data.status == 'success') {
                 $("#hide").hide();
                 $("#show").show();
+                $(".show").show();
                 $('#login-form')[0].reset();
                 setTimeout(function () {
                     window.location = 'index.php';
@@ -57,7 +59,7 @@ function login() {
 }
 
 function validate(e) {
-    let isValid = true;
+    var isValid = true;
 
     // Patterns
     var namePattern = /^[a-zA-Z ]{3,15}$/;
@@ -109,11 +111,11 @@ function validate(e) {
     }
 
     if ($("#email_check").val() == 1) {
-        $("#erremail").text("Email Already Exists");
+        $("#erremail").text("Email has already been taken");
         isValid = false;
     }
     if ($("#username_check").val() == 1) {
-        $("#errusername").text("Username Already Exists");
+        $("#errusername").text("Username has already been taken");
         isValid = false;
     }
 
@@ -167,14 +169,41 @@ $(document).ready(function () {
         $('.remove').text("");
     });
 
+    //--------For you / Following hover--------------//
+    $(".hover").mouseenter(function(){
+        $(this).css("background-color", "rgb(241, 240, 240)")
+    });
+    $(".hover").mouseout(function(){
+        $(this).css("background-color", "white")
+    });
+
+    //----------Explore's Tabs hover------------//
+    
+    $(".multi-a").mouseenter(function(){
+        $(this).css("background-color", "rgb(241, 240, 240)")
+    });
+    $(".multi-a").mouseout(function(){
+        $(this).css("background-color", "white")
+    });
+    
     //-------------- Footer Search-------------//
     $(".footer-search-input").focus(function(){
-        $(".footer-search-div").css("border", "2px solid deepskyblue");
+        $(".footer-search-div").css("border", "1px solid skyblue");
         $(this).css("outline"," none")
     });
     $(".footer-search-input").blur(function(){
-        $(".footer-search-div").css("border", "2px solid black");
+        $(".footer-search-div").css("border", "1px solid black");
     });
+
+    //-------------- Explore Search-------------//
+    $(".explore-search-input").focus(function(){
+        $(".explore-search-div").css("border", "1px solid skyblue");
+        $(this).css("outline"," none")
+    });
+    $(".explore-search-input").blur(function(){
+        $(".explore-search-div").css("border", "1px solid black");
+    });
+
 
 
 

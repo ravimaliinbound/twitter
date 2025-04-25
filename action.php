@@ -13,9 +13,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'signup') {
     $insert = "INSERT INTO users (name, username, email, password, dob) VALUES ('$name','$username','$email','$password','$dob')";
     $run = $conn->query($insert);
     if ($run) {
-        echo "<p class='text-success border border-success p-2 rounded msg'>Signup success please wait</p>";
+        $_SESSION['login'] = 'Login';
+        $_SESSION['username'] = $username;
+        $_SESSION['firstname'] = substr($name, 0,1);
+        $_SESSION['name'] = $name;
+        echo "<p class=' p-2 rounded msg'>Signup success please wait</p>";
     } else {
-        echo "<p class='text-danger border border-danger p-2 rounded msg'>Something Went Wrong</p>";
+        echo "<p class='p-2 rounded msg'>Something Went Wrong</p>";
     }
 }
 //-----------------Already Exists----------------//
@@ -47,14 +51,20 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
     $email_check = '';
     $password_check = '';
     $username_check = '';
+    $name_check = '';
     $res = '';
     while ($fetch = $run->fetch_object()) {
         $email_check = $fetch->email;
         $username_check = $fetch->username;
         $password_check = $fetch->password;
+        $name_check = $fetch->name;
     }
     if ($email == $email_check || $email == $username_check && $password == $password_check) {
         $_SESSION['login'] = 'Login';
+        $_SESSION['username'] = $username_check;
+        $_SESSION['name'] = $name_check;
+        $_SESSION['firstname'] = substr($name_check, 0, 1);
+
         echo json_encode([
             'status' => 'success'
         ]);
@@ -66,8 +76,9 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
 }
 
 //------------------Logout-----------------//
-if(isset($_POST['action']) && $_POST['action'] == "logout")
-{
+if (isset($_POST['action']) && $_POST['action'] == "logout") {
     unset($_SESSION['login']);
+    unset($_SESSION['username']);
+    unset($_SESSION['firstname']);
 }
 ?>

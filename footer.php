@@ -19,7 +19,7 @@
         <a href="https://developer.x.com/en"> Developers </a>|
         <a href="https://x.com/i/directory/profiles"> Directory </a>|
         <a href="https://x.com/settings/account/personalization"> Settings </a>|
-        <a href="#"> © 2025 X Corp.</a>
+        <a href="#"> © <?php echo date('Y'); ?> X Corp.</a>
     </p>
 </div>
 </div>

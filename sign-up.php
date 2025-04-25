@@ -5,17 +5,16 @@ if (isset($_SESSION['login'])) {
 }
 include_once 'header.php';
 ?>
-    <title>Sign up for X</title>
+<title>Sign up for X</title>
 
-    <link rel="stylesheet" href="sign-up.css">
+<link rel="stylesheet" href="sign-up.css">
 </head>
 
 <body>
 
     <div class="container">
-        <h3 id="msg"></h3>
 
-        <div class="form">
+        <div class="form" style="margin-top: 134px; height: 800px;">
 
             <div class="container">
                 <div class="cancel-logo" style="display: flex;">
@@ -26,8 +25,11 @@ include_once 'header.php';
                         <img src="images/logo-black.png" alt="">
                     </div>
                 </div>
-                <h3>Create your account</h3>
-                <form action="#" method="post" id="signup">
+                <img src="images/loader.gif" alt="" style="margin: 0 220px; margin-top: 260px; display: none" class="show">
+                <p class="show" style="display: none; margin-left: 200px; margin-top: 20px;">Sighing up</p>
+
+                <h3 class="hide">Create your account</h3>
+                <form action="#" method="post" id="signup" class="hide">
                     <input type="hidden" name="" id="email_check" value="0">
                     <input type="hidden" name="" id="username_check" value="0">
                     <div class="form-group">
@@ -65,6 +67,7 @@ include_once 'header.php';
                 </form>
             </div>
         </div>
+        <h3 id="msg"></h3>
 
         <?php
         include_once 'footer.php';

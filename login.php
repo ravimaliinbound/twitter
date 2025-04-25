@@ -13,9 +13,10 @@ include_once 'header.php';
 
     <div class="container">
 
-        <div class="form" style="margin: 99.5px auto; height: 720px;">
+        <div class="form" style="margin: 99.5px auto; height: 730px;">
 
-            <img src="images/loader.gif" alt="" style="margin: 300px 220px; display:none" id="show">
+            <img src="images/loader.gif" alt="" style="margin: 0 220px; margin-top: 260px; display: none" id="show">
+            <p class="show" style="display: none; margin-left: 200px; margin-top: 20px;">Logging in</p>
 
             <div class="container" id="hide">
                 <div class="cancel-logo" style="display: flex;">

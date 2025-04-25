@@ -136,7 +136,7 @@
 
 .slider {
     width: 25%;
-    margin-top: 40px;
+    margin-top: 20px;
     position: fixed;
 }
 
@@ -152,7 +152,7 @@
     background-color: rgb(235, 235, 235);
     padding: 10px;
     border-radius: 20px;
-    width: 50%;
+    width: fit-content;
 }
 
 .items li a {
@@ -176,7 +176,7 @@
     text-decoration: none;
     font-size: 25px;
     margin-left: 95px;
-    
+
 }
 
 .user_profile {
@@ -192,15 +192,25 @@
 }
 
 .user_image {
-    margin: 17px 0;
-    margin-left: 15px;
-    padding: 5px;
-    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    padding: 0 40px;
+    padding-left: 15px;
+    background-color: rgb(110, 190, 110);
+    border-radius: 50%;
 }
 
 .user_data {
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
+}
+
+.show_first_name {
+    font-size: 20px;
+    margin-left: 6px;
+    padding-top: 12px;
+    color: white;
 }
 
 .profle_name {
@@ -208,11 +218,11 @@
     font-weight: 500;
 }
 
-.ellipsis{
-    margin: 25px;
-    margin-left: 50px;
+.ellipsis {
+    margin-top: 25px;
 }
-.profile_model{
+
+.profile_model {
     padding: 8px 10px;
     margin-top: 8px;
     border: 2px solid white;
@@ -220,7 +230,8 @@
     width: 50%;
     box-shadow: 2px 2px 2px 2px rgb(182, 182, 182);
 }
-.profile_model a{
+
+.profile_model a {
     display: block;
     text-decoration: none;
     color: black;
@@ -228,7 +239,8 @@
     font-weight: 500;
     margin-top: 10px;
 }
-.for_logout{
+
+.for_logout {
     margin: 0 auto;
     margin-top: 151px;
     width: 30%;
@@ -242,31 +254,198 @@
 }
 
 /* Main Footer css */
-.footers
-{
+.footers {
     width: 20%;
     margin-left: 1018px;
-    margin-top: 20px;
     position: fixed;
-    padding: 20px;
-    border-left: 1px solid;
+    padding: 10px;
 }
-.footer-search-div{
-    border: 1px solid;
+
+.footer-search-div {
+    border: 1px solid grey;
     padding: 10px;
     border-radius: 20px;
 }
-.footer-search-input{
+
+.footer-search-input {
     border: none;
     margin-left: 10px;
+    width: 80%;
 }
 
 
 /* Content Part css */
-.middle{
+.middle {
     width: 40%;
     position: absolute;
-    margin-top: 20px;
     margin-left: 250px;
-    padding: 20px;
+}
+
+.middle .ul {
+    width: 100%;
+    background-color: white;
+}
+.middle .ul:hover{
+    cursor: pointer;
+}
+
+.middle li a {
+    list-style: none;
+    text-decoration: none;
+    width: 48%;
+    color: black;
+    padding: 20px 125px;
+    font-weight: 500;
+}
+
+.middle li {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+/* Explore Tab */
+.explore {
+    width: 40%;
+    position: absolute;
+    margin-left: 250px;
+}
+
+.exp {
+    margin-top: 20px;
+}
+
+.explore-search-div {
+    border: 1px solid grey;
+    padding: 10px;
+    width: 80%;
+    border-radius: 20px;
+    margin-left: 30px;
+}
+
+.explore-search-input {
+    border: none;
+    width: 90%;
+    margin-left: 10px;
+}
+
+.explore-setting {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.explore-setting a {
+    color: black;
+    font-size: 20px;
+}
+
+.explore-list li {
+    list-style: none;
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: -3px;
+}
+
+.explore-list a {
+    text-decoration: none;
+    padding: 10px 35px;
+    color: black;
+    font-weight: 500;
+}
+
+.explore-fix {
+    position: fixed;
+    width: 40%;
+    background-color: white;
+}
+.explore-fix:hover{
+    cursor: pointer;
+}
+
+/* Notification Tab */
+.notification {
+    width: 40%;
+    position: absolute;
+    margin-left: 250px;
+}
+.notification-fix {
+    position: fixed;
+    width: 40%;
+    background-color: white;
+}
+.notification-fix:hover{
+    cursor: pointer;
+}
+.notification-list li {
+    list-style: none;
+    display: inline-block;
+    margin-top: 10px;
+    width: 30%;
+}
+
+.notification-list a {
+    text-decoration: none;
+    padding: 7% 40%;
+    color: black;
+    font-weight: 500;
+    width: 100%;
+}
+.notify{
+    font-size: 22px;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+/* Messages Tab */
+
+.message {
+    width: 40%;
+    position: absolute;
+    margin-left: 250px;
+}
+.message-fix {
+    padding: 10px 0;
+    position: fixed;
+    width: 40%;
+    background-color: white;
+}
+.mesg{
+    font-size: 22px;
+    font-weight: 500;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.msg-setting{
+    font-size: 20px;
+    color: black;
+    margin-left: 450px;
+}
+
+
+/* Bookmarks Tab */
+
+.bookmark {
+    width: 40%;
+    position: absolute;
+    margin-left: 250px;
+}
+.bookmark-fix {
+    padding: 10px 0;
+    position: fixed;
+    width: 40%;
+    background-color: white;
+}
+.mesg{
+    font-size: 22px;
+    font-weight: 500;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.save-post{
+    margin-top: 150px;
+    margin-left: 230px;
+}
+.bookmark-msg{
+    margin-left: 175px;
 }
