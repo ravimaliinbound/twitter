@@ -15,8 +15,8 @@ function signup() {
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
         success: function (data) {
 
-           $(".show").show();
-           $(".hide").hide();
+            $(".show").show();
+            $(".hide").hide();
             setTimeout(function () {
                 $('.msg').fadeOut('slow');
                 window.location = 'index.php';
@@ -170,42 +170,50 @@ $(document).ready(function () {
     });
 
     //--------For you / Following hover--------------//
-    $(".hover").mouseenter(function(){
+    $(".hover").mouseenter(function () {
         $(this).css("background-color", "rgb(241, 240, 240)")
     });
-    $(".hover").mouseout(function(){
+    $(".hover").mouseout(function () {
         $(this).css("background-color", "white")
     });
 
     //----------Explore's Tabs hover------------//
-    
-    $(".multi-a").mouseenter(function(){
+
+    $(".multi-a").mouseenter(function () {
         $(this).css("background-color", "rgb(241, 240, 240)")
     });
-    $(".multi-a").mouseout(function(){
+    $(".multi-a").mouseout(function () {
         $(this).css("background-color", "white")
     });
-    
+
     //-------------- Footer Search-------------//
-    $(".footer-search-input").focus(function(){
+    $(".footer-search-input").focus(function () {
         $(".footer-search-div").css("border", "1px solid skyblue");
-        $(this).css("outline"," none")
+        $(this).css("outline", " none")
     });
-    $(".footer-search-input").blur(function(){
+    $(".footer-search-input").blur(function () {
         $(".footer-search-div").css("border", "1px solid black");
     });
 
     //-------------- Explore Search-------------//
-    $(".explore-search-input").focus(function(){
+    $(".explore-search-input").focus(function () {
         $(".explore-search-div").css("border", "1px solid skyblue");
-        $(this).css("outline"," none")
+        $(this).css("outline", " none")
     });
-    $(".explore-search-input").blur(function(){
+    $(".explore-search-input").blur(function () {
         $(".explore-search-div").css("border", "1px solid black");
     });
 
+    //-------------- Index Post-------------//
+    $("#index-input").focus(function () {
+        $(this).css("outline", " none")
+    });
 
 
+
+    // $(".multi-a").click(function () {
+    //     $(this).css("border-bottom", "5px solid");
+    // })
 
     //------------------->> Validation <<----------------------//
 
@@ -417,6 +425,6 @@ $(document).ready(function () {
         });
     });
 
-    
+
 
 });

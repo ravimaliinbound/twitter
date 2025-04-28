@@ -228,7 +228,7 @@
     border: 2px solid white;
     border-radius: 5px;
     width: 50%;
-    box-shadow: 2px 2px 2px 2px rgb(182, 182, 182);
+    box-shadow: 1px 1px 2px 2px rgb(182, 182, 182);
 }
 
 .profile_model a {
@@ -285,7 +285,8 @@
     width: 100%;
     background-color: white;
 }
-.middle .ul:hover{
+
+.middle .ul:hover {
     cursor: pointer;
 }
 
@@ -302,6 +303,77 @@
     margin-top: 20px;
     margin-bottom: 10px;
     display: inline-block;
+}
+
+.index-post {
+    margin-top: 65px;
+    padding: 15px;
+    width: 100%;
+}
+
+.index-sess {
+    width: 30px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    padding: 0 40px;
+    padding-top: 5px;
+    padding-left: 15px;
+    background-color: rgb(110, 190, 110);
+    border-radius: 50%;
+}
+
+.index_first_name {
+    font-size: 20px;
+    margin-left: 5px;
+    color: white;
+}
+
+.index-post-form {
+    display: flex;
+    width: 100%;
+}
+
+.index-inp {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.index-inp input {
+    border: transparent;
+    width: 600px;
+    padding: 10px;
+}
+
+.index-inp input::placeholder {
+    font-size: 20px;
+}
+
+#img-label {
+    font-size: 25px;
+}
+
+.index-post-icons {
+    margin-left: 75px;
+    display: flex;
+}
+
+.post-icons {
+    margin-left: 15px;
+}
+
+.post-icons:hover {
+    cursor: pointer;
+}
+
+.post-btn {
+    margin-left: 220px;
+}
+
+.post-btn a {
+    text-decoration: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-weight: 600;
 }
 
 /* Explore Tab */
@@ -358,7 +430,8 @@
     width: 40%;
     background-color: white;
 }
-.explore-fix:hover{
+
+.explore-fix:hover {
     cursor: pointer;
 }
 
@@ -368,14 +441,17 @@
     position: absolute;
     margin-left: 250px;
 }
+
 .notification-fix {
     position: fixed;
     width: 40%;
     background-color: white;
 }
-.notification-fix:hover{
+
+.notification-fix:hover {
     cursor: pointer;
 }
+
 .notification-list li {
     list-style: none;
     display: inline-block;
@@ -390,7 +466,8 @@
     font-weight: 500;
     width: 100%;
 }
-.notify{
+
+.notify {
     font-size: 22px;
     font-weight: 500;
     margin-left: 20px;
@@ -404,19 +481,22 @@
     position: absolute;
     margin-left: 250px;
 }
+
 .message-fix {
     padding: 10px 0;
     position: fixed;
     width: 40%;
     background-color: white;
 }
-.mesg{
+
+.mesg {
     font-size: 22px;
     font-weight: 500;
     margin-left: 50px;
     margin-top: 10px;
 }
-.msg-setting{
+
+.msg-setting {
     font-size: 20px;
     color: black;
     margin-left: 450px;
@@ -430,22 +510,150 @@
     position: absolute;
     margin-left: 250px;
 }
+
 .bookmark-fix {
     padding: 10px 0;
     position: fixed;
     width: 40%;
     background-color: white;
 }
-.mesg{
+
+.mesg {
     font-size: 22px;
     font-weight: 500;
     margin-left: 50px;
     margin-top: 10px;
 }
-.save-post{
+
+.save-post {
     margin-top: 150px;
     margin-left: 230px;
 }
-.bookmark-msg{
+
+.bookmark-msg {
     margin-left: 175px;
+}
+
+/* Profile Tab */
+.profile {
+    width: 40%;
+    position: absolute;
+    margin-left: 250px;
+    padding: 0 30px;
+    color: black;
+}
+
+.profile-name {
+    padding: 0 50px;
+}
+
+.pro-name {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cover {
+    margin-top: -8px;
+    height: 200px;
+    background-color: rgb(200, 213, 219);
+}
+
+.profile-pic {
+    height: 150px;
+    width: 150px;
+    margin-left: 50px;
+    margin-top: -75px;
+    border-radius: 50%;
+    background-color: rgb(110, 190, 110);
+}
+
+.profile-fname {
+    font-size: 80px;
+    color: white;
+    padding-top: 13px;
+    padding-left: 50px;
+}
+
+.edit {
+    margin-left: 550px;
+    margin-top: -50px;
+    border: 1px solid grey;
+    width: fit-content;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.edit a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.edit:hover {
+    background-color: rgb(231, 231, 231);
+}
+
+.profile-data {
+    margin-top: 20px;
+}
+
+.verified {
+    margin-left: 50px;
+    border: 1px solid grey;
+    color: black;
+    padding: 5px 20px;
+    font-weight: 500;
+    border-radius: 20px;
+}
+
+.verified:hover {
+    cursor: pointer;
+    background-color: rgb(231, 231, 231);
+}
+
+.following {
+    font-weight: 600;
+}
+
+.follower {
+    margin-left: 50px;
+    font-weight: 600;
+}
+.profile-menu{
+    border-bottom: 1px solid;
+}
+
+.profile-menu ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 8px 20px;
+    width: 16%;
+    justify-content: center;
+}
+
+.profile-menu ul a {
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+
+.profile-menu ul li:hover {
+    cursor: pointer;
+    background-color: rgb(231, 231, 231);
+}
+.highlight{
+    margin-top: 50px;
+    margin-left: 170px;
+    width: 300px;
+}
+.highlight h2{
+    font-size: 35px;
+}
+.highlight a{
+    text-decoration: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 500;
 }

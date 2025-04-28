@@ -9,11 +9,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'signup') {
     $email = isset($_POST['email']) ? trim($_POST['email']) : "";
     $password = isset($_POST['password']) ? md5(trim($_POST['password'])) : "";
     $dob = isset($_POST['dob']) ? trim($_POST['dob']) : "";
-
-    $insert = "INSERT INTO users (name, username, email, password, dob) VALUES ('$name','$username','$email','$password','$dob')";
+    $joined = date('F Y');
+    $insert = "INSERT INTO users (name, username, email, password, dob, joined) VALUES ('$name','$username','$email','$password','$dob', '$joined')";
     $run = $conn->query($insert);
     if ($run) {
         $_SESSION['login'] = 'Login';
+        $_SESSION['joined'] = date('F Y');
         $_SESSION['username'] = $username;
         $_SESSION['firstname'] = substr($name, 0,1);
         $_SESSION['name'] = $name;

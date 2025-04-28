@@ -3,6 +3,19 @@ session_start();
 if (!isset($_SESSION['login'])) {
     header('Location: login.php');
 }
+
+
+// require "vendor/autoload.php";
+
+// use Abraham\TwitterOAuth\TwitterOAuth;
+// $connection = new TwitterOAuth(
+//     '7Lmhv5Ch9FS8uaSOEtBEWXvnP', // API Key
+//     'S2J9TO0RaJAf4PAr2ouk7enbJpZ3s2oJusFCPABcaIkQd8lZhI',  // API Key Secret
+//     '1913233069374410752-XRploVlcasjm0mFOXyp6VQqxiAyEdR', // Access Token
+//     'H0D2VEpMRAj4JWLxZcgoGsnm3cUKbLaw2RZIjg7a3tLxG' // Access Token Secret
+// );
+// $content = $connection->get("account/verify_credentials");
+// print_r($content);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +36,8 @@ if (!isset($_SESSION['login'])) {
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/logo-black.png">
 
-    <body>
-        
+<body>
+
 
     <!-- Logout Loader -->
 
@@ -35,9 +48,9 @@ if (!isset($_SESSION['login'])) {
             <p class="show" style="margin-top: 20px;">Logging out</p>
         </div>
     </div>
-    
+
     <!-- Left Panel -->
-      <div class="container all" style="display: flex; " id="left-panel" >
+    <div class="container all" style="display: flex; " id="left-panel">
         <div class="slider">
             <div class="logo">
                 <img src="images/logo-black.png" alt="" height="30px" width="30px" style="margin-left: 10px;">
@@ -75,7 +88,7 @@ if (!isset($_SESSION['login'])) {
                     <i class="fa-solid fa-ribbon"></i><a href="#">Varified Orgs</a>
                 </li>
                 <li>
-                    <i class="fa-regular fa-user"></i><a href="#">Profile</a>
+                    <i class="fa-regular fa-user"></i><a href="profile.php">Profile</a>
                 </li>
                 <li>
                     <img src="images/circle.png" alt="" height="30px" style="margin-left: -5px;">
@@ -96,7 +109,9 @@ if (!isset($_SESSION['login'])) {
                     <p class="show_first_name"><?php echo $_SESSION['firstname']; ?></p>
                 </div>
                 <div class="user_data" style="width: 60%;">
-                    <p><span class="profle_name"><?php echo $_SESSION['name'];?></span> <br>@<?php echo $_SESSION['username']; ?> </p>
+                    <p><span class="profle_name"><?php echo $_SESSION['name']; ?></span>
+                        <br>@<?php echo $_SESSION['username']; ?>
+                    </p>
                 </div>
                 <div class="ellipsis" style="width: 20%;">
                     <i class="fa-solid fa-ellipsis"></i>
@@ -104,6 +119,4 @@ if (!isset($_SESSION['login'])) {
             </div>
         </div>
 
-     <!-- </div>  -->
-
-   
+        <!-- </div>  -->

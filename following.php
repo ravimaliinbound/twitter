@@ -6,8 +6,8 @@ include_once 'headers.php'
 <div class="middle">
     <div class="ul" style="width: 40%; position: fixed;">
         <ul class="">
-            <li>&nbsp; <a href="index.php" class="hover" style="border-bottom: 2px solid;">For you</a></li>
-            <li> <a href="following.php" class="hover">Following</a></li>
+            <li>&nbsp; <a href="index.php" class="hover">For you</a></li>
+            <li> <a href="following.php" class="hover" style="border-bottom: 2px solid ">Following</a></li>
         </ul>
     </div>
     <div class="index-post">
