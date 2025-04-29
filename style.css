@@ -152,15 +152,17 @@
     background-color: rgb(235, 235, 235);
     padding: 10px;
     border-radius: 20px;
-    width: fit-content;
+    width: 50%;
 }
 
-.items li a {
+.items a {
     color: black;
     text-decoration: none;
-    margin: 0 0 0 30px;
+    margin-top: 10px;
 }
-
+.items span{
+    margin-left: 20px;
+}
 .items i {
     font-size: 20px;
 }
@@ -255,10 +257,19 @@
 
 /* Main Footer css */
 .footers {
-    width: 20%;
-    margin-left: 1018px;
+    width: 14%;
+    margin-left: 1028px;
     position: fixed;
     padding: 10px;
+    background-color: white;
+    color: black;
+}
+
+.footerss {
+    width: 40%;
+    margin-left: 1028px;
+    padding: 10px;
+    color: black;
 }
 
 .footer-search-div {
@@ -267,12 +278,53 @@
     border-radius: 20px;
 }
 
+.f-anchor {
+    color: black;
+    font-size: 11px;
+    text-decoration: none;
+}
+
 .footer-search-input {
     border: none;
     margin-left: 10px;
     width: 80%;
 }
 
+.who-to-follow {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.show-to-follow {
+    display: flex;
+}
+
+.show-to-follow-data {
+    margin-left: 10px;
+}
+
+.show-to-follow-data a {
+    color: black;
+    text-decoration: none;
+}
+
+.show-to-follow-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.show-to-follow-btn a {
+    background-color: black;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.show-to-follow-btn {
+    margin-top: 12px;
+    margin-left: 20px;
+}
 
 /* Content Part css */
 .middle {
@@ -305,6 +357,10 @@
     display: inline-block;
 }
 
+.pro-fname {
+    text-decoration: none;
+}
+
 .index-post {
     margin-top: 65px;
     padding: 15px;
@@ -320,6 +376,10 @@
     padding-left: 15px;
     background-color: rgb(110, 190, 110);
     border-radius: 50%;
+}
+
+.index-sess:hover {
+    cursor: pointer;
 }
 
 .index_first_name {
@@ -359,6 +419,10 @@
 
 .post-icons {
     margin-left: 15px;
+}
+
+.hover:hover {
+    background-color: rgb(231, 231, 232);
 }
 
 .post-icons:hover {
@@ -425,6 +489,10 @@
     font-weight: 500;
 }
 
+.explore-foryou {
+    margin-top: 130px;
+}
+
 .explore-fix {
     position: fixed;
     width: 40%;
@@ -439,6 +507,7 @@
 .notification {
     width: 40%;
     position: absolute;
+    padding: 0 20px;
     margin-left: 250px;
 }
 
@@ -472,6 +541,40 @@
     font-weight: 500;
     margin-left: 20px;
     margin-top: 10px;
+}
+
+.verified-img {
+    margin-top: 150px;
+    margin-left: 200px;
+}
+
+.verified-msg {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.verify {
+    width: 45%;
+    margin-left: 190px;
+}
+
+.mention-msg {
+    width: 80%;
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.mention-p {
+    font-size: 18px;
+}
+
+.anchor {
+    color: black;
+    font-weight: 500;
+}
+
+.mentions {
+    margin-top: 120px;
 }
 
 /* Messages Tab */
@@ -555,28 +658,32 @@
 .cover {
     margin-top: -8px;
     height: 200px;
-    background-color: rgb(200, 213, 219);
+    background-color: rgb(207, 217, 222);
+    /* background: url('images/Capture.PNG');
+    background-size: 700px 200px;
+    width: 100%;
+    background-repeat: no-repeat; */
 }
 
 .profile-pic {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     margin-left: 50px;
-    margin-top: -75px;
+    margin-top: -50px;
     border-radius: 50%;
     background-color: rgb(110, 190, 110);
 }
 
 .profile-fname {
-    font-size: 80px;
+    font-size: 50px;
     color: white;
     padding-top: 13px;
-    padding-left: 50px;
+    padding-left: 35px;
 }
 
 .edit {
     margin-left: 550px;
-    margin-top: -50px;
+    margin-top: -30px;
     border: 1px solid grey;
     width: fit-content;
     padding: 5px 15px;
@@ -620,7 +727,8 @@
     margin-left: 50px;
     font-weight: 600;
 }
-.profile-menu{
+
+.profile-menu {
     border-bottom: 1px solid;
 }
 
@@ -628,6 +736,7 @@
     list-style: none;
     display: inline-block;
     padding: 8px 20px;
+    padding-left: 32px;
     width: 16%;
     justify-content: center;
 }
@@ -635,25 +744,45 @@
 .profile-menu ul a {
     text-decoration: none;
     color: black;
-    margin-left: 10px;
 }
 
 .profile-menu ul li:hover {
     cursor: pointer;
     background-color: rgb(231, 231, 231);
 }
-.highlight{
+
+.highlight {
     margin-top: 50px;
     margin-left: 170px;
     width: 300px;
 }
-.highlight h2{
+
+.highlight h2 {
     font-size: 35px;
 }
-.highlight a{
+
+.highlight a {
     text-decoration: none;
     padding: 10px 30px;
     border-radius: 20px;
     font-size: 20px;
     font-weight: 500;
+}
+
+.profile-menu-item {
+    border-bottom: 3px solid deepskyblue;
+    padding-bottom: 10px;
+}
+
+.likes {
+    margin-top: 5px;
+    padding: 1px;
+    padding-left: 15px;
+    border-radius: 5px;
+    background-color: rgb(234, 250, 255);
+    ;
+}
+
+.like-text {
+    font-size: 15px;
 }

@@ -43,6 +43,7 @@ include_once 'header.php';
                 <form action="#" method="post" id="login-form">
                     <input type="hidden" name="" id="email_check" value="0">
                     <input type="hidden" name="" id="username_check" value="0">
+                    <input type="hidden" name="" id="login_id" value="0">
 
 
                     <div class="form-group">

@@ -3,19 +3,6 @@ session_start();
 if (!isset($_SESSION['login'])) {
     header('Location: login.php');
 }
-
-
-// require "vendor/autoload.php";
-
-// use Abraham\TwitterOAuth\TwitterOAuth;
-// $connection = new TwitterOAuth(
-//     '7Lmhv5Ch9FS8uaSOEtBEWXvnP', // API Key
-//     'S2J9TO0RaJAf4PAr2ouk7enbJpZ3s2oJusFCPABcaIkQd8lZhI',  // API Key Secret
-//     '1913233069374410752-XRploVlcasjm0mFOXyp6VQqxiAyEdR', // Access Token
-//     'H0D2VEpMRAj4JWLxZcgoGsnm3cUKbLaw2RZIjg7a3tLxG' // Access Token Secret
-// );
-// $content = $connection->get("account/verify_credentials");
-// print_r($content);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,44 +43,68 @@ if (!isset($_SESSION['login'])) {
                 <img src="images/logo-black.png" alt="" height="30px" width="30px" style="margin-left: 10px;">
             </div>
             <div class="items" style="margin-top: 10px;">
-                <li>
-                    <i class="fa-solid fa-house"></i><a href="index.php">Home</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-magnifying-glass"></i><a href="explore.php">Explore</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-bell"></i><a href="notifications.php">Notifications</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-envelope"></i><a href="message.php">Messages</a>
-                </li>
-                <li>
-                    <img src="images/grok.png" alt="" height="24px"><a href="#" style="margin-left: 25px;">Grok</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-bookmark"></i><a href="bookmark.php" style="margin-left: 34px;">Bookmarks</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-briefcase"></i><a href="#">Jobs</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-user-group"></i><a href="#" style="margin-left: 25px;">Communities</a>
-                </li>
-                <li>
-                    <img src="images/logo-black.png" alt="" height="23px"><a href="#"
-                        style="margin-left: 28px;">Premium</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-ribbon"></i><a href="#">Varified Orgs</a>
-                </li>
-                <li>
-                    <i class="fa-regular fa-user"></i><a href="profile.php">Profile</a>
-                </li>
-                <li>
-                    <img src="images/circle.png" alt="" height="30px" style="margin-left: -5px;">
-                    <a href="#" style="margin-left: 20px;">More</a>
-                </li>
+                <a href="index.php">
+                    <li>
+                        <i class="fa-solid fa-house"></i><span>Home</span>
+                    </li>
+                </a>
+                <a href="explore.php">
+                    <li>
+                        <i class="fa-solid fa-magnifying-glass"></i><span>Explore</span>
+                    </li>
+                </a>
+                <a href="notification.php">
+                    <li>
+                        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+                    </li>
+                </a>
+                <a href="message.php">
+                    <li>
+                        <i class="fa-solid fa-envelope"></i><span>Messages</span>
+                    </li>
+                </a>
+
+                <a href="#">
+                    <li>
+                        <img src="images/grok.png" alt="" height="24px"><span style="margin-left: 15px;">Grok</span>
+                    </li>
+                </a>
+                <a href="bookmark.php">
+                    <li>
+                        <i class="fa-solid fa-bookmark"></i><span>Bookmarks</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li>
+                        <i class="fa-solid fa-briefcase"></i><span>Jobs</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li>
+                        <i class="fa-solid fa-user-group"></i><span style="margin-left: 15px;">Communities</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li>
+                        <img src="images/logo-black.png" alt="" height="23px"><span>Premium</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li>
+                        <i class="fa-solid fa-ribbon"></i><span>Varified Orgs</span>
+                    </li>
+                </a>
+                <a href="profile.php">
+                    <li>
+                        <i class="fa-regular fa-user"></i><span>Profile</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li>
+                        <img src="images/circle.png" alt="" height="30px" style="margin-left: -5px;">
+                        <span style="margin-left: 10px;">More</span>
+                    </li>
+                </a>
 
             </div>
             <div class="post bg-dark" style="display: block;">

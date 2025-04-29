@@ -1,15 +1,16 @@
 <?php
 include_once 'profile-post.php'
     ?>
+
 <div class="profile-menu" style="margin-left: -28px;">
     <ul style="width: 100%;">
         <a href="profile.php">
             <li>Posts</li>
         </a>
-        <a href="replies.php">
+        <a href="replies.php" class="profile-menu-item">
             <li>Replies</li>
         </a>
-        <a href="highlight.php" class="profile-menu-item">
+        <a href="highlight.php">
             <li>Highlights</li>
         </a>
         <a href="article.php">
@@ -23,12 +24,6 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
-<div class="highlight">
-    <h2>Highlight on your profile</h2>
-    <p style="margin-bottom: 30px;">You must be subscribed to Premium to highlight posts on your profile.</p>
-    <a href="#" class="text-white bg-dark">Subscribe to Premium</a>
-</div>
-
 </div>
 
 <?php

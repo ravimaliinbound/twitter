@@ -1,6 +1,7 @@
 <?php
 include_once 'profile-post.php'
     ?>
+
 <div class="profile-menu" style="margin-left: -28px;">
     <ul style="width: 100%;">
         <a href="profile.php">
@@ -9,7 +10,7 @@ include_once 'profile-post.php'
         <a href="replies.php">
             <li>Replies</li>
         </a>
-        <a href="highlight.php" class="profile-menu-item">
+        <a href="highlight.php">
             <li>Highlights</li>
         </a>
         <a href="article.php">
@@ -18,17 +19,15 @@ include_once 'profile-post.php'
         <a href="media.php">
             <li>Media</li>
         </a>
-        <a href="likes.php">
+        <a href="likes.php" class="profile-menu-item">
             <li>Likes</li>
         </a>
     </ul>
 </div>
-<div class="highlight">
-    <h2>Highlight on your profile</h2>
-    <p style="margin-bottom: 30px;">You must be subscribed to Premium to highlight posts on your profile.</p>
-    <a href="#" class="text-white bg-dark">Subscribe to Premium</a>
+<div class="likes">
+    <p style="margin-top: 8px;"><img src="images/padlock.png" alt="" height="20px" style="margin-top: -10px;"><span
+            class="like-text">&nbsp;Your likes are private. Only you can see them.</span></p>
 </div>
-
 </div>
 
 <?php

@@ -1,3 +1,20 @@
+// //-----------Fetch Data-----------//
+// function fetch_data() {
+//     var login_id = $("#login_id").val();
+//     console.log(login_id)
+//     // $.ajax({
+//     //     url: "action.php",
+//     //     type: "post",
+//     //     data: { "action": "fetch", "login_id": login_id },
+//     //     success: function (data) {
+//     //         var jsonData = JSON.parse(data);
+//     //         console.log(jsonData.id)
+//     //     }
+//     // });
+// }
+
+
+//-------------------Signup-----------------//
 function signup() {
     var name = $("#name").val();
     var username = $("#username").val();
@@ -14,7 +31,7 @@ function signup() {
         type: "post",
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
         success: function (data) {
-
+            console.log(data)
             $(".show").show();
             $(".hide").hide();
             setTimeout(function () {
@@ -25,6 +42,9 @@ function signup() {
         }
     });
 }
+
+//-----------------Login-------------------//
+
 function login() {
     var email = $("#login_email").val();
     var password = $("#login_password").val();
@@ -164,18 +184,41 @@ function loginvalidate(e) {
 }
 
 
+//-----------------------For You Post-------------//
+function insert_post() {
+    var input = $("#index-input").val();
+    var form = $('#media-form')[0];
+    var formData = new FormData(form);
+    var image = $("#index-image").val();
+    formData.append('input', input);
+    formData.append('action', 'insert_post');
+
+    $.ajax({
+        url: "action.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log(data)
+            $('#content-form')[0].reset();
+            $('#media-form')[0].reset();
+        }
+    });
+
+
+
+
+}
+
+
 $(document).ready(function () {
+    // fetch_data();
     $(".remove-btn").click(function () {
         $('.remove').text("");
     });
 
-    //--------For you / Following hover--------------//
-    $(".hover").mouseenter(function () {
-        $(this).css("background-color", "rgb(241, 240, 240)")
-    });
-    $(".hover").mouseout(function () {
-        $(this).css("background-color", "white")
-    });
+
 
     //----------Explore's Tabs hover------------//
 
@@ -209,14 +252,7 @@ $(document).ready(function () {
         $(this).css("outline", " none")
     });
 
-
-
-    // $(".multi-a").click(function () {
-    //     $(this).css("border-bottom", "5px solid");
-    // })
-
     //------------------->> Validation <<----------------------//
-
 
     $("input").focus(function () {
         var inp_id = $(this).attr('id');
@@ -273,7 +309,6 @@ $(document).ready(function () {
             type: "post",
             data: { "username": name_val, "action": "email_check" },
             success: function (response) {
-                console.log(response)
                 var data = JSON.parse(response);
                 if (data.status == 'failed') {
                     $("#username_check").val(1);
@@ -314,7 +349,6 @@ $(document).ready(function () {
             type: "post",
             data: { "email": mail, "action": "email_check" },
             success: function (response) {
-                console.log(response)
                 var data = JSON.parse(response);
                 if (data.status == 'failed') {
                     $("#email_check").val(1);
@@ -428,3 +462,32 @@ $(document).ready(function () {
 
 
 });
+
+
+//---------------------------------------------------------//
+// var form = $('#form')[0];
+// var formData = new FormData(form);
+// var page = $("#page").val();
+
+// if (!validate()) {
+//     return false;
+// }
+
+// formData.append('action', 'insert');
+
+// $.ajax({
+//     url: "action.php",
+//     type: "POST",
+//     data: formData,
+//     contentType: false,
+//     processData: false,
+//     success: function (data) {
+//         $('#addEmployee').modal('hide');
+//         $("#msg").html(data);
+//         setTimeout(function () {
+//             $('.msg').fadeOut('slow');
+//         }, 3000);
+//         searchFilter(page);
+//         $('#form')[0].reset();
+//     }
+// });

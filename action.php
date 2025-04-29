@@ -1,6 +1,7 @@
 <?php
 $conn = new mysqli('localhost', 'root', '', 'project');
 session_start();
+
 //---------------Signup-------------------//
 
 if (isset($_POST['action']) && $_POST['action'] == 'signup') {
@@ -16,13 +17,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'signup') {
         $_SESSION['login'] = 'Login';
         $_SESSION['joined'] = date('F Y');
         $_SESSION['username'] = $username;
-        $_SESSION['firstname'] = substr($name, 0,1);
+        $_SESSION['firstname'] = substr($name, 0, 1);
         $_SESSION['name'] = $name;
-        echo "<p class=' p-2 rounded msg'>Signup success please wait</p>";
     } else {
         echo "<p class='p-2 rounded msg'>Something Went Wrong</p>";
     }
 }
+
+//--------------------- Insert Post-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
+    $content = $_POST['input'];
+    $image = $_FILES['index-image']['name'];
+    $username = $_SESSION['username'];
+    echo $username;
+    /*-----Insert Code---*/
+    
+}
+
+
+
 //-----------------Already Exists----------------//
 
 if (isset($_POST['action']) && $_POST['action'] == 'email_check' || $_POST['action'] == 'email_check') {
@@ -65,7 +78,6 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
         $_SESSION['username'] = $username_check;
         $_SESSION['name'] = $name_check;
         $_SESSION['firstname'] = substr($name_check, 0, 1);
-
         echo json_encode([
             'status' => 'success'
         ]);
