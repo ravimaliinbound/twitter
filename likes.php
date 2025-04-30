@@ -20,7 +20,7 @@ include_once 'profile-post.php'
             <li>Media</li>
         </a>
         <a href="likes.php" class="profile-menu-item">
-            <li>Likes</li>
+            <li style="color: black">Likes</li>
         </a>
     </ul>
 </div>

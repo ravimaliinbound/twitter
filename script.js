@@ -1,18 +1,43 @@
-// //-----------Fetch Data-----------//
-// function fetch_data() {
-//     var login_id = $("#login_id").val();
-//     console.log(login_id)
-//     // $.ajax({
-//     //     url: "action.php",
-//     //     type: "post",
-//     //     data: { "action": "fetch", "login_id": login_id },
-//     //     success: function (data) {
-//     //         var jsonData = JSON.parse(data);
-//     //         console.log(jsonData.id)
-//     //     }
-//     // });
-// }
+//-----------Fetch Data-----------//
+function fetch_data() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "fetch" },
+        success: function (data) {
+            var jsonData = JSON.parse(data);
+            $(".pro-name").text(jsonData.name);
+            $(".username").text(jsonData.username);
+            $(".bio").text(jsonData.bio);
+            $(".joined").text(jsonData.joined);
+        }
+    });
+}
 
+//------------------Footer Who to follow-----------------//
+function footer() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "footer" },
+        success: function (data) {
+            var response = JSON.parse(data);
+            $(".show-to-follow").html(response)
+        }
+    });
+}
+//---------------------Show More-----------//
+function show_more() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_more" },
+        success: function (data) {
+            var response = JSON.parse(data);
+            $(".followw").html(response);
+        }
+    });
+}
 
 //-------------------Signup-----------------//
 function signup() {
@@ -31,7 +56,6 @@ function signup() {
         type: "post",
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
         success: function (data) {
-            console.log(data)
             $(".show").show();
             $(".hide").hide();
             setTimeout(function () {
@@ -213,12 +237,10 @@ function insert_post() {
 
 
 $(document).ready(function () {
-    // fetch_data();
+    show_more();
     $(".remove-btn").click(function () {
         $('.remove').text("");
     });
-
-
 
     //----------Explore's Tabs hover------------//
 

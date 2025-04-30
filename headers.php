@@ -22,6 +22,12 @@ if (!isset($_SESSION['login'])) {
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/logo-black.png">
+    <script>
+        $(document).ready(function () {
+            fetch_data();
+            footer();
+        })
+    </script>
 
 <body>
 
@@ -45,64 +51,66 @@ if (!isset($_SESSION['login'])) {
             <div class="items" style="margin-top: 10px;">
                 <a href="index.php">
                     <li>
-                        <i class="fa-solid fa-house"></i><span>Home</span>
+                        <i class="fa-solid fa-house"></i><span id="home">Home</span>
                     </li>
                 </a>
                 <a href="explore.php">
                     <li>
-                        <i class="fa-solid fa-magnifying-glass"></i><span>Explore</span>
+                        <i class="fa-solid fa-magnifying-glass"></i><span id="explore">Explore</span>
                     </li>
                 </a>
                 <a href="notification.php">
                     <li>
-                        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+                        <i class="fa-solid fa-bell"></i><span id="notification">Notifications</span>
                     </li>
                 </a>
                 <a href="message.php">
                     <li>
-                        <i class="fa-solid fa-envelope"></i><span>Messages</span>
+                        <i class="fa-solid fa-envelope"></i><span id="message">Messages</span>
                     </li>
                 </a>
 
                 <a href="#">
                     <li>
-                        <img src="images/grok.png" alt="" height="24px"><span style="margin-left: 15px;">Grok</span>
+                        <img src="images/grok.png" alt="" height="24px"><span style="margin-left: 15px;"
+                            id="grok">Grok</span>
                     </li>
                 </a>
                 <a href="bookmark.php">
                     <li>
-                        <i class="fa-solid fa-bookmark"></i><span>Bookmarks</span>
+                        <i class="fa-solid fa-bookmark"></i><span id="bookmark">Bookmarks</span>
                     </li>
                 </a>
                 <a href="#">
                     <li>
-                        <i class="fa-solid fa-briefcase"></i><span>Jobs</span>
+                        <i class="fa-solid fa-briefcase"></i><span id="job">Jobs</span>
                     </li>
                 </a>
                 <a href="#">
                     <li>
-                        <i class="fa-solid fa-user-group"></i><span style="margin-left: 15px;">Communities</span>
+                        <i class="fa-solid fa-user-group"></i><span style="margin-left: 15px;"
+                            id="community">Communities</span>
                     </li>
                 </a>
                 <a href="#">
                     <li>
-                        <img src="images/logo-black.png" alt="" height="23px"><span>Premium</span>
+                        <img src="images/logo-black.png" alt="" height="23px"><span id="premium">Premium</span>
                     </li>
                 </a>
                 <a href="#">
                     <li>
-                        <i class="fa-solid fa-ribbon"></i><span>Varified Orgs</span>
+                        <i class="fa-solid fa-ribbon"></i><span id="verified-orgs">Varified Orgs</span>
                     </li>
                 </a>
                 <a href="profile.php">
                     <li>
-                        <i class="fa-regular fa-user"></i><span>Profile</span>
+                        <i class="fa-regular fa-user"></i><span id="profile">Profile</span>
                     </li>
                 </a>
                 <a href="#">
                     <li>
                         <img src="images/circle.png" alt="" height="30px" style="margin-left: -5px;">
-                        <span style="margin-left: 10px;">More</span>
+                        <span style="margin-left: 10px;" id="more">More</span>
                     </li>
                 </a>
 

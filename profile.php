@@ -5,7 +5,7 @@ include_once 'profile-post.php'
 <div class="profile-menu" style="margin-left: -28px;">
     <ul style="width: 100%;">
         <a href="profile.php" class="profile-menu-item">
-            <li>Posts</li>
+            <li style="color: black">Posts</li>
         </a>
         <a href="replies.php">
             <li>Replies</li>
@@ -24,6 +24,8 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
+
+    
 </div>
 
 <?php

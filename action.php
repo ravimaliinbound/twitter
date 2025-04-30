@@ -2,6 +2,74 @@
 $conn = new mysqli('localhost', 'root', '', 'project');
 session_start();
 
+//----------------Fetch Data For Particular User---------------//
+if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
+    $username = $_SESSION['username'];
+    $sel_id = "SELECT user_id FROM users WHERE username = '$username'";
+    $run_id = $conn->query($sel_id);
+    $arr_id = null;
+    while ($data = $run_id->fetch_object()) {
+        $arr_id = $data->user_id;
+    }
+    $sel = "SELECT * FROM users WHERE user_id = '$arr_id'";
+    $run = $conn->query($sel);
+
+    $data = [];
+    $arr = [];
+    while ($fetch = $run->fetch_object()) {
+        $data = $fetch;
+        $arr = array(
+            "user_id" => $data->user_id,
+            "name" => $data->name,
+            "username" => $data->username,
+            "email" => $data->email,
+            "dob" => $data->dob,
+            "joined" => $data->joined
+        );
+    }
+    echo json_encode($arr);
+    // echo json_encode([
+    //     "user_id" => $data->user_id,
+    //     "name" => $data->name,
+    //     "username" => $data->username,
+    //     "email" => $data->email,
+    //     "dob" => $data->dob,
+    //     "joined" => $data->joined
+    // ]);
+    // echo json_encode($data->name);
+}
+
+
+//--------------------- Footer who to follow-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'footer') {
+    $username = $_SESSION['username'];
+    $sel_footer = "SELECT * FROM users WHERE username != '$username' LiMIT 0, 3";
+    $run_footer = $conn->query($sel_footer);
+    $arr_footer = "";
+    while ($data = $run_footer->fetch_object()) {
+        $arr_footer .=
+            " <div style = 'display: flex;'>
+            <div class='show-img' style='margin-top: 6px;'>
+            <a href='#'><img src='images/happy.png' height='40px'></a>
+        </div>
+        <div class='show-to-follow-data'>
+            <p>
+                <a href='#' class='show-to-follow-name'>$data->name</a><br>
+                <a href='#' class='show-to-follow-username'>@$data->username</a>
+            </p>
+        </div>
+        <div class='show-to-follow-btn'>
+            <a href='#'>Follow</a>
+        </div>
+        </div>
+        ";
+    }
+    $arr_footer .= "";
+    echo json_encode($arr_footer);
+
+}
+
+
 //---------------Signup-------------------//
 
 if (isset($_POST['action']) && $_POST['action'] == 'signup') {
@@ -31,7 +99,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
     $username = $_SESSION['username'];
     echo $username;
     /*-----Insert Code---*/
-    
+
 }
 
 
@@ -94,4 +162,34 @@ if (isset($_POST['action']) && $_POST['action'] == "logout") {
     unset($_SESSION['username']);
     unset($_SESSION['firstname']);
 }
+
+//---------------------Who to follow-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
+    $username = $_SESSION['username'];
+    $sel_footer = "SELECT * FROM users WHERE username != '$username' LIMIT 0,50";
+    $run_footer = $conn->query($sel_footer);
+    $arr_footer = "";
+    while ($data = $run_footer->fetch_object()) {
+        $arr_footer .=
+            " <div style = 'display: flex;'>
+                <div class='showw-img' style='margin-top: 6px; '>
+                    <a href='#'><img src='images/happy.png' height='40px' width= '40px'></a>
+                </div>
+                <div class='show-to-followw-data' style='width:50%  '>
+                    <p>
+                        <a href='#' class='show-to-followw-name'>$data->name</a><br>
+                        <a href='#' class='show-to-followw-username'>@$data->username</a><br>
+                        <a href='#' class='show-to-followw-username'>$data->bio</a>
+                    </p>
+                </div>
+                <div class='show-to-followw-btn'>
+                    <a href='#'>Follow</a>
+                </div>
+            </div>";
+    }
+    $arr_footer .= "";
+    echo json_encode($arr_footer);
+
+}
+
 ?>

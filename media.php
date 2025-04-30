@@ -16,7 +16,7 @@ include_once 'profile-post.php'
             <li>Articles</li>
         </a>
         <a href="media.php" class="profile-menu-item">
-            <li>Media</li>
+            <li style="color: black">Media</li>
         </a>
         <a href="likes.php">
             <li>Likes</li>

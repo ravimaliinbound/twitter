@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: black;
 }
 
 .parent {
@@ -133,6 +134,9 @@
 }
 
 /* Header / Slider css */
+.active_class {
+    font-weight: 700;
+}
 
 .slider {
     width: 25%;
@@ -140,6 +144,10 @@
     position: fixed;
 }
 
+.items {
+    width: 50%;
+
+}
 
 .items li {
     text-decoration: none;
@@ -149,10 +157,9 @@
 }
 
 .items li:hover {
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(231, 231, 232) ;
     padding: 10px;
     border-radius: 20px;
-    width: 50%;
 }
 
 .items a {
@@ -160,9 +167,11 @@
     text-decoration: none;
     margin-top: 10px;
 }
-.items span{
+
+.items span {
     margin-left: 20px;
 }
+
 .items i {
     font-size: 20px;
 }
@@ -261,6 +270,7 @@
     margin-left: 1028px;
     position: fixed;
     padding: 10px;
+    border-left: 1px solid rgb(204, 203, 203);
     background-color: white;
     color: black;
 }
@@ -268,12 +278,13 @@
 .footerss {
     width: 40%;
     margin-left: 1028px;
+    border: 1px solid rgb(204, 203, 203);
     padding: 10px;
     color: black;
 }
 
 .footer-search-div {
-    border: 1px solid grey;
+    border: 1px solid rgb(204, 203, 203);
     padding: 10px;
     border-radius: 20px;
 }
@@ -301,6 +312,7 @@
 
 .show-to-follow-data {
     margin-left: 10px;
+    width: 120px;
 }
 
 .show-to-follow-data a {
@@ -309,7 +321,6 @@
 }
 
 .show-to-follow-name {
-    font-size: 18px;
     font-weight: 600;
 }
 
@@ -323,18 +334,25 @@
 
 .show-to-follow-btn {
     margin-top: 12px;
-    margin-left: 20px;
+    margin-left: 10px;
+}
+
+.show_more {
+    text-decoration: none;
 }
 
 /* Content Part css */
 .middle {
     width: 40%;
     position: absolute;
+    border: 1px solid rgb(204, 203, 203);
     margin-left: 250px;
 }
 
 .middle .ul {
     width: 100%;
+    border-bottom: 1px solid rgb(204, 203, 203);
+    border-right: 1px solid rgb(204, 203, 203);
     background-color: white;
 }
 
@@ -346,7 +364,7 @@
     list-style: none;
     text-decoration: none;
     width: 48%;
-    color: black;
+    color: grey;
     padding: 20px 125px;
     font-weight: 500;
 }
@@ -364,6 +382,7 @@
 .index-post {
     margin-top: 65px;
     padding: 15px;
+    border-bottom: 1px solid rgb(204, 203, 203);
     width: 100%;
 }
 
@@ -443,6 +462,7 @@
 /* Explore Tab */
 .explore {
     width: 40%;
+    border: 1px solid rgb(204, 203, 203);
     position: absolute;
     margin-left: 250px;
 }
@@ -452,7 +472,7 @@
 }
 
 .explore-search-div {
-    border: 1px solid grey;
+    border: 1px solid rgb(204, 203, 203);
     padding: 10px;
     width: 80%;
     border-radius: 20px;
@@ -485,16 +505,42 @@
 .explore-list a {
     text-decoration: none;
     padding: 10px 35px;
-    color: black;
+    color: grey;
     font-weight: 500;
 }
 
 .explore-foryou {
+    margin: 20px;
     margin-top: 130px;
+}
+
+.todays-news {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.foryou-news-heading {
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px;
+    color: black;
+    margin-left: 43px;
+    font-weight: 500;
+}
+
+.foryou-news-heading:hover {
+    background-color: rgb(247, 247, 247);
+    color: black;
+}
+
+.news-div {
+    margin-top: 30px;
 }
 
 .explore-fix {
     position: fixed;
+    border-right: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(204, 203, 203);
     width: 40%;
     background-color: white;
 }
@@ -503,16 +549,127 @@
     cursor: pointer;
 }
 
+.trending {
+    margin-top: 140px;
+}
+
+.trend-hover {
+    padding: 10px;
+}
+
+.trending a {
+    text-decoration: none;
+}
+
+.trend {
+    font-size: 15px;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.trend-hover:hover {
+    cursor: pointer;
+    background-color: rgb(247, 247, 247);
+}
+
+.news {
+    margin-top: 140px;
+}
+
+.news-hover {
+    padding: 10px;
+}
+
+.news a {
+    text-decoration: none;
+}
+
+.newss {
+    font-size: 15px;
+}
+
+.news-title {
+    font-weight: 700;
+}
+
+.news-hover:hover {
+    cursor: pointer;
+    background-color: rgb(247, 247, 247);
+}
+
+.sport {
+    margin-top: 140px;
+}
+
+.sports-hover {
+    padding: 10px;
+}
+
+.sports-hover a {
+    text-decoration: none;
+}
+
+.sports {
+    font-size: 15px;
+}
+
+.sports-title {
+    font-weight: 700;
+}
+
+.sports-hover:hover {
+    cursor: pointer;
+    background-color: rgb(247, 247, 247);
+}
+.entertainment {
+    margin-top: 140px;
+}
+
+.enter-hover {
+    padding: 10px;
+}
+
+.enter-hover a {
+    text-decoration: none;
+}
+
+.enter {
+    font-size: 15px;
+}
+
+.enter-title {
+    font-weight: 700;
+}
+
+.enter-hover:hover {
+    cursor: pointer;
+    background-color: rgb(247, 247, 247);
+}
+.dots {
+    margin-left: 550px;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.dots:hover {
+    background-color: rgb(225, 238, 246);
+    color: rgb(48, 203, 255);
+}
+
 /* Notification Tab */
 .notification {
     width: 40%;
     position: absolute;
-    padding: 0 20px;
+    border: 1px solid rgb(204, 203, 203);
     margin-left: 250px;
 }
 
 .notification-fix {
     position: fixed;
+    border-right: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(204, 203, 203);
     width: 40%;
     background-color: white;
 }
@@ -531,7 +688,7 @@
 .notification-list a {
     text-decoration: none;
     padding: 7% 40%;
-    color: black;
+    color: grey;
     font-weight: 500;
     width: 100%;
 }
@@ -582,11 +739,13 @@
 .message {
     width: 40%;
     position: absolute;
+    border: 1px solid rgb(204, 203, 203);
     margin-left: 250px;
 }
 
 .message-fix {
     padding: 10px 0;
+    border-right: 1px solid rgb(204, 203, 203);
     position: fixed;
     width: 40%;
     background-color: white;
@@ -611,12 +770,15 @@
 .bookmark {
     width: 40%;
     position: absolute;
+    border: 1px solid rgb(204, 203, 203);
     margin-left: 250px;
 }
 
 .bookmark-fix {
     padding: 10px 0;
     position: fixed;
+    border-bottom: 1px solid rgb(204, 203, 203);
+    border-right: 1px solid rgb(204, 203, 203);
     width: 40%;
     background-color: white;
 }
@@ -642,6 +804,7 @@
     width: 40%;
     position: absolute;
     margin-left: 250px;
+    border: 1px solid rgb(204, 203, 203);
     padding: 0 30px;
     color: black;
 }
@@ -684,7 +847,7 @@
 .edit {
     margin-left: 550px;
     margin-top: -30px;
-    border: 1px solid grey;
+    border: 1px solid rgb(204, 203, 203);
     width: fit-content;
     padding: 5px 15px;
     border-radius: 20px;
@@ -707,7 +870,7 @@
 
 .verified {
     margin-left: 50px;
-    border: 1px solid grey;
+    border: 1px solid rgb(204, 203, 203);
     color: black;
     padding: 5px 20px;
     font-weight: 500;
@@ -729,7 +892,8 @@
 }
 
 .profile-menu {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgb(204, 203, 203);
+
 }
 
 .profile-menu ul li {
@@ -737,13 +901,14 @@
     display: inline-block;
     padding: 8px 20px;
     padding-left: 32px;
+    color: grey;
     width: 16%;
     justify-content: center;
 }
 
 .profile-menu ul a {
     text-decoration: none;
-    color: black;
+    font-weight: 500;
 }
 
 .profile-menu ul li:hover {
@@ -772,6 +937,7 @@
 .profile-menu-item {
     border-bottom: 3px solid deepskyblue;
     padding-bottom: 10px;
+    font-weight: 500;
 }
 
 .likes {
@@ -785,4 +951,74 @@
 
 .like-text {
     font-size: 15px;
+}
+
+/* Follow Page / Connect */
+
+.connect {
+    margin-left: 100px;
+    margin-top: 10px;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.to-follow {
+    margin-left: 250px;
+    font-size: 20px;
+    font-weight: 500;
+    border-bottom: 3px solid deepskyblue;
+    width: fit-content;
+    padding-bottom: 10px;
+    padding: 10px 55px;
+}
+
+.to-follow:hover {
+    background-color: rgb(231, 231, 231);
+    cursor: pointer;
+}
+
+.follow-div {
+    border-bottom: 1px solid rgb(204, 203, 203);
+}
+
+.suggest {
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.suggest p {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.show-to-followw-btn a {
+    background-color: black;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.show-to-followw-btn {
+    margin-top: 12px;
+    margin-left: 100px;
+}
+
+.show-to-followw-data {
+    margin-left: 10px;
+}
+
+.show-to-followw-data a {
+    text-decoration: none;
+    color: black;
+}
+
+.show-to-followw-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.followw {
+    margin-left: 80px;
+    width: 600px;
 }

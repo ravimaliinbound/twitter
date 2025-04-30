@@ -13,7 +13,7 @@ include_once 'profile-post.php'
             <li>Highlights</li>
         </a>
         <a href="article.php" class="profile-menu-item">
-            <li>Articles</li>
+            <li style="color: black">Articles</li>
         </a>
         <a href="media.php">
             <li>Media</li>

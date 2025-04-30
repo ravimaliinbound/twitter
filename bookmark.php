@@ -18,5 +18,12 @@ include_once 'headers.php'
 </div>
 
 <?php
-include_once 'footers.php'
-    ?>
+include_once 'footers.php';
+?>
+
+<!-- Adding class to active element -->
+<script>
+    $(document).ready(function () {
+        $("#bookmark").addClass("active_class");
+    });
+</script>

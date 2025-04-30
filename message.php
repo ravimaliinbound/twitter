@@ -19,3 +19,10 @@ include_once 'headers.php';
 <?php
 include_once 'footers.php';
 ?>
+
+<!-- Adding class to active element -->
+<script>
+    $(document).ready(function () {
+        $("#message").addClass("active_class");
+    });
+</script>

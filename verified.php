@@ -6,7 +6,7 @@ include_once 'notifications.php';
     <ul>
         <li><a href="notification.php" class="multi-a">All</a></li>
         <li><a href="verified.php" class="multi-a"
-                style="margin-left: -18px; border-bottom: 3px solid deepskyblue">Verified</a></li>
+                style="margin-left: -18px; border-bottom: 3px solid deepskyblue; color: black">Verified</a></li>
         <li><a href="mentions.php" class="multi-a">Mentions</a></li>
     </ul>
 </div>

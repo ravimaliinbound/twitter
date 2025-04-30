@@ -8,7 +8,7 @@ include_once 'profile-post.php'
             <li>Posts</li>
         </a>
         <a href="replies.php" class="profile-menu-item">
-            <li>Replies</li>
+            <li style="color: black">Replies</li>
         </a>
         <a href="highlight.php">
             <li>Highlights</li>

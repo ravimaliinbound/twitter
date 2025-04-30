@@ -13,4 +13,16 @@ include_once 'headers.php';
                 <a href="#"><i class="fa-solid fa-gear"></i></a>
             </div>
         </div>
-       
+
+
+
+
+
+
+
+        <!-- Adding class to active element -->
+        <script>
+            $(document).ready(function () {
+                $("#explore").addClass("active_class");
+            });
+        </script>

@@ -1,18 +1,10 @@
 <div class="footerss">
     <p style="margin-top: 50px" class="who-to-follow">Who to follow</p>
-    <div class="show-to-follow">
-        <div class="show-img" style="margin-top: 6px;">
-            <a href="#"><img src="images/happy.png" alt="" height="40px"></a>
-        </div>
-        <div class="show-to-follow-data">
-            <p><a href="#" class="show-to-follow-name">Kiran Mali</a><br><a href="#"
-                    class="show-to-follow-username">@kiranmali</a></p>
-        </div>
-        <div class="show-to-follow-btn">
-            <a href="#">Follow</a>
-        </div>
+    <div class="show-to-follow" style="display: block;">
+
     </div>
-    <a href="#" class="f-anchor">Terms of Service |</a> 
+    <p><a href="follow.php" class="show_more">Show More</a></p>
+    <a href="#" class="f-anchor">Terms of Service |</a>
     <a href="#" class="f-anchor"> Privacy Policy |</a>
     <a href="#" class="f-anchor"> Cookie Policy |</a>
     <a href="#" class="f-anchor"> Accessibility |</a>

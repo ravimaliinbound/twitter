@@ -10,7 +10,7 @@ include_once 'profile-post.php'
             <li>Replies</li>
         </a>
         <a href="highlight.php" class="profile-menu-item">
-            <li>Highlights</li>
+            <li style="color: black">Highlights</li>
         </a>
         <a href="article.php">
             <li>Articles</li>
