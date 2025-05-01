@@ -25,6 +25,7 @@ if (!isset($_SESSION['login'])) {
     <script>
         $(document).ready(function () {
             fetch_data();
+            show_more();
             footer();
         })
     </script>

@@ -22,15 +22,7 @@ include_once 'headers.php'
     include_once 'index-post.php';
     ?>
 </div>
-<div class="footers">
-    <div class="footer-search-div">
-        <i class="fa-solid fa-magnifying-glass"></i><input type="text" class="footer-search-input"
-            name="footer-search-input" placeholder="Search">
-    </div>
-    <!-- <div class="happening">
-        <p class="whats-happening">What’s happening</p>
-    </div> -->
-</div>
+
 
 <?php
 include_once 'footers.php';

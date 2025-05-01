@@ -9,10 +9,49 @@ function fetch_data() {
             $(".pro-name").text(jsonData.name);
             $(".username").text(jsonData.username);
             $(".bio").text(jsonData.bio);
-            $(".joined").text(jsonData.joined);
+            $(".joined").text(jsonData.joined_date);
         }
     });
 }
+
+
+//-----------------------Post-------------//
+function insert_post() {
+    var input = $("#index-input").val();
+    var form = $('#media-form')[0];
+    var image = $("#index-image").val();
+    var formData = new FormData(form);
+
+    formData.append('input', input);
+    formData.append('action', 'insert_post');
+
+    $.ajax({
+        url: "action.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $('#content-form')[0].reset();
+            $('#media-form')[0].reset();
+        }
+    });
+}
+
+
+//--------------- Show Media-----------------------//
+function show_media() {
+    // console.log("Showing Media");
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_media" },
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}
+
 
 //------------------Footer Who to follow-----------------//
 function footer() {
@@ -55,7 +94,7 @@ function signup() {
         url: "action.php",
         type: "post",
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
-        success: function (data) {
+        success: function () {
             $(".show").show();
             $(".hide").hide();
             setTimeout(function () {
@@ -106,6 +145,7 @@ function validate(e) {
     var isValid = true;
 
     // Patterns
+    var usernamePattern = /^[a-zA-Z0-9]{3,15}$/;
     var namePattern = /^[a-zA-Z ]{3,15}$/;
     var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
     var passPatern = /^[a-z A-Z0-9!@#$%^&*()_+-=]{8,15}$/;
@@ -140,7 +180,7 @@ function validate(e) {
     } else if (username == "") {
         $("#errusername").text("Only spaces are not allowed");
         isValid = false;
-    } else if (!namePattern.test(usernames)) {
+    } else if (!usernamePattern.test(usernames)) {
         $("#errusername").text("Minimum 3 And Maximum 15 Characters Allowed");
         isValid = false;
     }
@@ -208,36 +248,9 @@ function loginvalidate(e) {
 }
 
 
-//-----------------------For You Post-------------//
-function insert_post() {
-    var input = $("#index-input").val();
-    var form = $('#media-form')[0];
-    var formData = new FormData(form);
-    var image = $("#index-image").val();
-    formData.append('input', input);
-    formData.append('action', 'insert_post');
-
-    $.ajax({
-        url: "action.php",
-        type: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log(data)
-            $('#content-form')[0].reset();
-            $('#media-form')[0].reset();
-        }
-    });
-
-
-
-
-}
-
+//Document.ready
 
 $(document).ready(function () {
-    show_more();
     $(".remove-btn").click(function () {
         $('.remove').text("");
     });
@@ -311,7 +324,7 @@ $(document).ready(function () {
     $("#username").blur(function (e) {
         var isValid = true;
         var name_val = $("#username").val().trim();
-        var namePattern = /^[a-zA-Z ]{3,15}$/;
+        var namePattern = /^[a-zA-Z0-9]{3,15}$/;
         if (namePattern.test(name_val)) {
             $("#errusername").text("");
         }
@@ -485,31 +498,3 @@ $(document).ready(function () {
 
 });
 
-
-//---------------------------------------------------------//
-// var form = $('#form')[0];
-// var formData = new FormData(form);
-// var page = $("#page").val();
-
-// if (!validate()) {
-//     return false;
-// }
-
-// formData.append('action', 'insert');
-
-// $.ajax({
-//     url: "action.php",
-//     type: "POST",
-//     data: formData,
-//     contentType: false,
-//     processData: false,
-//     success: function (data) {
-//         $('#addEmployee').modal('hide');
-//         $("#msg").html(data);
-//         setTimeout(function () {
-//             $('.msg').fadeOut('slow');
-//         }, 3000);
-//         searchFilter(page);
-//         $('#form')[0].reset();
-//     }
-// });

@@ -5,7 +5,7 @@ if (isset($_SESSION['login'])) {
 }
 include_once 'header.php';
 ?>
-<title>Login to X</title>
+<title>Login to X / X</title>
 <link rel="stylesheet" href="sign-up.css">
 </head>
 

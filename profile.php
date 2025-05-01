@@ -24,10 +24,12 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
-
-    
+<div class="posts">
+    <p>Hello</p>
+</div>
 </div>
 
 <?php
 include_once 'footers.php';
 ?>
+

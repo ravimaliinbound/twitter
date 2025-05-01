@@ -1,7 +1,7 @@
 <?php
 include_once 'header.php';
 ?>
-    <title>It's what's happening?</title>
+    <title>X. It's what's happening / X</title>
     <link rel="stylesheet" href="style.css">
 </head>
 

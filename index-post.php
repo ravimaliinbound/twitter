@@ -12,7 +12,7 @@
     <div class="index-post-icons">
         <div class="post-icons">
             <form action="" method="post" enctype="multipart/form-data" id="media-form">
-                <label for="index-image" class="post-icons"><img src="images/image.png" alt="" height="16px"></label>
+                <label for="index-image"><img src="images/image.png" alt="" height="16px"  class="post-icons"></label>
                 <input type="file" id="index-image" style="display: none;" name="index-image">
             </form>
         </div>

@@ -1,5 +1,11 @@
+<div class="footers">
+    <div class="footer-search-div">
+        <i class="fa-solid fa-magnifying-glass"></i><input type="text" class="footer-search-input"
+            name="footer-search-input" placeholder="Search">
+    </div>
+</div>
 <div class="footerss">
-    <p style="margin-top: 50px" class="who-to-follow">Who to follow</p>
+    <p style="margin-top: 55px;" class="who-to-follow">Who to follow</p>
     <div class="show-to-follow" style="display: block;">
 
     </div>

@@ -136,6 +136,7 @@
 /* Header / Slider css */
 .active_class {
     font-weight: 700;
+    color: black;
 }
 
 .slider {
@@ -157,15 +158,16 @@
 }
 
 .items li:hover {
-    background-color: rgb(231, 231, 232) ;
+    background-color: rgb(231, 231, 232);
     padding: 10px;
     border-radius: 20px;
 }
 
 .items a {
-    color: black;
     text-decoration: none;
     margin-top: 10px;
+    color: deepskyblue;
+    font-weight: 200;
 }
 
 .items span {
@@ -270,7 +272,7 @@
     margin-left: 1028px;
     position: fixed;
     padding: 10px;
-    border-left: 1px solid rgb(204, 203, 203);
+    border-left: 1px solid rgb(239, 243, 244);
     background-color: white;
     color: black;
 }
@@ -278,13 +280,14 @@
 .footerss {
     width: 40%;
     margin-left: 1028px;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 5px;
     padding: 10px;
     color: black;
 }
 
 .footer-search-div {
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
     padding: 10px;
     border-radius: 20px;
 }
@@ -344,15 +347,16 @@
 /* Content Part css */
 .middle {
     width: 40%;
+    border-radius: 5px;
     position: absolute;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
     margin-left: 250px;
 }
 
 .middle .ul {
     width: 100%;
-    border-bottom: 1px solid rgb(204, 203, 203);
-    border-right: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(239, 243, 244);
+    border-right: 1px solid rgb(239, 243, 244);
     background-color: white;
 }
 
@@ -382,7 +386,7 @@
 .index-post {
     margin-top: 65px;
     padding: 15px;
-    border-bottom: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(239, 243, 244);
     width: 100%;
 }
 
@@ -462,8 +466,9 @@
 /* Explore Tab */
 .explore {
     width: 40%;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
     position: absolute;
+    border-radius: 5px;
     margin-left: 250px;
 }
 
@@ -472,7 +477,7 @@
 }
 
 .explore-search-div {
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
     padding: 10px;
     width: 80%;
     border-radius: 20px;
@@ -510,7 +515,6 @@
 }
 
 .explore-foryou {
-    margin: 20px;
     margin-top: 130px;
 }
 
@@ -522,9 +526,9 @@
 .foryou-news-heading {
     text-decoration: none;
     font-size: 20px;
-    padding: 20px;
+    padding: 20px 86.9px;
     color: black;
-    margin-left: 43px;
+    width: 100%;
     font-weight: 500;
 }
 
@@ -539,8 +543,8 @@
 
 .explore-fix {
     position: fixed;
-    border-right: 1px solid rgb(204, 203, 203);
-    border-bottom: 1px solid rgb(204, 203, 203);
+    border-right: 1px solid rgb(239, 243, 244);
+    border-bottom: 1px solid rgb(239, 243, 244);
     width: 40%;
     background-color: white;
 }
@@ -623,6 +627,7 @@
     cursor: pointer;
     background-color: rgb(247, 247, 247);
 }
+
 .entertainment {
     margin-top: 140px;
 }
@@ -647,6 +652,7 @@
     cursor: pointer;
     background-color: rgb(247, 247, 247);
 }
+
 .dots {
     margin-left: 550px;
     padding: 10px;
@@ -662,14 +668,15 @@
 .notification {
     width: 40%;
     position: absolute;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 5px;
     margin-left: 250px;
 }
 
 .notification-fix {
     position: fixed;
-    border-right: 1px solid rgb(204, 203, 203);
-    border-bottom: 1px solid rgb(204, 203, 203);
+    border-right: 1px solid rgb(239, 243, 244);
+    border-bottom: 1px solid rgb(239, 243, 244);
     width: 40%;
     background-color: white;
 }
@@ -739,13 +746,14 @@
 .message {
     width: 40%;
     position: absolute;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 5px;
     margin-left: 250px;
 }
 
 .message-fix {
     padding: 10px 0;
-    border-right: 1px solid rgb(204, 203, 203);
+    border-right: 1px solid rgb(239, 243, 244);
     position: fixed;
     width: 40%;
     background-color: white;
@@ -770,15 +778,16 @@
 .bookmark {
     width: 40%;
     position: absolute;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 5px;
     margin-left: 250px;
 }
 
 .bookmark-fix {
     padding: 10px 0;
     position: fixed;
-    border-bottom: 1px solid rgb(204, 203, 203);
-    border-right: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(239, 243, 244);
+    border-right: 1px solid rgb(239, 243, 244);
     width: 40%;
     background-color: white;
 }
@@ -804,8 +813,8 @@
     width: 40%;
     position: absolute;
     margin-left: 250px;
-    border: 1px solid rgb(204, 203, 203);
-    padding: 0 30px;
+    border: 1px solid rgb(239, 243, 244);
+    border-radius: 5px;
     color: black;
 }
 
@@ -847,7 +856,7 @@
 .edit {
     margin-left: 550px;
     margin-top: -30px;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
     width: fit-content;
     padding: 5px 15px;
     border-radius: 20px;
@@ -870,7 +879,7 @@
 
 .verified {
     margin-left: 50px;
-    border: 1px solid rgb(204, 203, 203);
+    border: 1px solid rgb(239, 243, 244);
     color: black;
     padding: 5px 20px;
     font-weight: 500;
@@ -892,7 +901,7 @@
 }
 
 .profile-menu {
-    border-bottom: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(239, 243, 244);
 
 }
 
@@ -953,6 +962,25 @@
     font-size: 15px;
 }
 
+.media {
+    border: 1px solid;
+}
+
+.media-flex {
+    display: flex;
+}
+
+.media-post {
+    width: 33.33%;
+    height: 150px;
+    border: 1px solid;
+}
+
+.media-post img {
+    width: 100%;
+    height: 100%;
+}
+
 /* Follow Page / Connect */
 
 .connect {
@@ -978,7 +1006,7 @@
 }
 
 .follow-div {
-    border-bottom: 1px solid rgb(204, 203, 203);
+    border-bottom: 1px solid rgb(239, 243, 244);
 }
 
 .suggest {
@@ -1019,6 +1047,17 @@
 }
 
 .followw {
-    margin-left: 80px;
-    width: 600px;
+    width: 767px;
+}
+
+.background:hover {
+    background-color: rgb(247, 247, 247);
+}
+
+.background-follow {
+    padding: 10px 20px;
+}
+
+.background-follow:hover {
+    background-color: rgb(247, 247, 247);
 }
