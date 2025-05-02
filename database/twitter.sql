@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2025 at 04:07 PM
+-- Generation Time: May 02, 2025 at 04:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -102,10 +102,26 @@ CREATE TABLE `twitter_posts` (
 --
 
 INSERT INTO `twitter_posts` (`id`, `user_id`, `content`, `media`, `created_at`, `updated_at`) VALUES
-(2, 2, 'Hello, how are you?', NULL, '2025-05-01 12:48:12', '2025-05-01 12:48:12'),
-(3, 2, NULL, 'x1746104049.avif', '2025-05-01 12:54:09', '2025-05-01 12:54:09'),
+(2, 2, 'Hello, how are you?', 'x1746104049.avif', '2025-05-01 12:48:12', '2025-05-01 12:48:12'),
+(3, 2, 'Twitter', 'x1746104049.avif', '2025-05-01 12:54:09', '2025-05-01 12:54:09'),
 (4, 2, NULL, 'twitter1746104120.png', '2025-05-01 12:55:20', '2025-05-01 12:55:20'),
-(5, 1, 'Hello', NULL, '2025-05-01 12:59:36', '2025-05-01 12:59:36');
+(5, 1, 'Hello', NULL, '2025-05-01 12:59:36', '2025-05-01 12:59:36'),
+(6, 2, 'Hii', 'bag1746162484.png', '2025-05-02 05:08:04', '2025-05-02 05:08:04'),
+(7, 2, 'My new Car', 'audi1746164123.png', '2025-05-02 05:35:23', '2025-05-02 05:35:23'),
+(8, 1, 'Iphone', 'iphone151746165334.png', '2025-05-02 05:55:34', '2025-05-02 05:55:34'),
+(9, 1, 'New User', 'user1746165532.jpg', '2025-05-02 05:58:52', '2025-05-02 05:58:52'),
+(10, 2, NULL, 'iphone151746166315.png', '2025-05-02 06:11:55', '2025-05-02 06:11:55'),
+(11, 2, NULL, 'Capture1746166452.PNG', '2025-05-02 06:14:12', '2025-05-02 06:14:12'),
+(12, 2, NULL, 'verified1746166782.png', '2025-05-02 06:19:42', '2025-05-02 06:19:42'),
+(13, 2, NULL, 'grok1746166799.png', '2025-05-02 06:19:59', '2025-05-02 06:19:59'),
+(14, 2, NULL, 'happy1746166821.png', '2025-05-02 06:20:21', '2025-05-02 06:20:21'),
+(15, 1, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit expedita consequuntur fugiat in, optio soluta consequatur nesciunt enim omnis animi perferendis labore quos? Maiores at sit earum rem voluptatem itaque quo molestiae vero consequatur ipsa ', 'bag1746170880.png', '2025-05-02 07:28:00', '2025-05-02 07:28:00'),
+(16, 3, 'Karan Singh', NULL, '2025-05-02 09:08:45', '2025-05-02 09:08:45'),
+(17, 3, 'New car', 'audi1746176951.png', '2025-05-02 09:09:11', '2025-05-02 09:09:11'),
+(18, 3, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit expedita consequuntur fugiat in, optio soluta consequatur nesciunt enim omnis animi perferendis labore quos? Maiores at sit earum rem voluptatem itaque quo molestiae vero consequatur ipsa ', 'user1746177412.jpg', '2025-05-02 09:16:52', '2025-05-02 09:16:52'),
+(19, 2, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores, explicabo illo ea veritatis saepe ducimus fuga nobis voluptate laboriosam ipsam eum alias voluptas nisi. At natus odit quidem aliquam non placeat earum commodi ex quasi autem, amet dign', 'profile_pic1746183661.png', '2025-05-02 11:01:01', '2025-05-02 11:01:01'),
+(20, 4, 'Hi, this is Rajesh Kumar', 'loader1746185985.gif', '2025-05-02 11:39:45', '2025-05-02 11:39:45'),
+(21, 1, NULL, 'illustration_unmention1746188278.png', '2025-05-02 12:17:58', '2025-05-02 12:17:58');
 
 -- --------------------------------------------------------
 
@@ -150,7 +166,9 @@ CREATE TABLE `twitter_users` (
 
 INSERT INTO `twitter_users` (`id`, `name`, `username`, `email`, `password`, `dob`, `bio`, `profile_pic`, `cover_pic`, `joined_date`, `created_at`, `updated_at`) VALUES
 (1, 'Ravi Mali', 'ravimali', 'ravimali@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', NULL, '', '', 'May 2025', '2025-05-01 12:12:59', '2025-05-01 12:12:59'),
-(2, 'Ravi', 'ravi', 'ravi@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', NULL, '', '', 'May 2025', '2025-05-01 12:22:53', '2025-05-01 12:22:53');
+(2, 'Ravi', 'ravi', 'ravi@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', 'Web Developer', '', '', 'May 2025', '2025-05-01 12:22:53', '2025-05-01 12:22:53'),
+(3, 'Karan Singh', 'karan', 'karan@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2000-02-11', NULL, '', '', 'May 2025', '2025-05-02 05:01:20', '2025-05-02 05:01:20'),
+(4, 'Rajesh Kumar', 'rajesh', 'rajesh@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2002-06-02', NULL, '', '', 'May 2025', '2025-05-02 11:39:06', '2025-05-02 11:39:06');
 
 --
 -- Indexes for dumped tables
@@ -243,7 +261,7 @@ ALTER TABLE `twitter_notifications`
 -- AUTO_INCREMENT for table `twitter_posts`
 --
 ALTER TABLE `twitter_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `twitter_replies`
@@ -255,7 +273,7 @@ ALTER TABLE `twitter_replies`
 -- AUTO_INCREMENT for table `twitter_users`
 --
 ALTER TABLE `twitter_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
