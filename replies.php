@@ -24,6 +24,8 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
+<hr style="border: 1px solid rgb(219, 223, 244);">
+
 </div>
 
 <?php

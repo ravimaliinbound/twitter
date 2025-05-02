@@ -39,6 +39,27 @@ function insert_post() {
 }
 
 
+//------------------ Edit Profile-------------------//
+
+function edit_profile() {
+
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "edit_profile" },
+        success: function (response) {
+            var data = JSON.parse(response)
+            $("#edit-name").val(data.name);
+            $("#edit-username").val(data.username);
+            $("#edit-email").val(data.email);
+            $("#edit-dob").val(data.dob);
+            $("#edit-bio").val(data.bio);
+        }
+    });
+}
+
+
+
 //--------------- Show Media-----------------------//
 function show_media() {
     // console.log("Showing Media");
@@ -47,11 +68,28 @@ function show_media() {
         type: "post",
         data: { "action": "show_media" },
         success: function (data) {
-            console.log(data);
+            if (data == "") {
+                $(".highlight").css("display", "block");
+            }
+            else {
+                $(".media-flex").html(data);
+            }
         }
     });
 }
 
+
+//----------------------- Show Posts---------------------//
+function show_post() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_post" },
+        success: function (data) {
+            $(".posts").html(data);
+        }
+    })
+}
 
 //------------------Footer Who to follow-----------------//
 function footer() {
@@ -247,7 +285,6 @@ function loginvalidate(e) {
     return isValid;
 }
 
-
 //Document.ready
 
 $(document).ready(function () {
@@ -255,6 +292,7 @@ $(document).ready(function () {
         $('.remove').text("");
     });
 
+    $(".edit").css("text-decoration", "none");
     //----------Explore's Tabs hover------------//
 
     $(".multi-a").mouseenter(function () {

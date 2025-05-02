@@ -24,8 +24,9 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
+<hr style="border: 1px solid rgb(219, 223, 244);">
 <div class="posts">
-    <p>Hello</p>
+    
 </div>
 </div>
 
@@ -33,3 +34,8 @@ include_once 'profile-post.php'
 include_once 'footers.php';
 ?>
 
+<script>
+    $(document).ready(function () {
+        show_post();
+    })
+</script>

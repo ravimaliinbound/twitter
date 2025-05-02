@@ -23,26 +23,15 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
-<!-- <div class="highlight">
+<hr style="border: 1px solid rgb(219, 223, 244);">
+
+<div class="highlight" style="display: none;">
     <h2>Lights, camera … attachments!</h2>
     <p style="margin-bottom: 30px;">When you post photos or videos, they will show up here..</p>
-</div> -->
+</div>
 <div class="media">
-    <div class="media-flex">
-        <div class="media-post">
-            <img src="images/verification-check.png" alt="">
-        </div>
-        <div class="media-post">
-            <img src="images/verification-check.png" alt="">
-        </div>
-        <div class="media-post">
-            <img src="images/verification-check.png" alt="">
-        </div>
-    </div>
-    <div class="media-flex">
-        <div class="media-post">
-            <img src="images/verification-check.png" alt="">
-        </div>
+    <div class='media-flex'>
+
     </div>
 </div>
 </div>
@@ -52,7 +41,7 @@ include_once 'footers.php';
 ?>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         show_media();
     })
 </script>

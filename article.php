@@ -23,6 +23,8 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
+<hr style="border: 1px solid rgb(219, 223, 244);">
+
 <div class="highlight">
     <h2>Write Articles on X</h2>
     <p style="margin-bottom: 30px;">You must be subscribed to Premium+ to write Articles on X.</p>

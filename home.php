@@ -29,10 +29,10 @@ include_once 'header.php';
                         <a href="sign-up.php" class="text-white" id="create-account">Create Account</a>
                     </div>
                     <div class="terms">
-                        <p>By signing up, you agree to the <a href="https://x.com/en/tos">Terms of Service </a>and <a
-                                href="https://x.com/en/privacy">Privacy
+                        <p>By signing up, you agree to the <a href="#">Terms of Service </a>and <a
+                                href="#">Privacy
                                 Policy</a>, including <a
-                                href="https://help.x.com/en/rules-and-policies/x-cookies">Cookie Use</a>.</p>
+                                href="#kies">Cookie Use</a>.</p>
                     </div>
                     <div class="already">
                         <p>Already have an account?</p>

@@ -24,6 +24,8 @@ include_once 'profile-post.php'
         </a>
     </ul>
 </div>
+<hr style="border: 1px solid rgb(219, 223, 244);">
+    
 <div class="likes">
     <p style="margin-top: 8px;"><img src="images/padlock.png" alt="" height="20px" style="margin-top: -10px;"><span
             class="like-text">&nbsp;Your likes are private. Only you can see them.</span></p>

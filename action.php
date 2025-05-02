@@ -23,6 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
             "name" => $data->name,
             "username" => $data->username,
             "email" => $data->email,
+            "bio" => $data->bio,
             "dob" => $data->dob,
             "joined_date" => $data->joined_date
         );
@@ -40,20 +41,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
     while ($data = $run_footer->fetch_object()) {
         $arr_footer .=
             " <div style = 'display: flex;' class='background'>
-            <div class='show-img' style='margin-top: 6px;'>
-            <a href='#'><img src='images/happy.png' height='40px'></a>
-        </div>
-        <div class='show-to-follow-data'>
-            <p>
-                <a href='#' class='show-to-follow-name'>$data->name</a><br>
-                <a href='#' class='show-to-follow-username'>@$data->username</a>
-            </p>
-        </div>
-        <div class='show-to-follow-btn'>
-            <a href='#'>Follow</a>
-        </div>
-        </div>
-        ";
+                <div class='show-img' style='margin-top: 6px;'>
+                    <a href='#'>
+                        <img src='images/profile_pic.png' height='40px' style='border-radius: 50%'>
+                    </a>
+                </div>
+                <div class='show-to-follow-data'>
+                    <p>
+                        <a href='#' class='show-to-follow-name'>$data->name</a><br>
+                        <a href='#' class='show-to-follow-username'>@$data->username</a>
+                    </p>
+                </div>
+                <div class='show-to-follow-btn'>
+                    <a href='#'>Follow</a>
+                </div>
+                </div>";
     }
     $arr_footer .= "";
     echo json_encode($arr_footer);
@@ -118,6 +120,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
     }
 }
 
+//--------------------- Edit Profile-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'edit_profile') {
+    $username = $_SESSION['username'];
+    $fetch_edit = "SELECT * FROM twitter_users WHERE username = '$username'";
+    $run_edit = $conn->query($fetch_edit);
+    $arr = [];
+    $edit = [];
+    while ($data = $run_edit->fetch_object()) {
+        $arr = $data;
+        $arr = array(
+            "id" => $data->id,
+            "name" => $data->name,
+            "username" => $data->username,
+            "email" => $data->email,
+            "bio" => $data->bio,
+            "dob" => $data->dob,
+            "joined_date" => $data->joined_date
+        );
+    }
+    echo json_encode($arr);
+}
 
 
 //-----------------Already Exists----------------//
@@ -189,7 +212,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
         $arr_footer .=
             " <div style = 'display: flex;' class= 'background-follow'>
                 <div class='showw-img' style='margin-top: 6px; '>
-                    <a href='#'><img src='images/happy.png' height='40px' width= '40px'></a>
+                    <a href='#'><img src='images/profile_pic.png' 
+                        height='40px' width= '40px' style='border-radius: 50%'>
+                    </a>
                 </div>
                 <div class='show-to-followw-data' style='width:50%  '>
                     <p>
@@ -210,7 +235,82 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
 
 //------------------ Show Media----------------//
 if (isset($_POST['action']) && $_POST['action'] == "show_media") {
-    echo "Media Shown Successfully";
+    $username = $_SESSION['username'];
+    $show_media_query = "SELECT media FROM twitter_posts JOIN twitter_users ON 
+                        twitter_posts.user_id = twitter_users.id WHERE 
+                        twitter_users.username = '$username' AND twitter_posts.media != 'Null'";
+    $run_query = $conn->query($show_media_query);
+    $media_data = '';
+    while ($data = $run_query->fetch_object()) {
+        $media_data .= "<div class='media-post'>
+                                <img src='users/$data->media'>
+                        </div>";
+    }
+    echo $media_data;
 }
 
+//------------------ Show Media----------------//
+if (isset($_POST['action']) && $_POST['action'] == "show_post") {
+    $username = $_SESSION['username'];
+    $show_post_query = "SELECT * FROM twitter_posts JOIN twitter_users ON 
+                        twitter_posts.user_id = twitter_users.id WHERE 
+                        twitter_users.username = '$username' ORDER BY twitter_posts.id desc";
+    $run_query = $conn->query($show_post_query);
+    $post_data = '';
+    while ($data = $run_query->fetch_object()) {
+        if ($data->media != "") {
+            $post_data .= "<div class='user-post'>
+                            <div class='post-user-info'>
+                                <img src='images/profile_pic.png' alt='Post' height='40px' style='border-radius: 50%'>
+                            </div>
+                            <div class='postuser-name'>
+                                <p>
+                                    <span class='post-name'>$data->name </span>
+                                    <span class='post-username'>@$data->username</span>
+                                    <span class='post-delete-icon'>
+                                        <i class='fa-solid fa-ellipsis'></i>
+                                    </span>
+                                </p>
+                                <p class='post-content'>$data->content</p>
+                                <div class='post-img'>
+                                    <img src='users/$data->media' alt='Post Image'>
+                                </div>
+                                <p class='icons'>
+                                   <span class='comment-icon'>
+                                        <i class='fa-solid fa-comment' title='Reply'></i>
+                                    </span>
+                                    <span class='like-icon'>
+                                        <i class='fa-solid fa-heart' title='Like'></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>";
+        } else {
+            $post_data .= "<div class='user-post'>
+                            <div class='post-user-info'>
+                                <img src='images/profile_pic.png' alt='Post' height='40px' style='border-radius: 50%'>
+                            </div>
+                            <div class='postuser-name'>
+                                <p>
+                                    <span class='post-name'>$data->name </span>
+                                    <span class='post-username'>@$data->username</span>
+                                    <span class='post-delete-icon'>
+                                        <i class='fa-solid fa-ellipsis'></i>
+                                    </span>
+                                </p>
+                                <p class='post-content'>$data->content</p>
+                                <p class='icons'>
+                                    <span class='comment-icon'>
+                                        <i class='fa-solid fa-comment' title='Reply'></i>
+                                    </span>
+                                    <span class='like-icon'>
+                                        <i class='fa-solid fa-heart' title='Like'></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>";
+        }
+    }
+    echo $post_data;
+}
 ?>

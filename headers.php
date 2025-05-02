@@ -19,6 +19,10 @@ if (!isset($_SESSION['login'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/logo-black.png">
@@ -116,17 +120,16 @@ if (!isset($_SESSION['login'])) {
                 </a>
 
             </div>
-            <div class="post bg-dark" style="display: block;">
-                <a href="#" class="text-white">Post</a>
-            </div>
+            <br><br>
+            <a href="post.php" class="text-white bg-dark post">Post</a>
             <div class="profile_model" style="display: none;">
                 <a href="#">Add an existing account</a>
                 <a href="#" id="logout">Log out @<?php echo $_SESSION['username']; ?></a>
             </div>
 
             <div class="user_profile">
-                <div class="user_image" style="width: 20%;">
-                    <p class="show_first_name"><?php echo $_SESSION['firstname']; ?></p>
+                <div class="user_image">
+                    <img src="images/profile_pic.png" alt="" height="100%" style="border-radius: 50%;">
                 </div>
                 <div class="user_data" style="width: 60%;">
                     <p><span class="profle_name"><?php echo $_SESSION['name']; ?></span>
