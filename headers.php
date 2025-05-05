@@ -23,6 +23,7 @@ if (!isset($_SESSION['login'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/logo-black.png">
@@ -69,7 +70,7 @@ if (!isset($_SESSION['login'])) {
                         <i class="fa-solid fa-bell"></i><span id="notification">Notifications</span>
                     </li>
                 </a>
-                <a href="message.php">
+                <a href="#">
                     <li>
                         <i class="fa-solid fa-envelope"></i><span id="message">Messages</span>
                     </li>

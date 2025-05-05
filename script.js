@@ -38,11 +38,26 @@ function insert_post() {
     });
 }
 
+//----------------Edit User-------------------------//
+function edit_user() {
+    var form = $("#edit-user-form")[0];
+    var formData = new FormData(form);
+    formData.append('action', 'edit_user');
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log(data)
+        }
+    })
+}
 
-//------------------ Edit Profile-------------------//
+//------------------ Edit Profile Open Form (Modal)-------------------//
 
 function edit_profile() {
-
     $.ajax({
         url: "action.php",
         type: "post",

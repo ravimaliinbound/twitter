@@ -31,6 +31,52 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
     echo json_encode($arr);
 }
 
+//--------------------Edit User--------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
+    $username_chk = $_SESSION['username'];
+    $name = $_POST['edit-name'];
+    $username = $_POST['edit-username'];
+    $email = $_POST['edit-email'];
+    $bio = $_POST['edit-bio'];
+    $dob = $_POST['edit-dob'];
+    $profile_pic = $_FILES['edit-profile-pic']['name'];
+    $tmp_profile = $_FILES['edit-profile-pic']['tmp_name'];
+    $profile_ext = pathinfo($profile_pic, PATHINFO_EXTENSION);
+    $profile_name = pathinfo($profile_pic, PATHINFO_FILENAME);
+    $final_profile = $profile_name . time() . "." . $profile_ext;
+    $profile_path = "users/" . $final_profile;
+
+    $cover_pic = $_FILES['edit-cover-pic']['name'];
+    $tmp_cover = $_FILES['edit-cover-pic']['tmp_name'];
+    $cover_ext = pathinfo($cover_pic, PATHINFO_EXTENSION);
+    $cover_name = pathinfo($cover_pic, PATHINFO_FILENAME);
+    $final_cover = $cover_name . time() . "." . $cover_ext;
+    $cover_path = "users/" . $final_cover;
+    $timestamp = date('Y-m-d h:i:s');
+
+    if ($cover_pic == "" && $profile_pic == "") {
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username',email = '$email', 
+        bio = '$bio', dob = $dob  WHERE username= '$username_chk'";
+    } elseif ($cover_pic == "" && $profile_pic != "") {
+        move_uploaded_file($tmp_profile, $profile_path);
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username',email = '$email', bio = '$bio', 
+        dob = $dob, profile_pic = '$final_profile'  WHERE username= '$username_chk'";
+    } elseif ($cover_pic != "" && $profile_pic == "") {
+        move_uploaded_file($tmp_cover, $cover_path);
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', bio = '$bio', 
+        dob = $dob, cover_pic = '$final_cover' WHERE username= '$username_chk'";
+    } elseif ($profile_pic != "" && $cover_pic != "") {
+        move_uploaded_file($tmp_cover, $cover_path);
+        move_uploaded_file($tmp_profile, $profile_path);
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', bio = '$bio', dob = $dob, 
+        cover_pic = '$final_cover', profile_pic='$profile_pic' WHERE username= '$username_chk'";
+    }
+    $run = $conn->query($upd);
+    if($run){
+        $_SESSION['username'] = $username;
+    }
+
+}
 
 //--------------------- Footer who to follow-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'footer') {
@@ -96,8 +142,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
     $img_name = pathinfo($image_name, PATHINFO_FILENAME);
     $final_image = $img_name . time() . "." . $img_ext;
     $path = "users/" . $final_image;
-    echo $content;
-    echo $tmp_name;
     if ($image_name == "" && $content != "") {
         $insert_post = "INSERT INTO twitter_posts(content,user_id)
         SELECT '$content', id 

@@ -14,12 +14,6 @@ include_once 'headers.php';
             </div>
         </div>
 
-
-
-
-
-
-
         <!-- Adding class to active element -->
         <script>
             $(document).ready(function () {

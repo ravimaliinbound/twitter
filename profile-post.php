@@ -3,21 +3,36 @@ include_once 'headers.php'
     ?>
 <title><?php echo $_SESSION['name']; ?> (@<?php echo $_SESSION['username']; ?>)</title>
 
-<!-- Edit Modal -->
-<div id="edit-user" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
+<!-- The Modal -->
+<div class="modal" id="edit-user">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
+
+            <!-- Modal Header -->
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" style="margin-left: -100px">&times;</button>
-                <div style="margin-left: -100px">
-                    <h4>Edit Profile</h4>
-                </div>
+                <h4 class="modal-title">Edit Profile</h4>
+                <button type="button" class="btn-close" data-dismiss="modal"></button>
             </div>
+
+            <!-- Modal body -->
             <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
+                <form action="" method="post" enctype="multipart/form-data" id="edit-user-form">
+                    <div class="edit_cover_pic_div">
+                        <img src="images/Capture.PNG" alt="">
+                        <label for="edit-cover-pic">
+                            <div class="edit-icon"><img src="images/camera.png" alt="" height="50px">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="edit_profile_pic_div" style="position: relative;">
+                        <img src="users/user1746165497.jpg" alt="" style="border-radius: 50%; height: 120px">
+                        <label for="edit-profile-pic">
+                            <div>
+                                <img src="images/camera.png" alt="" class="myeditpic">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-group" style="margin-top: 100px;">
                         <label for="edit-name">Name</label>
                         <input type="text" class="form-control" id="edit-name" aria-describedby="nameHelp"
                             placeholder="Enter Name" name="edit-name">
@@ -29,7 +44,8 @@ include_once 'headers.php'
                     </div>
                     <div class="form-group">
                         <label for="edit-email">Email</label>
-                        <input type="email" class="form-control" id="edit-email" placeholder="Enter Email" name="edit-email">
+                        <input type="email" class="form-control" id="edit-email" placeholder="Enter Email"
+                            name="edit-email">
                     </div>
                     <div class="form-group">
                         <label for="edit-bio">Bio</label>
@@ -39,25 +55,25 @@ include_once 'headers.php'
                         <label for="edit-dob">Date of birth</label>
                         <input type="date" class="form-control" id="edit-dob" name="edit-dob">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label for="edit-profile-pic">Profile Image</label>
-                        <input type="file" class="form-control" id="edit-profile-pic">
+                        <input type="file" class="form-control" id="edit-profile-pic" name="edit-profile-pic">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label for="edit-cover-pic">Cover Image</label>
-                        <input type="file" class="form-control" id="edit-cover-pic">
+                        <input type="file" class="form-control" id="edit-cover-pic" name="edit-cover-pic">
                     </div>
                 </form>
             </div>
+
+            <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-dark text-white" data-dismiss="modal" onclick="edit_user()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
 </div>
-
 
 <div class="profile">
     <div class="profile-name">
@@ -71,7 +87,8 @@ include_once 'headers.php'
         <!-- <p class="profile-fname"><?php echo $_SESSION['firstname'] ?></p> -->
         <img src="images/profile_pic.png" alt="" height="100%" style="border-radius: 50%;">
     </div>
-    <div>
+
+    <div class="edit-btn">
         <a href="#" class="edit" data-toggle="modal" data-target="#edit-user" onclick="edit_profile()">Edit Profile</a>
     </div>
     <div class="profile-data">

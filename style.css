@@ -135,7 +135,7 @@
 
 /* Header / Slider css */
 .active_class {
-    font-weight: 700;
+    font-weight: 800;
     color: black;
 }
 
@@ -166,7 +166,6 @@
 .items a {
     text-decoration: none;
     margin-top: 10px;
-    color: deepskyblue;
     font-weight: 200;
 }
 
@@ -732,37 +731,6 @@
     margin-top: 120px;
 }
 
-/* Messages Tab */
-
-.message {
-    width: 40%;
-    position: absolute;
-    border: 1px solid rgb(239, 243, 244);
-    border-radius: 5px;
-    margin-left: 250px;
-}
-
-.message-fix {
-    padding: 10px 0;
-    border-right: 1px solid rgb(239, 243, 244);
-    position: fixed;
-    width: 40%;
-    background-color: white;
-}
-
-.mesg {
-    font-size: 22px;
-    font-weight: 500;
-    margin-left: 50px;
-    margin-top: 10px;
-}
-
-.msg-setting {
-    font-size: 20px;
-    color: black;
-    margin-left: 450px;
-}
-
 
 /* Bookmarks Tab */
 
@@ -837,6 +805,20 @@
     background-color: rgb(110, 190, 110);
 }
 
+.edit-btn {
+    margin-top: 30px;
+}
+
+.edit-profile-pic {
+    height: 100px;
+    width: 100px;
+    margin-left: 30px;
+    color: red;
+    margin-top: -50px;
+    border-radius: 50%;
+    background-color: rgb(110, 190, 110);
+}
+
 .profile-fname {
     font-size: 50px;
     color: white;
@@ -850,7 +832,6 @@
     font-weight: 500;
     font-size: 18px;
     margin-left: 550px;
-    margin-top: -30px;
     border: 1px solid rgb(239, 243, 244);
     width: fit-content;
     padding: 5px 15px;
@@ -884,6 +865,7 @@
     padding-left: 32px;
     color: grey;
     width: 16%;
+    font-size: 18px;
     justify-content: center;
 }
 
@@ -918,7 +900,7 @@
 
 .profile-menu-item {
     border-bottom: 3px solid deepskyblue;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     font-weight: 500;
 }
 
@@ -1060,6 +1042,70 @@
 
 .posts {
     margin-top: -17px;
+}
+
+.edit_cover_pic_div,
+.edit_profile_pic_div {
+    position: relative;
+    width: 450px;
+    height: 150px;
+    margin: 0 auto;
+
+}
+
+.edit_profile_pic_div {
+    margin-top: -60px;
+    margin-left: 30px;
+    height: 10px;
+}
+
+.edit_cover_pic_div img {
+    width: 100%;
+    height: 100%;
+}
+
+.edit_profile-pic_div label img:hover {
+    cursor: pointer;
+
+}
+
+.edit_profile-pic_div {
+    position: absolute;
+}
+
+.myeditpic {
+    position: absolute;
+    height: 30px;
+    margin-left: -75px;
+    margin-top: -10px;
+    background-color: white;
+}
+.myeditpic:hover{
+    cursor: pointer;
+}
+.edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.edit-icon img {
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+}
+
+.edit-icon img:hover {
+    cursor: pointer;
+}
+
+.cover-label i {
+    color: white;
+    font-size: 25px;
+}
+
+.cover-label:hover {
+    cursor: pointer;
 }
 
 /* Follow Page / Connect */
