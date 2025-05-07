@@ -34,48 +34,62 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
 //--------------------Edit User--------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
     $username_chk = $_SESSION['username'];
+
+    //-------------Get Old Profile and Cover Pics Before Delete--------------//
+
+    $get_img = "SELECT * FROM twitter_users WHERE username = '$username_chk'";
+    $run_query = $conn->query($get_img);
+
+    $fetch = $run_query->fetch_object();
+    $old_profile = $fetch->profile_pic;
+    $old_cover = $fetch->cover_pic;
+
     $name = $_POST['edit-name'];
     $username = $_POST['edit-username'];
     $email = $_POST['edit-email'];
     $bio = $_POST['edit-bio'];
     $dob = $_POST['edit-dob'];
+   
     $profile_pic = $_FILES['edit-profile-pic']['name'];
     $tmp_profile = $_FILES['edit-profile-pic']['tmp_name'];
     $profile_ext = pathinfo($profile_pic, PATHINFO_EXTENSION);
     $profile_name = pathinfo($profile_pic, PATHINFO_FILENAME);
     $final_profile = $profile_name . time() . "." . $profile_ext;
-    $profile_path = "users/" . $final_profile;
+    $profile_path = "profile_pic/" . $final_profile;
 
     $cover_pic = $_FILES['edit-cover-pic']['name'];
     $tmp_cover = $_FILES['edit-cover-pic']['tmp_name'];
     $cover_ext = pathinfo($cover_pic, PATHINFO_EXTENSION);
     $cover_name = pathinfo($cover_pic, PATHINFO_FILENAME);
     $final_cover = $cover_name . time() . "." . $cover_ext;
-    $cover_path = "users/" . $final_cover;
+    $cover_path = "cover_pic/" . $final_cover;
     $timestamp = date('Y-m-d h:i:s');
 
     if ($cover_pic == "" && $profile_pic == "") {
         $upd = "UPDATE twitter_users SET name = '$name', username = '$username',email = '$email', 
-        bio = '$bio', dob = $dob  WHERE username= '$username_chk'";
+        bio = '$bio', dob = '$dob'  WHERE username= '$username_chk'";
     } elseif ($cover_pic == "" && $profile_pic != "") {
         move_uploaded_file($tmp_profile, $profile_path);
-        $upd = "UPDATE twitter_users SET name = '$name', username = '$username',email = '$email', bio = '$bio', 
-        dob = $dob, profile_pic = '$final_profile'  WHERE username= '$username_chk'";
+        unlink('profile_pic/' . $old_profile);
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username',email = '$email', 
+        bio = '$bio', dob = '$dob', profile_pic = '$final_profile'  WHERE username= '$username_chk'";
     } elseif ($cover_pic != "" && $profile_pic == "") {
         move_uploaded_file($tmp_cover, $cover_path);
-        $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', bio = '$bio', 
-        dob = $dob, cover_pic = '$final_cover' WHERE username= '$username_chk'";
+        unlink(filename: 'cover_pic/' . $old_cover);
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', 
+        bio = '$bio', dob = '$dob', cover_pic = '$final_cover' WHERE username= '$username_chk'";
     } elseif ($profile_pic != "" && $cover_pic != "") {
         move_uploaded_file($tmp_cover, $cover_path);
         move_uploaded_file($tmp_profile, $profile_path);
-        $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', bio = '$bio', dob = $dob, 
-        cover_pic = '$final_cover', profile_pic='$profile_pic' WHERE username= '$username_chk'";
+        unlink('cover_pic/' . $old_cover);
+        unlink('profile_pic/' . $old_profile);
+        $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', bio = '$bio', 
+        dob = '$dob', cover_pic = '$final_cover', profile_pic='$final_profile' WHERE username= '$username_chk'";
     }
     $run = $conn->query($upd);
-    if($run){
+    if ($run) {
         $_SESSION['username'] = $username;
     }
-
 }
 
 //--------------------- Footer who to follow-------------------------//
@@ -118,12 +132,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'signup') {
     $password = isset($_POST['password']) ? md5(trim($_POST['password'])) : "";
     $dob = isset($_POST['dob']) ? trim($_POST['dob']) : "";
     $joined_date = date('F Y');
-    $insert = "INSERT INTO twitter_users (name, username, email, password, dob, joined_date, profile_pic, cover_pic) VALUES ('$name','$username','$email','$password','$dob', '$joined_date', '', '')";
+    $insert = "INSERT INTO twitter_users (name, username, email, password, dob, joined_date, profile_pic, cover_pic) 
+    VALUES ('$name','$username','$email','$password','$dob', '$joined_date', '', '')";
     $run = $conn->query($insert);
+
     if ($run) {
         $_SESSION['login'] = 'Login';
         $_SESSION['username'] = $username;
-        $_SESSION['firstname'] = substr($name, 0, 1);
+        // $_SESSION['firstname'] = substr($name, 0, 1);
         $_SESSION['name'] = $name;
     } else {
         echo "<p class='p-2 rounded msg'>Something Went Wrong</p>";
@@ -141,7 +157,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
     $img_ext = pathinfo($image_name, PATHINFO_EXTENSION);
     $img_name = pathinfo($image_name, PATHINFO_FILENAME);
     $final_image = $img_name . time() . "." . $img_ext;
-    $path = "users/" . $final_image;
+    $path = "posts/" . $final_image;
     if ($image_name == "" && $content != "") {
         $insert_post = "INSERT INTO twitter_posts(content,user_id)
         SELECT '$content', id 
@@ -180,7 +196,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_profile') {
             "email" => $data->email,
             "bio" => $data->bio,
             "dob" => $data->dob,
-            "joined_date" => $data->joined_date
+            "joined_date" => $data->joined_date,
+            'profile' => $data->profile_pic,
+            'cover' => $data->cover_pic
         );
     }
     echo json_encode($arr);
@@ -212,6 +230,7 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
     $password = isset($_POST['password']) ? md5(trim($_POST['password'])) : "";
 
     $sel = "SELECT * FROM twitter_users WHERE (email = '$email' OR username = '$email') AND password = '$password'";
+
     $run = $conn->query($sel);
     $email_check = '';
     $password_check = '';
@@ -228,7 +247,7 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
         $_SESSION['login'] = 'Login';
         $_SESSION['username'] = $username_check;
         $_SESSION['name'] = $name_check;
-        $_SESSION['firstname'] = substr($name_check, 0, 1);
+        // $_SESSION['firstname'] = substr($name_check, 0, 1);
         echo json_encode([
             'status' => 'success'
         ]);
@@ -243,7 +262,8 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
 if (isset($_POST['action']) && $_POST['action'] == "logout") {
     unset($_SESSION['login']);
     unset($_SESSION['username']);
-    unset($_SESSION['firstname']);
+    // unset($_SESSION['firstname']);
+    unset($_SESSION['count']);
 }
 
 //---------------------Who to follow-------------------------//
@@ -281,23 +301,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
 if (isset($_POST['action']) && $_POST['action'] == "show_media") {
     $username = $_SESSION['username'];
     $show_media_query = "SELECT media FROM twitter_posts JOIN twitter_users ON 
-                        twitter_posts.user_id = twitter_users.id WHERE 
-                        twitter_users.username = '$username' AND twitter_posts.media != 'Null'";
+                        twitter_posts.user_id = twitter_users.id WHERE twitter_users.username = 
+                        '$username' AND twitter_posts.media != 'Null' ORDER BY twitter_posts.id desc";
     $run_query = $conn->query($show_media_query);
     $media_data = '';
     while ($data = $run_query->fetch_object()) {
         $media_data .= "<div class='media-post'>
-                                <img src='users/$data->media'>
+                                <img src='posts/$data->media'>
                         </div>";
     }
     echo $media_data;
 }
 
-//------------------ Show Media----------------//
+//------------------ Show Post----------------//
 if (isset($_POST['action']) && $_POST['action'] == "show_post") {
     $username = $_SESSION['username'];
-    $show_post_query = "SELECT * FROM twitter_posts JOIN twitter_users ON 
-                        twitter_posts.user_id = twitter_users.id WHERE 
+    $show_post_query = "SELECT twitter_posts.id, twitter_posts.content, twitter_posts.media, 
+                        twitter_users.name, twitter_users.username FROM twitter_posts JOIN 
+                        twitter_users ON twitter_posts.user_id = twitter_users.id WHERE 
                         twitter_users.username = '$username' ORDER BY twitter_posts.id desc";
     $run_query = $conn->query($show_post_query);
     $post_data = '';
@@ -309,15 +330,17 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                             </div>
                             <div class='postuser-name'>
                                 <p>
+                                    <input type='hidden' id='hidden' value='0'>
                                     <span class='post-name'>$data->name </span>
                                     <span class='post-username'>@$data->username</span>
                                     <span class='post-delete-icon'>
-                                        <i class='fa-solid fa-ellipsis'></i>
+                                        <i class='fa-solid fa-ellipsis' data-toggle='modal' data-target='#deleteModal' 
+                                        onclick='before_delete($data->id)'></i>
                                     </span>
                                 </p>
                                 <p class='post-content'>$data->content</p>
                                 <div class='post-img'>
-                                    <img src='users/$data->media' alt='Post Image'>
+                                    <img src='posts/$data->media' alt='Post Image'>
                                 </div>
                                 <p class='icons'>
                                    <span class='comment-icon'>
@@ -336,10 +359,12 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                             </div>
                             <div class='postuser-name'>
                                 <p>
+                                    <input type='hidden' id='hidden' value='0'>
                                     <span class='post-name'>$data->name </span>
                                     <span class='post-username'>@$data->username</span>
                                     <span class='post-delete-icon'>
-                                        <i class='fa-solid fa-ellipsis'></i>
+                                        <i class='fa-solid fa-ellipsis' data-toggle='modal' data-target='#deleteModal' 
+                                        onclick='before_delete($data->id)'></i>
                                     </span>
                                 </p>
                                 <p class='post-content'>$data->content</p>
@@ -357,4 +382,39 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
     }
     echo $post_data;
 }
+
+//------------Count Total Posts--------------//
+if (isset($_POST['action']) && $_POST['action'] == "count_posts") {
+    $username = $_SESSION['username'];
+    $show_post_query = "SELECT * FROM twitter_posts JOIN twitter_users ON 
+    twitter_posts.user_id = twitter_users.id WHERE 
+    twitter_users.username = '$username' ORDER BY twitter_posts.id desc";
+    $run_query = $conn->query($show_post_query);
+
+    $count = 0;
+    while ($run_query->fetch_object()) {
+        $count++;
+    }
+    echo $count;
+}
+
+//----------------------- Delete Post------------------//
+
+if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
+    $id = $_POST['id'];
+
+    $get_img = "SELECT media FROM twitter_posts WHERE id = '$id'";
+    $run_query = $conn->query($get_img);
+
+    $fetch = $run_query->fetch_object();
+    $media = $fetch->media;
+
+    $del = "DELETE FROM twitter_posts WHERE id = '$id'";
+    $run = $conn->query($del);
+    if ($run) {
+        unlink('posts/' . $media);
+    }
+}
+
+
 ?>

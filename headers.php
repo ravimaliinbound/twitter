@@ -20,7 +20,7 @@ if (!isset($_SESSION['login'])) {
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -32,7 +32,8 @@ if (!isset($_SESSION['login'])) {
             fetch_data();
             show_more();
             footer();
-        })
+            edit_profile();
+        });
     </script>
 
 <body>
@@ -130,15 +131,13 @@ if (!isset($_SESSION['login'])) {
 
             <div class="user_profile">
                 <div class="user_image">
-                    <img src="images/profile_pic.png" alt="" height="100%" style="border-radius: 50%;">
+                    <img src="images/profile_pic.png" alt="" height="100%" style="border-radius: 50%;"
+                        class="profile_pics">
                 </div>
                 <div class="user_data" style="width: 60%;">
                     <p><span class="profle_name"><?php echo $_SESSION['name']; ?></span>
                         <br>@<?php echo $_SESSION['username']; ?>
                     </p>
-                </div>
-                <div class="ellipsis" style="width: 20%;">
-                    <i class="fa-solid fa-ellipsis"></i>
                 </div>
             </div>
         </div>

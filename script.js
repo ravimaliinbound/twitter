@@ -49,8 +49,8 @@ function edit_user() {
         data: formData,
         contentType: false,
         processData: false,
-        success: function (data) {
-            console.log(data)
+        success: function () {
+            edit_profile();
         }
     })
 }
@@ -69,10 +69,50 @@ function edit_profile() {
             $("#edit-email").val(data.email);
             $("#edit-dob").val(data.dob);
             $("#edit-bio").val(data.bio);
+            var profile = data.profile;
+            var cover = data.cover;
+            if (profile == "") {
+                $(".profile_pics").attr('src', 'images/profile_pic.png');
+            } else {
+                $(".profile_pics").attr('src', 'profile_pic/' + profile);
+            }
+            if (cover == "") {
+                $(".cover").css('background', 'rgb(207, 217, 222)');
+            } else {
+                var imageUrl = 'cover_pic/' + cover;
+                $(".cover").css({
+                    'background': 'url(' + imageUrl + ')',
+                    'background-size': '800px 250px',
+                    'width': '100%'
+                });
+            }
         }
     });
 }
 
+//-------------Before Delete-------------//
+function before_delete(id) {
+    $("#hidden").val(id);
+}
+//--------------------- Delete Post-----------------//
+function delete_post() {
+    var conf = confirm("Do You Really Want To Delete?")
+    if (conf == true) {
+        var id = $("#hidden").val();
+        console.log(id)
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { 'action': 'delete_post', 'id': id },
+            success: function () {
+                $('#deleteModal').modal('hide');
+                show_media();
+                count_posts();
+                show_post();
+            }
+        });
+    }
+}
 
 
 //--------------- Show Media-----------------------//
@@ -93,6 +133,23 @@ function show_media() {
     });
 }
 
+//----------------- Post Count-----------------//
+function count_posts() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { 'action': 'count_posts' },
+        success: function (data) {
+            $(".count").text(data)
+            if (data == 1) {
+                $(".post-posts").text('post');
+            } else {
+                $(".post-posts").text('posts');
+
+            }
+        }
+    })
+}
 
 //----------------------- Show Posts---------------------//
 function show_post() {
@@ -147,7 +204,7 @@ function signup() {
         url: "action.php",
         type: "post",
         data: { "name": name, "username": username, "email": email, "password": password, "dob": dob, "action": "signup" },
-        success: function () {
+        success: function (data) {
             $(".show").show();
             $(".hide").hide();
             setTimeout(function () {
@@ -303,6 +360,7 @@ function loginvalidate(e) {
 //Document.ready
 
 $(document).ready(function () {
+    count_posts();
     $(".remove-btn").click(function () {
         $('.remove').text("");
     });

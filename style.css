@@ -202,7 +202,7 @@
     height: 40px;
     width: 40px;
     margin-left: 20px;
-    margin-top: 17px;
+    margin-top: 14px;
 
 }
 
@@ -210,7 +210,7 @@
     height: 80%;
 } */
 .user_data {
-    margin-left: 10px;
+    margin-left: 20px;
     margin-top: 10px;
 }
 
@@ -789,20 +789,23 @@
 .cover {
     margin-top: -8px;
     height: 200px;
-    /* background-color: rgb(207, 217, 222); */
-    background: url('images/Capture.PNG');
+    /* background: rgb(207, 217, 222); */
+    /* background: url('images/Capture.PNG'); */
     background-size: 700px 200px;
     width: 100%;
     background-repeat: no-repeat;
 }
-
+.covers{
+    height: 160px;
+    width: 800px;
+}
 .profile-pic {
     height: 100px;
     width: 100px;
     margin-left: 50px;
     margin-top: -50px;
     border-radius: 50%;
-    background-color: rgb(110, 190, 110);
+    background-color: rgb(231,231,231);
 }
 
 .edit-btn {
@@ -1047,14 +1050,16 @@
 .edit_cover_pic_div,
 .edit_profile_pic_div {
     position: relative;
-    width: 450px;
+    width: 550px;
     height: 150px;
     margin: 0 auto;
 
 }
-
+.profile_pics{
+    background-color: #d4d4d4;
+}
 .edit_profile_pic_div {
-    margin-top: -60px;
+    margin-top: -50px;
     margin-left: 30px;
     height: 10px;
 }
@@ -1080,9 +1085,11 @@
     margin-top: -10px;
     background-color: white;
 }
-.myeditpic:hover{
+
+.myeditpic:hover {
     cursor: pointer;
 }
+
 .edit-icon {
     position: absolute;
     top: 50%;
@@ -1106,6 +1113,27 @@
 
 .cover-label:hover {
     cursor: pointer;
+}
+
+.model-ul li {
+    font-size: 17px;
+    margin-top: 15px;
+    list-style: none;
+    padding: 5px;
+}
+
+.model-ul li:hover {
+    background-color: #f7f7f7;
+}
+
+.model-ul a {
+    color: black;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.model-ul a:hover {
+    text-decoration: none;
 }
 
 /* Follow Page / Connect */

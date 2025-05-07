@@ -5,7 +5,7 @@ include_once 'headers.php'
 
 <!-- The Modal -->
 <div class="modal" id="edit-user">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -18,14 +18,14 @@ include_once 'headers.php'
             <div class="modal-body">
                 <form action="" method="post" enctype="multipart/form-data" id="edit-user-form">
                     <div class="edit_cover_pic_div">
-                        <img src="images/Capture.PNG" alt="">
+                        <div class="cover covers"></div>
                         <label for="edit-cover-pic">
                             <div class="edit-icon"><img src="images/camera.png" alt="" height="50px">
                             </div>
                         </label>
                     </div>
                     <div class="edit_profile_pic_div" style="position: relative;">
-                        <img src="users/user1746165497.jpg" alt="" style="border-radius: 50%; height: 120px">
+                        <img src="" alt="" style="border-radius: 50%; height: 120px" class="profile_pics">
                         <label for="edit-profile-pic">
                             <div>
                                 <img src="images/camera.png" alt="" class="myeditpic">
@@ -68,24 +68,69 @@ include_once 'headers.php'
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark text-white" data-dismiss="modal" onclick="edit_user()">Save</button>
+                <button type="button" class="btn btn-dark text-white" data-dismiss="modal"
+                    onclick="edit_user()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
+<!--------------------Delete Post Modal--------------------->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <ul class="model-ul">
+                        <li onclick="delete_post()">
+                            <i class="fa-solid fa-trash text-danger"></i>
+                            <a href="#" class="text-danger" id="delete-modal">Delete</a>
+                        </li>
+                        <li>
+                            <img src="images/pin.png" alt="" height="20px">
+                            <a href="#">Pin to your profile</a>
+                        </li>
+                        <li>
+                            <img src="images/comment.png" alt="" height="20px">
+                            <a href="#">Change who can reply</a>
+                        </li>
+                        <li>
+                            <img src="images/graph.png" alt="" height="20px">
+                            <a href="#">View post engagements</a>
+                        </li>
+                        <li>
+                            <img src="images/link.png" alt="" height="20px">
+                            <a href="#">Embed post</a>
+                        </li>
+                        <li>
+                            <img src="images/graph.png" alt="" height="20px">
+                            <a href="#">View post analytics</a>
+                        </li>
+                        <li>
+                            <img src="images/marketing.png" alt="" height="20px">
+                            <a href="#">Request community notes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="profile">
     <div class="profile-name">
-        <p><span class="pro-name"></span><br>0 posts</p>
+        <p>
+            <span class="pro-name"></span><br>
+            <span class="count"></span>
+            <span class="post-posts"></span>
+        </p>
     </div>
     <div class="cover">
         <!-- Cover image or background -->
-        <!-- <img src="images/background.PNG" alt="" height="100%" width="100%"> -->
     </div>
     <div class="profile-pic">
         <!-- <p class="profile-fname"><?php echo $_SESSION['firstname'] ?></p> -->
-        <img src="images/profile_pic.png" alt="" height="100%" style="border-radius: 50%;">
+        <img src="" alt="" style="border-radius: 50%;" class="profile_pics" height="100px" width="100px">
     </div>
 
     <div class="edit-btn">
