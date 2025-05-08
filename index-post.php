@@ -1,6 +1,6 @@
 <div class="index-post">
     <?php
-    include_once 'posts.php';
+    include 'post.php';
     ?>
 </div>
 

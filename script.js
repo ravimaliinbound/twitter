@@ -14,17 +14,14 @@ function fetch_data() {
     });
 }
 
-
 //-----------------------Post-------------//
 function insert_post() {
-    var input = $("#index-input").val();
+    var input = $(".index_input").val();
+    console.log(input)
     var form = $('#media-form')[0];
-    var image = $("#index-image").val();
     var formData = new FormData(form);
-
     formData.append('input', input);
     formData.append('action', 'insert_post');
-
     $.ajax({
         url: "action.php",
         type: "POST",
@@ -32,7 +29,9 @@ function insert_post() {
         contentType: false,
         processData: false,
         success: function (data) {
-            $('#content-form')[0].reset();
+            console.log(data)
+            $("#post_modal").modal('hide');
+            $('#content_form')[0].reset();
             $('#media-form')[0].reset();
         }
     });
@@ -51,6 +50,7 @@ function edit_user() {
         processData: false,
         success: function () {
             edit_profile();
+            fetch_data();
         }
     })
 }
@@ -92,6 +92,7 @@ function edit_profile() {
 
 //-------------Before Delete-------------//
 function before_delete(id) {
+    $('#deleteModal').modal('show');
     $("#hidden").val(id);
 }
 //--------------------- Delete Post-----------------//
@@ -99,7 +100,6 @@ function delete_post() {
     var conf = confirm("Do You Really Want To Delete?")
     if (conf == true) {
         var id = $("#hidden").val();
-        console.log(id)
         $.ajax({
             url: "action.php",
             type: "post",
@@ -161,6 +161,23 @@ function show_post() {
             $(".posts").html(data);
         }
     })
+}
+
+
+//-------------------- Likes Count----------------------//
+function like_count(like) {
+    console.log(like)
+    var like_inp = $("#liked").val();
+    if (like_inp == 0) {
+        like++;
+    }
+    console.log(like)
+}
+
+
+//-------------------- Comment Count--------------------//
+function comment_count(comment) {
+    console.log(comment)
 }
 
 //------------------Footer Who to follow-----------------//
@@ -394,7 +411,7 @@ $(document).ready(function () {
     });
 
     //-------------- Index Post-------------//
-    $("#index-input").focus(function () {
+    $(".index_input").focus(function () {
         $(this).css("outline", " none")
     });
 

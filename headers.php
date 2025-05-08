@@ -20,7 +20,7 @@ if (!isset($_SESSION['login'])) {
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -52,6 +52,10 @@ if (!isset($_SESSION['login'])) {
     <!-- Left Panel -->
     <div class="container all" style="display: flex; " id="left-panel">
         <div class="slider">
+
+
+
+
             <div class="logo">
                 <img src="images/logo-black.png" alt="" height="30px" width="30px" style="margin-left: 10px;">
             </div>
@@ -123,7 +127,7 @@ if (!isset($_SESSION['login'])) {
 
             </div>
             <br><br>
-            <a href="post.php" class="text-white bg-dark post">Post</a>
+            <a href="#" class="text-white bg-dark post" data-toggle="modal" data-target="#post_modal">Post</a>
             <div class="profile_model" style="display: none;">
                 <a href="#">Add an existing account</a>
                 <a href="#" id="logout">Log out @<?php echo $_SESSION['username']; ?></a>
@@ -138,6 +142,26 @@ if (!isset($_SESSION['login'])) {
                     <p><span class="profle_name"><?php echo $_SESSION['name']; ?></span>
                         <br>@<?php echo $_SESSION['username']; ?>
                     </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- Post Modal -->
+        <div class="modal fade" id="post_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Post</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        include 'post.php';
+                        ?>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
                 </div>
             </div>
         </div>

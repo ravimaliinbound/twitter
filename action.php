@@ -49,7 +49,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
     $email = $_POST['edit-email'];
     $bio = $_POST['edit-bio'];
     $dob = $_POST['edit-dob'];
-   
+
     $profile_pic = $_FILES['edit-profile-pic']['name'];
     $tmp_profile = $_FILES['edit-profile-pic']['tmp_name'];
     $profile_ext = pathinfo($profile_pic, PATHINFO_EXTENSION);
@@ -159,20 +159,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
     $final_image = $img_name . time() . "." . $img_ext;
     $path = "posts/" . $final_image;
     if ($image_name == "" && $content != "") {
-        $insert_post = "INSERT INTO twitter_posts(content,user_id)
-        SELECT '$content', id 
+        $insert_post = "INSERT INTO twitter_posts(content,total_comments, total_likes,user_id)
+        SELECT '$content',0,0, id 
         FROM twitter_users WHERE username = '$username'";
         $run_post = $conn->query($insert_post);
     } elseif ($content == "" && $image_name != "") {
         move_uploaded_file($tmp_name, $path);
-        $insert_post = "INSERT INTO twitter_posts(media,user_id)
-           SELECT '$final_image', id 
+        $insert_post = "INSERT INTO twitter_posts(media,total_comments, total_likes,user_id)
+           SELECT '$final_image',0,0, id 
            FROM twitter_users WHERE username = '$username'";
         $run_post = $conn->query($insert_post);
     } elseif ($content != "" && $final_image != "") {
         move_uploaded_file($tmp_name, $path);
-        $insert_post = "INSERT INTO twitter_posts(content, media, user_id)
-        SELECT '$content', '$final_image', id 
+        $insert_post = "INSERT INTO twitter_posts(content, media,total_comments, total_likes, user_id)
+        SELECT '$content', '$final_image',0,0, id 
         FROM twitter_users WHERE username = '$username'";
         $run_post = $conn->query($insert_post);
     } elseif ($image_name == "" && $content == "") {
@@ -316,14 +316,50 @@ if (isset($_POST['action']) && $_POST['action'] == "show_media") {
 //------------------ Show Post----------------//
 if (isset($_POST['action']) && $_POST['action'] == "show_post") {
     $username = $_SESSION['username'];
-    $show_post_query = "SELECT twitter_posts.id, twitter_posts.content, twitter_posts.media, 
+    $show_post_query = "SELECT twitter_posts.id, twitter_posts.content, twitter_posts.media, twitter_posts.created_at,
+                        twitter_posts.total_comments, twitter_posts.total_likes,
                         twitter_users.name, twitter_users.username FROM twitter_posts JOIN 
                         twitter_users ON twitter_posts.user_id = twitter_users.id WHERE 
-                        twitter_users.username = '$username' ORDER BY twitter_posts.id desc";
+                        twitter_users.username = '$username' ORDER BY twitter_posts.id DESC";
     $run_query = $conn->query($show_post_query);
     $post_data = '';
     while ($data = $run_query->fetch_object()) {
+        $likes = $data->total_likes;
+        $comments = $data->total_comments;
+        if ($likes == 0) {
+            $likes = Null;
+        }
+        if ($comments == 0) {
+            $comments = Null;
+        }
+        //--------------- Time of post--------------------
+        date_default_timezone_set("Asia/Kolkata");
+        $post_date = new DateTime("$data->created_at");
+        $today = new DateTime(date('Y-m-d H:i:s'));
+        $diff = $post_date->diff($today);
+        $print = $diff->format('%s');
+        $title = $post_date->format('h:i A - M d, Y');
+
+        if ($diff->format('%i') < 1) {
+            $print = $diff->format('%s') . 's';
+        }
+        if ($diff->format('%h') < 1 && $diff->format('%i') > 0) {
+            $print = $diff->format('%i') . 'm';
+        }
+        if ($diff->format('%h') > 0) {
+            $print = $diff->format('%h') . 'h';
+        }
+        if ($diff->format('%d') > 0) {
+            $print = $diff->format('%d') . 'd';
+        }
+        if ($diff->format('%m') > 0) {
+            $print = $diff->format('%m') . 'mon';
+        }
+        if ($diff->format('%y') > 0) {
+            $print = $diff->format('%y') . 'y';
+        }
         if ($data->media != "") {
+
             $post_data .= "<div class='user-post'>
                             <div class='post-user-info'>
                                 <img src='images/profile_pic.png' alt='Post' height='40px' style='border-radius: 50%'>
@@ -331,11 +367,13 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                             <div class='postuser-name'>
                                 <p>
                                     <input type='hidden' id='hidden' value='0'>
+                                     <input type='hidden' id='liked' value='0'>
+                                    <input type='hidden' id='commented' value='0'>
                                     <span class='post-name'>$data->name </span>
                                     <span class='post-username'>@$data->username</span>
-                                    <span class='post-delete-icon'>
-                                        <i class='fa-solid fa-ellipsis' data-toggle='modal' data-target='#deleteModal' 
-                                        onclick='before_delete($data->id)'></i>
+                                    <span class='time' title='$title'>· $print</span>
+                                     <span class='post-delete-icon'>
+                                        <i class='fa-solid fa-ellipsis' onclick='before_delete($data->id)'></i>
                                     </span>
                                 </p>
                                 <p class='post-content'>$data->content</p>
@@ -343,12 +381,14 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                                     <img src='posts/$data->media' alt='Post Image'>
                                 </div>
                                 <p class='icons'>
-                                   <span class='comment-icon'>
-                                        <i class='fa-solid fa-comment' title='Reply'></i>
+                                    <span class='comment-icon'>
+                                        <img src='images/chat.png' height='17px' title='Reply' onclick='comment_count($data->total_comments)>
                                     </span>
-                                    <span class='like-icon'>
-                                        <i class='fa-solid fa-heart' title='Like'></i>
+                                    <span class='comment-count'>$comments</span>
+                                     <span class='like-icon'>
+                                        <img src='images/heart.png' height='18px' title='Like' onclick='like_count($data->total_likes)'>
                                     </span>
+                                    <span class='like' >$likes</span>
                                 </p>
                             </div>
                         </div>";
@@ -360,21 +400,25 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                             <div class='postuser-name'>
                                 <p>
                                     <input type='hidden' id='hidden' value='0'>
+                                    <input type='hidden' id='liked' value='0'>
+                                    <input type='hidden' id='commented' value='0'>
                                     <span class='post-name'>$data->name </span>
                                     <span class='post-username'>@$data->username</span>
+                                    <span class='time' title='$title'>· $print</span>
                                     <span class='post-delete-icon'>
-                                        <i class='fa-solid fa-ellipsis' data-toggle='modal' data-target='#deleteModal' 
-                                        onclick='before_delete($data->id)'></i>
+                                        <i class='fa-solid fa-ellipsis' onclick='before_delete($data->id)'></i>
                                     </span>
                                 </p>
                                 <p class='post-content'>$data->content</p>
                                 <p class='icons'>
                                     <span class='comment-icon'>
-                                        <i class='fa-solid fa-comment' title='Reply'></i>
+                                        <img src='images/chat.png' height='17px' title='Reply' onclick='comment_count($data->total_comments)'>
                                     </span>
-                                    <span class='like-icon'>
-                                        <i class='fa-solid fa-heart' title='Like'></i>
+                                    <span class='comment-count'>$comments</span>
+                                     <span class='like-icon'>
+                                        <img src='images/heart.png' height='18px' title='Like' onclick='like_count($data->total_likes)'>
                                     </span>
+                                    <span class='like'>$likes</span>
                                 </p>
                             </div>
                         </div>";
