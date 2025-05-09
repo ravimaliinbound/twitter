@@ -135,7 +135,7 @@
 
 /* Header / Slider css */
 .active_class {
-    font-weight: 800;
+    font-weight: 600;
     color: black;
 }
 
@@ -266,7 +266,6 @@
 }
 
 .footerss {
-    width: 40%;
     margin-left: 1028px;
     border: 1px solid rgb(239, 243, 244);
     border-radius: 5px;
@@ -410,10 +409,12 @@
 .index-inp {
     margin-top: 5px;
 }
-.index-inp textarea{
+
+.index-inp textarea {
     border: transparent;
 }
-.index-inp textarea::placeholder{
+
+.index-inp textarea::placeholder {
     font-size: 20px;
 }
 
@@ -440,31 +441,54 @@
     margin-top: 10px;
     margin-left: 15px;
 }
-#media-form img:hover{
+
+#media-form img:hover {
     cursor: pointer;
 }
+
 .hover:hover {
     background-color: rgb(231, 231, 232);
 }
 
-.post-icons:hover, .post-icon:hover {
+.post-icons:hover,
+.post-icon:hover {
     cursor: pointer;
 }
-.post-icon{
+
+.post-icon {
     margin-left: 20px;
 }
+
 .post-btn {
     margin-left: 100px;
 }
-.post-button{
+
+.post-btn a {
+    background-color: rgb(17, 17, 17);
+    border-radius: 20px;
+    color: white;
+    padding-top: 20px;
+}
+.post-button {
     margin-left: 100px;
 }
 
-.post-btn a , .post-button a{
+.post-image-hover:hover {
+    cursor: pointer;
+}
+
+.post-btn a,
+.post-button a {
     text-decoration: none;
     padding: 10px 30px;
     border-radius: 20px;
     font-weight: 600;
+}
+
+.post-err {
+    color: red;
+    margin-top: 10px;
+    margin-left: 30px;
 }
 
 /* Explore Tab */
@@ -745,42 +769,6 @@
     margin-top: 120px;
 }
 
-
-/* Bookmarks Tab */
-
-.bookmark {
-    width: 40%;
-    position: absolute;
-    border: 1px solid rgb(239, 243, 244);
-    border-radius: 5px;
-    margin-left: 250px;
-}
-
-.bookmark-fix {
-    padding: 10px 0;
-    position: fixed;
-    border-bottom: 1px solid rgb(239, 243, 244);
-    border-right: 1px solid rgb(239, 243, 244);
-    width: 40%;
-    background-color: white;
-}
-
-.mesg {
-    font-size: 22px;
-    font-weight: 500;
-    margin-left: 50px;
-    margin-top: 10px;
-}
-
-.save-post {
-    margin-top: 150px;
-    margin-left: 230px;
-}
-
-.bookmark-msg {
-    margin-left: 175px;
-}
-
 /* Profile Tab */
 .profile {
     width: 40%;
@@ -812,7 +800,10 @@
 
 .covers {
     height: 160px;
-    width: 800px;
+}
+
+#cover_edit {
+    width: 100px;
 }
 
 .profile-pic {
@@ -1128,7 +1119,7 @@
 .edit-icon {
     position: absolute;
     top: 50%;
-    left: 50%;
+    margin-left: 230px;
     transform: translate(-50%, -50%);
 }
 
@@ -1154,7 +1145,6 @@
     font-size: 17px;
     margin-top: 15px;
     list-style: none;
-    padding: 5px;
 }
 
 .model-ul li:hover {
@@ -1164,11 +1154,16 @@
 .model-ul a {
     color: black;
     font-weight: 500;
+    text-decoration: none;
     margin-left: 5px;
 }
 
-.model-ul a:hover {
-    text-decoration: none;
+.length {
+    margin-left: 420px;
+}
+
+.error {
+    color: red;
 }
 
 /* Follow Page / Connect */

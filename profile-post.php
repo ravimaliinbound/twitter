@@ -5,20 +5,22 @@ include_once 'headers.php'
 
 <!-- The Modal -->
 <div class="modal" id="edit-user">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Edit Profile</h4>
-                <button type="button" class="btn-close" data-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
                 <form action="" method="post" enctype="multipart/form-data" id="edit-user-form">
+                    <input type="hidden" id="edit_username_check" value="0">
+                    <input type="hidden" id="edit_email_check" value="0">
                     <div class="edit_cover_pic_div">
-                        <div class="cover covers"></div>
+                        <div class="cover covers" id="cover_edit"></div>
                         <label for="edit-cover-pic">
                             <div class="edit-icon"><img src="images/camera.png" alt="" height="50px">
                             </div>
@@ -35,25 +37,32 @@ include_once 'headers.php'
                     <div class="form-group" style="margin-top: 100px;">
                         <label for="edit-name">Name</label>
                         <input type="text" class="form-control" id="edit-name" aria-describedby="nameHelp"
-                            placeholder="Enter Name" name="edit-name">
+                            placeholder="Enter Name" name="edit-name" maxlength="15">
+                            <span id="err-editname" class="error"></span>
+                            <span class="length name-span">15</span>
                     </div>
                     <div class="form-group">
                         <label for="edit-username">Username</label>
                         <input type="text" class="form-control" id="edit-username" aria-describedby="usernameHelp"
-                            placeholder="Enter Username" name="edit-username">
+                            placeholder="Enter Username" name="edit-username" maxlength="15">
+                            <span id="err-editusername" class="error"></span>
+                            <span class="length username-span">15</span>
                     </div>
                     <div class="form-group">
                         <label for="edit-email">Email</label>
                         <input type="email" class="form-control" id="edit-email" placeholder="Enter Email"
                             name="edit-email">
+                            <span id="err-editemail" class="error"></span>
                     </div>
                     <div class="form-group">
                         <label for="edit-bio">Bio</label>
-                        <input type="text" class="form-control" id="edit-bio" placeholder="Enter Bio" name="edit-bio">
+                        <input type="text" class="form-control" id="edit-bio" placeholder="Enter Bio" name="edit-bio" maxlength="150">
+                        <span class="length bio-span">150</span>
                     </div>
                     <div class="form-group">
                         <label for="edit-dob">Date of birth</label>
                         <input type="date" class="form-control" id="edit-dob" name="edit-dob">
+                        <span id="err-editdob" class="error"></span>
                     </div>
                     <div class="form-group" style="display: none;">
                         <label for="edit-profile-pic">Profile Image</label>
@@ -70,7 +79,7 @@ include_once 'headers.php'
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark text-white" data-dismiss="modal"
                     onclick="edit_user()">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -133,7 +142,7 @@ include_once 'headers.php'
     </div>
 
     <div class="edit-btn">
-        <a href="#" class="edit" data-toggle="modal" data-target="#edit-user" onclick="edit_profile()">Edit Profile</a>
+        <a href="#" class="edit" onclick="edit_profile()">Edit Profile</a>
     </div>
     <div class="profile-data">
         <p>

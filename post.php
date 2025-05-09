@@ -12,8 +12,10 @@
 </div>
 <div class="index-post-icons">
     <div class="post-icons">
-        <form action="" method="post" enctype="multipart/form-data" id="media-form">
-            <label for="index-image"><img src="images/image.png" alt="" height="16px"></label>
+        <form action="" method="post" enctype="multipart/form-data" id="media_form">
+            <label for="index-image">
+                <img src="images/image.png" alt="" height="16px" class="post-image-hover">
+            </label>
             <input type="file" id="index-image" style="display: none;" name="index-image">
         </form>
     </div>
@@ -36,6 +38,7 @@
         <img src="images/location.png" alt="" height="18px">
     </div>
     <div class="post-btn">
-        <a href="#" class="bg-dark text-white" onclick="insert_post()">Post</a>
+        <a href="#" onclick="insert_post()">Post</a>
     </div>
 </div>
+<p class="post-err post-err-msg"></p>

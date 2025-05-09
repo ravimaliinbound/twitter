@@ -2,7 +2,7 @@
 $conn = new mysqli('localhost', 'root', '', 'twitter');
 session_start();
 
-//----------------Fetch Data For Particular User---------------//
+//----------------Fetch Data For Particular Logged in User---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
     $username = $_SESSION['username'];
     $sel_id = "SELECT id FROM twitter_users WHERE username = '$username'";
@@ -44,11 +44,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
     $old_profile = $fetch->profile_pic;
     $old_cover = $fetch->cover_pic;
 
-    $name = $_POST['edit-name'];
-    $username = $_POST['edit-username'];
-    $email = $_POST['edit-email'];
-    $bio = $_POST['edit-bio'];
-    $dob = $_POST['edit-dob'];
+    $name = trim($_POST['edit-name']);
+    $username = trim($_POST['edit-username']);
+    $email = trim($_POST['edit-email']);
+    $bio = trim($_POST['edit-bio']);
+    $dob = trim($_POST['edit-dob']);
 
     $profile_pic = $_FILES['edit-profile-pic']['name'];
     $tmp_profile = $_FILES['edit-profile-pic']['tmp_name'];
@@ -84,7 +84,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
         unlink('cover_pic/' . $old_cover);
         unlink('profile_pic/' . $old_profile);
         $upd = "UPDATE twitter_users SET name = '$name', username = '$username', email = '$email', bio = '$bio', 
-        dob = '$dob', cover_pic = '$final_cover', profile_pic='$final_profile' WHERE username= '$username_chk'";
+        dob = '$dob', cover_pic = '$final_cover', profile_pic = '$final_profile' WHERE username= '$username_chk'";
     }
     $run = $conn->query($upd);
     if ($run) {
@@ -99,6 +99,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
     $run_footer = $conn->query($sel_footer);
     $arr_footer = "";
     while ($data = $run_footer->fetch_object()) {
+        $count = $run_footer->num_rows;
         $arr_footer .=
             " <div style = 'display: flex;' class='background'>
                 <div class='show-img' style='margin-top: 6px;'>
@@ -118,7 +119,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
                 </div>";
     }
     $arr_footer .= "";
-    echo json_encode($arr_footer);
+    echo json_encode([
+        'arr' => $arr_footer,
+        'count' => $count
+    ]);
 
 }
 
@@ -148,7 +152,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'signup') {
 
 //--------------------- Insert Post-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'insert_post') {
-    $content = $_POST['input'];
+
+    $content = trim($_POST['input']);
     $username = $_SESSION['username'];
 
     $image_name = $_FILES['index-image']['name'];
@@ -207,9 +212,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_profile') {
 
 //-----------------Already Exists----------------//
 
-if (isset($_POST['action']) && $_POST['action'] == 'email_check' || $_POST['action'] == 'email_check') {
-    $email = isset($_POST['email']) ? $_POST['email'] : "";
-    $username = isset($_POST['username']) ? $_POST['username'] : "";
+if (isset($_POST['action']) && $_POST['action'] == 'email_check') {
+    $email = isset($_POST['email']) ? trim($_POST['email']) : "";
+    $username = isset($_POST['username']) ? trim($_POST['username']) : "";
     $email_query = "SELECT * FROM twitter_users WHERE email = '$email' OR username = '$username'";
     $email_run = $conn->query($email_query);
     if ($email_run->num_rows > 0) {
@@ -223,6 +228,42 @@ if (isset($_POST['action']) && $_POST['action'] == 'email_check' || $_POST['acti
     }
 }
 
+
+//-----------------Already Exists For Edit Username----------------//
+
+if (isset($_POST['action']) && $_POST['action'] == 'edit_username_check') {
+    $username_check = $_SESSION['username'];
+    $email = isset($_POST['email']) ? trim($_POST['email']) : "";
+    $username = isset($_POST['username']) ? trim($_POST['username']) : "";
+    $email_query = "SELECT * FROM twitter_users WHERE   username = '$username' AND username != '$username_check'";
+    $email_run = $conn->query($email_query);
+    if ($email_run->num_rows > 0) {
+        echo json_encode([
+            'status' => 'failed'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
+}
+
+//-----------------Already Exists For Edit Email----------------//
+if (isset($_POST['action']) && $_POST['action'] == "edit_email_check") {
+    $username_check = $_SESSION['username'];
+    $email = isset($_POST['email']) ? $_POST['email'] : "";
+    $email_query = "SELECT * FROM twitter_users WHERE email = '$email' AND username != '$username_check'";
+    $email_run = $conn->query($email_query);
+    if ($email_run->num_rows > 0) {
+        echo json_encode([
+            'status' => 'failed'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
+}
 //-------------------------Login-------------------------//
 
 if (isset($_POST['action']) && $_POST['action'] == "login") {
@@ -338,7 +379,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
         $today = new DateTime(date('Y-m-d H:i:s'));
         $diff = $post_date->diff($today);
         $print = $diff->format('%s');
-        $title = $post_date->format('h:i A - M d, Y');
+        $title = $post_date->format('h:i A - M j, Y');
 
         if ($diff->format('%i') < 1) {
             $print = $diff->format('%s') . 's';
@@ -349,14 +390,11 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
         if ($diff->format('%h') > 0) {
             $print = $diff->format('%h') . 'h';
         }
-        if ($diff->format('%d') > 0) {
-            $print = $diff->format('%d') . 'd';
-        }
-        if ($diff->format('%m') > 0) {
-            $print = $diff->format('%m') . 'mon';
+        if ($diff->format('%d') > 0 || $diff->format('%m') > 0) {
+            $print = $post_date->format('M j');
         }
         if ($diff->format('%y') > 0) {
-            $print = $diff->format('%y') . 'y';
+            $print = $post_date->format('M j Y');
         }
         if ($data->media != "") {
 

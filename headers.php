@@ -20,7 +20,7 @@ if (!isset($_SESSION['login'])) {
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -87,7 +87,7 @@ if (!isset($_SESSION['login'])) {
                             id="grok">Grok</span>
                     </li>
                 </a>
-                <a href="bookmark.php">
+                <a href="#">
                     <li>
                         <i class="fa-solid fa-bookmark"></i><span id="bookmark">Bookmarks</span>
                     </li>
@@ -127,7 +127,7 @@ if (!isset($_SESSION['login'])) {
 
             </div>
             <br><br>
-            <a href="#" class="text-white bg-dark post" data-toggle="modal" data-target="#post_modal">Post</a>
+            <a href="#" class="text-white bg-dark post open_post_modal" onclick="open_model()">Post</a>
             <div class="profile_model" style="display: none;">
                 <a href="#">Add an existing account</a>
                 <a href="#" id="logout">Log out @<?php echo $_SESSION['username']; ?></a>
@@ -147,17 +147,59 @@ if (!isset($_SESSION['login'])) {
 
         </div>
         <!-- Post Modal -->
-        <div class="modal fade" id="post_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="post_modal" tabindex="-1" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Post</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        <h3 class="modal-title" id="exampleModalLabel">Post</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <?php
-                        include 'post.php';
-                        ?>
+                        <div class="index-post-form">
+                            <div class="index-sess">
+                                <a href="profile.php" class="pro-fname">
+                                    <img src="images/profile_pic.png" alt="">
+                                </a>
+                            </div>
+                            <div class="index-inp">
+                                <form action="" id="post_content_form">
+                                    <input type="text" placeholder="What's happening?" name="index-input"
+                                        class="index_inputs">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="index-post-icons">
+                            <div class="post-icons">
+                                <form action="" method="post" enctype="multipart/form-data" id="post_media_form">
+                                    <label for="index-images">
+                                        <img src="images/image.png" alt="" height="16px" class="post-image-hover">
+                                    </label>
+                                    <input type="file" id="index-images" style="display: none;" name="index-image">
+                                </form>
+                            </div>
+                            <div class="post-icons">
+                                <img src="images/gif.png" alt="" height="20px">
+                            </div>
+                            <div class="post-icons">
+                                <img src="images/grok.png" alt="" height="20px">
+                            </div>
+                            <div class="post-icons">
+                                <img src="images/polling.png" alt="" height="20px">
+                            </div>
+                            <div class="post-icons">
+                                <img src="images/happy.png" alt="" height="18px">
+                            </div>
+                            <div class="post-icons">
+                                <img src="images/schedule.png" alt="" height="18px">
+                            </div>
+                            <div class="post-icons">
+                                <img src="images/location.png" alt="" height="18px">
+                            </div>
+                            <div class="post-btn">
+                                <a href="#" onclick="insert_post_modal()">Post</a>
+                            </div>
+                        </div>
+                        <p class="post-err modal-post-err-msg"></p>
                     </div>
                     <div class="modal-footer">
 

@@ -5,11 +5,11 @@
     </div>
 </div>
 <div class="footerss">
-    <p style="margin-top: 55px;" class="who-to-follow">Who to follow</p>
-    <div class="show-to-follow" style="display: block;">
+    <p style="margin-top: 55px;" class="who-to-follow"></p>
+    <div class="show-to-follow" style="display: block; width: 280px;">
 
     </div>
-    <p><a href="follow.php" class="show_more">Show More</a></p>
+    <p><a href="follow.php" class="show_more"></a></p>
     <a href="#" class="f-anchor">Terms of Service |</a>
     <a href="#" class="f-anchor"> Privacy Policy |</a>
     <a href="#" class="f-anchor"> Cookie Policy |</a>

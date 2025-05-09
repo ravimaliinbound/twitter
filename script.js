@@ -13,15 +13,63 @@ function fetch_data() {
         }
     });
 }
+//-------------- Open Post Model------------//
+function open_model() {
+    $("#post_modal").modal('show');
+}
 
-//-----------------------Post-------------//
+//-------------------- Post Validate----------------//
+function validate_post(e) {
+    var isValid = true;
+
+    var image = $("#index-image").val();
+    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+
+    if (!imgPattern.test(image)) {
+        $(".post-err-msg").text("Select a valid file");
+        isValid = false;
+    }
+    else {
+        $(".post-err-msg").text("");
+    }
+    if (image == "") {
+        $(".post-err-msg").text("");
+        isValid = true;
+    }
+    return isValid;
+}
+
+
+//-------------------- Modal Post Validate ----------------//
+function validate_post_modal(e) {
+    var isValid = true;
+
+    var image = $("#index-images").val();
+    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+
+    if (!imgPattern.test(image)) {
+        $(".modal-post-err-msg").text("Select a valid file");
+        isValid = false;
+    }
+    else {
+        $(".modal-post-err-msg").text("");
+    }
+    if (image == "") {
+        $(".modal-post-err-msg").text("");
+        isValid = true;
+    }
+    return isValid;
+}
+//-----------------Insert Post-------------//
 function insert_post() {
     var input = $(".index_input").val();
-    console.log(input)
-    var form = $('#media-form')[0];
-    var formData = new FormData(form);
+    var forms = $('#media_form')[0];
+    var formData = new FormData(forms);
     formData.append('input', input);
     formData.append('action', 'insert_post');
+    if (!validate_post()) {
+        return false;
+    }
     $.ajax({
         url: "action.php",
         type: "POST",
@@ -29,10 +77,35 @@ function insert_post() {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log(data)
-            $("#post_modal").modal('hide');
             $('#content_form')[0].reset();
-            $('#media-form')[0].reset();
+            $('#media_form')[0].reset();
+            show_post();
+            count_posts();
+        }
+    });
+}
+//------------------Insert Post With Modal-------------//
+function insert_post_modal() {
+    var input = $(".index_inputs").val();
+    var form = $('#post_media_form')[0];
+    var formData = new FormData(form);
+    formData.append('input', input);
+    formData.append('action', 'insert_post');
+    if (!validate_post_modal()) {
+        return false;
+    }
+    $.ajax({
+        url: "action.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            $('#post_content_form')[0].reset();
+            $('#post_media_form')[0].reset();
+            $("#post_modal").modal('hide');
+            show_post();
+            count_posts();
         }
     });
 }
@@ -42,6 +115,9 @@ function edit_user() {
     var form = $("#edit-user-form")[0];
     var formData = new FormData(form);
     formData.append('action', 'edit_user');
+    if (!validate_edit()) {
+        return false;
+    }
     $.ajax({
         url: "action.php",
         type: "post",
@@ -49,10 +125,70 @@ function edit_user() {
         contentType: false,
         processData: false,
         success: function () {
+            $("#edit-user").modal('hide');
             edit_profile();
             fetch_data();
         }
     })
+}
+
+//------------------------------ Edit Validate--------------------
+function validate_edit(e) {
+    var isValid = true;
+
+    // Patterns
+    var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
+    var usernamePattern = /^[a-zA-Z]{1,15}$/;
+
+    // Input Values
+    var name = $('#edit-name').val().trim();
+    var username = $('#edit-username').val().trim();
+    var email = $('#edit-email').val().trim();
+    var dob = $('#edit-dob').val().trim();
+
+    // ----------- Name Validation ------------
+    if (name == "") {
+        $("#err-editname").text("Name can't be blank");
+        isValid = false;
+    }
+    if (username == "") {
+        $("#err-editusername").text("Username can't be blank");
+        isValid = false;
+    }
+    else if (!usernamePattern.test(username)) {
+        $("#err-editusername").text("Enter a valid username");
+        isValid = false;
+    }
+    // ----------- Email Validation ------------
+    if (email == "") {
+        $("#err-editemail").text("Email can't be blank");
+        isValid = false;
+    } else if (!emailPattern.test(email)) {
+        $("#err-editemail").text("Enter a valid email");
+        isValid = false;
+    }
+
+    if ($("#edit_email_check").val() == 1) {
+        $("#err-editemail").text("Email has already been taken");
+        isValid = false;
+    }
+    if ($("#edit_username_check").val() == 1) {
+        $("#err-editusername").text("Username has already been taken");
+        isValid = false;
+    }
+
+    //----------DOB Validation-------------//
+
+    if (dob == "") {
+        $("#err-editdob").text("Date of birth can't be blank");
+        isValid = false;
+    }
+    return isValid;
+}
+
+//---------------- Open Edit Modal-----------------//
+function edit_modal() {
+    $("#edit-user").modal('show');
 }
 
 //------------------ Edit Profile Open Form (Modal)-------------------//
@@ -84,6 +220,11 @@ function edit_profile() {
                     'background': 'url(' + imageUrl + ')',
                     'background-size': '800px 250px',
                     'width': '100%'
+                });
+                $(".covers").css({
+                    'background': 'url(' + imageUrl + ')',
+                    'background-size': '800px 250px',
+                    'width': '82%'
                 });
             }
         }
@@ -117,7 +258,6 @@ function delete_post() {
 
 //--------------- Show Media-----------------------//
 function show_media() {
-    // console.log("Showing Media");
     $.ajax({
         url: "action.php",
         type: "post",
@@ -188,7 +328,12 @@ function footer() {
         data: { "action": "footer" },
         success: function (data) {
             var response = JSON.parse(data);
-            $(".show-to-follow").html(response)
+            var count = response.count;
+            if (count > 0) {
+                $(".show_more").text("Show More");
+                $(".who-to-follow").text("Who to follow");
+            }
+            $(".show-to-follow").html(response.arr)
         }
     });
 }
@@ -374,14 +519,17 @@ function loginvalidate(e) {
     return isValid;
 }
 
-//Document.ready
+//----------------------------------------------Document.ready-------------------------------------------------//
 
 $(document).ready(function () {
     count_posts();
     $(".remove-btn").click(function () {
         $('.remove').text("");
     });
-
+    //-------------- Open Edit Modal-------------//
+    $(".edit").click(function () {
+        edit_modal();
+    })
     $(".edit").css("text-decoration", "none");
     //----------Explore's Tabs hover------------//
 
@@ -411,7 +559,7 @@ $(document).ready(function () {
     });
 
     //-------------- Index Post-------------//
-    $(".index_input").focus(function () {
+    $(".index_input, .index_inputs").focus(function () {
         $(this).css("outline", " none")
     });
 
@@ -621,6 +769,179 @@ $(document).ready(function () {
             }
         });
     });
+
+    //---------------------- Limit Characters while Editing User details-------------------------//
+    var length = 15;
+    var bio = 150;
+    $("#edit-name").keyup(function () {
+        var len = length - $(this).val().length;
+        $(".name-span").text(len);
+    });
+    $("#edit-username").keyup(function () {
+        var len = length - $(this).val().length;
+        $(".username-span").text(len);
+    });
+    $("#edit-bio").keyup(function () {
+        var len = bio - $(this).val().length;
+        $(".bio-span").text(len);
+    });
+
+
+    //---------------------- Validation For Edit---------------------------//
+    //-----------Name Validation------------//
+    $("#edit-name").keyup(function () {
+        if ($("#edit-name").val().trim() == "") {
+            $("#err-editname").text("Name can't be blank");
+        }
+        if ($("#edit-name").val().trim() != "") {
+            $("#err-editname").text("");
+        }
+    });
+
+    //-----------Username Validation------------//
+    $("#edit-username").keyup(function () {
+        var name_val = $("#edit-username").val().trim();
+        var namePattern = /^[a-zA-Z]{1,15}$/;
+        if (namePattern.test(name_val)) {
+            $("#err-editusername").text("");
+        }
+        else {
+            $("#err-editusername").text("Enter a valid username");
+        }
+        if ($("#edit-username").val() == "") {
+            $("#err-editusername").text("Username can't be blank");
+        }
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "username": name_val, "action": "edit_username_check" },
+            success: function (response) {
+                var data = JSON.parse(response);
+                if (data.status == 'failed') {
+                    $("#edit_username_check").val(1);
+                    $("#err-editusername").text("Username has already been taken");
+                } else {
+                    $("#edit_username_check").val(0);
+                }
+            }
+        });
+        if (namePattern.test(name_val)) {
+            $("#err-editusername").text("");
+        }
+    });
+
+
+    //------------Email Validation----------------//
+
+    $("#edit-email").keyup(function () {
+        var mail = $("#edit-email").val();
+        var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
+        var a = emailPattern.test(mail);
+        if (a == true) {
+            $("#err-editemail").text("");
+        }
+        else {
+            $("#err-editemail").text("Enter a valid email");
+        }
+        if ($("#edit-email").val() == "") {
+            $("#err-editemail").text("Email can't be blank")
+            isValid = false;
+        }
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "email": mail, "action": "edit_email_check" },
+            success: function (response) {
+                var data = JSON.parse(response);
+                if (data.status == 'failed') {
+                    $("#edit_email_check").val(1);
+                    $("#err-editemail").text("Email has already been taken");
+                } else {
+                    $("#edit_email_check").val(0);
+                }
+            }
+        });
+    });
+    //--------------------- Date of Birth Validation----------------------//
+    $("#edit-dob").keyup(function () {
+        if ($(this).val() == "") {
+            $("#err-editdob").text("Date of birth can't be blank");
+        }
+        if ($(this).val() != "") {
+            $("#err-editdob").text("");
+        }
+    });
+
+
+    //------------------------------------- Post Validation----------------------------//
+
+    $("#index-image").change(function () {
+        var image = $("#index-image").val();
+        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+
+        if (!imgPattern.test(image)) {
+            $(".post-err-msg").text("Select a valid file");
+            $(".post-btn a").css('background-color', 'grey')
+            isValid = false;
+        }
+        else {
+            $(".post-err-msg").text("");
+            $(".post-btn a").css('background-color', 'black')
+        }
+        if (image == "") {
+            $(".post-err-msg").text("");
+            if ($(".index_input").val() == "") {
+                $(".post-btn a").css('background-color', 'grey')
+            }
+            else {
+                $(".post-btn a").css('background-color', 'black')
+            }
+        }
+    });
+
+
+    //------------------------------------- Modal Post Validation----------------------------//
+
+    $("#index-images").change(function () {
+        var image = $("#index-images").val();
+        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+
+        if (!imgPattern.test(image)) {
+            $(".modal-post-err-msg").text("Select a valid file");
+            $(".post-btn a").css('background-color', 'grey')
+            isValid = false;
+        }
+        else {
+            $(".modal-post-err-msg").text("");
+            $(".post-btn a").css('background-color', 'black')
+        }
+        if (image == "") {
+            $(".modal-post-err-msg").text("");
+            if ($(".index_inputs").val() == "") {
+                $(".post-btn a").css('background-color', 'grey')
+            }
+            else {
+                $(".post-btn a").css('background-color', 'black')
+            }
+        }
+    });
+
+    //-----------------Disable Post Button-------------//
+
+    if ($(".index_input").val() == "") {
+        $(".post-btn a").css('background-color', 'grey')
+    }
+    else {
+        $(".post-btn a").css('background-color', 'black')
+    }
+    $(".index_input, .index_inputs").keyup(function () {
+        if ($(this).val() == "") {
+            $(".post-btn a").css('background-color', 'grey')
+        }
+        else {
+            $(".post-btn a").css('background-color', 'black')
+        }
+    })
 
 
 
