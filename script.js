@@ -81,6 +81,7 @@ function insert_post() {
             $('#media_form')[0].reset();
             show_post();
             count_posts();
+            $(".post-btn a").css('background-color', 'grey')
         }
     });
 }
@@ -244,12 +245,13 @@ function delete_post() {
         $.ajax({
             url: "action.php",
             type: "post",
-            data: { 'action': 'delete_post', 'id': id },
-            success: function () {
+            data: { 'action': 'delete_post', 'post_id': id },
+            success: function (data) {
                 $('#deleteModal').modal('hide');
                 show_media();
                 count_posts();
                 show_post();
+                console.log(data)
             }
         });
     }
@@ -314,11 +316,6 @@ function like_count(like) {
     console.log(like)
 }
 
-
-//-------------------- Comment Count--------------------//
-function comment_count(comment) {
-    console.log(comment)
-}
 
 //------------------Footer Who to follow-----------------//
 function footer() {
@@ -523,6 +520,26 @@ function loginvalidate(e) {
 
 $(document).ready(function () {
     count_posts();
+//---------------Post Like -------------------//
+     $(document).on('click', '.like-icon', function () {
+        var post_id = $(this).data('post-id');
+        var heartIcon = $(this).children('i.heart-icon');
+
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "post_id": post_id, "action": "like", "type" : "post" },
+            success: function (response) {
+                console.log(response);
+                show_post();
+            }
+        });
+    });
+
+    
+
     $(".remove-btn").click(function () {
         $('.remove').text("");
     });
@@ -941,8 +958,8 @@ $(document).ready(function () {
         else {
             $(".post-btn a").css('background-color', 'black')
         }
-    })
-
+    });
+   
 
 
 });

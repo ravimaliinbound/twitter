@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2025 at 04:19 PM
+-- Generation Time: May 11, 2025 at 06:20 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -58,14 +58,23 @@ CREATE TABLE `twitter_followers` (
 
 CREATE TABLE `twitter_likes` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `likes_count` varchar(255) DEFAULT NULL,
-  `comment_id` int(11) DEFAULT NULL,
-  `reply_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `user_id` int(11) NOT NULL,
+  `liked_id` int(11) NOT NULL,
+  `likeable_type` enum('post','comment','reply') NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `twitter_likes`
+--
+
+INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `created_at`, `updated_at`) VALUES
+(19, 9, 119, 'post', '2025-05-11 18:51:29', '2025-05-11 18:51:29'),
+(30, 9, 171, 'post', '2025-05-11 18:58:33', '2025-05-11 18:58:33'),
+(33, 9, 202, 'post', '2025-05-11 21:06:29', '2025-05-11 21:06:29'),
+(35, 9, 118, 'post', '2025-05-11 21:08:24', '2025-05-11 21:08:24'),
+(38, 9, 48, 'post', '2025-05-11 21:16:37', '2025-05-11 21:16:37');
 
 -- --------------------------------------------------------
 
@@ -112,7 +121,8 @@ INSERT INTO `twitter_posts` (`id`, `user_id`, `content`, `media`, `total_comment
 (87, 9, 'Hello Guys...! My name is Ravi Mali', NULL, '0', '0', '2025-05-08 12:02:27', '2025-05-08 12:02:27'),
 (118, 9, 'I am going to Home', NULL, '0', '0', '2025-05-08 14:02:59', '2025-05-08 14:02:59'),
 (119, 9, 'Good Morning...!', NULL, '0', '0', '2025-05-09 04:25:27', '2025-05-09 04:25:27'),
-(171, 9, 'Hello', NULL, '0', '0', '2025-05-09 11:36:55', '2025-05-09 11:36:55');
+(171, 9, 'Hello', NULL, '0', '0', '2025-05-09 11:36:55', '2025-05-09 11:36:55'),
+(202, 9, 'I am here...!', NULL, '0', '0', '2025-05-11 08:27:46', '2025-05-11 08:27:46');
 
 -- --------------------------------------------------------
 
@@ -189,10 +199,7 @@ ALTER TABLE `twitter_followers`
 --
 ALTER TABLE `twitter_likes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `comment_id` (`comment_id`),
-  ADD KEY `reply_id` (`reply_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `twitter_notifications`
@@ -243,7 +250,7 @@ ALTER TABLE `twitter_followers`
 -- AUTO_INCREMENT for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `twitter_notifications`
@@ -255,7 +262,7 @@ ALTER TABLE `twitter_notifications`
 -- AUTO_INCREMENT for table `twitter_posts`
 --
 ALTER TABLE `twitter_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
 -- AUTO_INCREMENT for table `twitter_replies`
@@ -291,10 +298,7 @@ ALTER TABLE `twitter_followers`
 -- Constraints for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  ADD CONSTRAINT `twitter_likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`),
-  ADD CONSTRAINT `twitter_likes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `twitter_posts` (`id`),
-  ADD CONSTRAINT `twitter_likes_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `twitter_comments` (`id`),
-  ADD CONSTRAINT `twitter_likes_ibfk_4` FOREIGN KEY (`reply_id`) REFERENCES `twitter_replies` (`id`);
+  ADD CONSTRAINT `twitter_likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `twitter_notifications`

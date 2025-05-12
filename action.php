@@ -123,7 +123,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
         'arr' => $arr_footer,
         'count' => $count
     ]);
-
 }
 
 
@@ -335,7 +334,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
     }
     $arr_footer .= "";
     echo json_encode($arr_footer);
-
 }
 
 //------------------ Show Media----------------//
@@ -357,7 +355,14 @@ if (isset($_POST['action']) && $_POST['action'] == "show_media") {
 //------------------ Show Post----------------//
 if (isset($_POST['action']) && $_POST['action'] == "show_post") {
     $username = $_SESSION['username'];
-    $show_post_query = "SELECT twitter_posts.id, twitter_posts.content, twitter_posts.media, twitter_posts.created_at,
+    /*------------ Getting user id-------------*/
+    $u_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $u_result = $conn->query($u_query);
+    $u_data = $u_result->fetch_object();
+    $user_id = $u_data->id;
+
+    $show_post_query = "SELECT twitter_posts.id, twitter_posts.content, twitter_posts.media, 
+                        twitter_posts.created_at,
                         twitter_posts.total_comments, twitter_posts.total_likes,
                         twitter_users.name, twitter_users.username FROM twitter_posts JOIN 
                         twitter_users ON twitter_posts.user_id = twitter_users.id WHERE 
@@ -365,13 +370,23 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
     $run_query = $conn->query($show_post_query);
     $post_data = '';
     while ($data = $run_query->fetch_object()) {
-        $likes = $data->total_likes;
-        $comments = $data->total_comments;
-        if ($likes == 0) {
-            $likes = Null;
-        }
-        if ($comments == 0) {
-            $comments = Null;
+        /*--------------- Total Likes---------------*/
+        $post_id = $data->id;
+        $query = "SELECT COUNT(*) AS total_likes 
+          FROM twitter_likes 
+          WHERE liked_id = $post_id 
+          AND likeable_type = 'post'";
+
+        $result = $conn->query($query);
+
+        if ($result) {
+            $likes = $result->fetch_assoc();
+            $total_likes = $likes['total_likes'];
+            if ($total_likes == 0) {
+                $total_likes = null;
+            }
+        } else {
+            echo "Error: " . $conn->error;
         }
         //--------------- Time of post--------------------
         date_default_timezone_set("Asia/Kolkata");
@@ -396,6 +411,18 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
         if ($diff->format('%y') > 0) {
             $print = $post_date->format('M j Y');
         }
+
+        /*----------------- Check user has liked the post or not--------------------*/
+        $check_query = "SELECT * FROM twitter_likes 
+                WHERE user_id = $user_id 
+                AND liked_id = $post_id 
+                AND likeable_type = 'post'";
+
+        $check_result = $conn->query($check_query);
+
+        $already_liked = ($check_result->num_rows > 0);
+        $liked = $already_liked ? 'liked' : '';
+
         if ($data->media != "") {
 
             $post_data .= "<div class='user-post'>
@@ -404,9 +431,8 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                             </div>
                             <div class='postuser-name'>
                                 <p>
-                                    <input type='hidden' id='hidden' value='0'>
-                                     <input type='hidden' id='liked' value='0'>
                                     <input type='hidden' id='commented' value='0'>
+                                    <input type='hidden' id='hidden' value='0'>
                                     <span class='post-name'>$data->name </span>
                                     <span class='post-username'>@$data->username</span>
                                     <span class='time' title='$title'>· $print</span>
@@ -420,13 +446,13 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                                 </div>
                                 <p class='icons'>
                                     <span class='comment-icon'>
-                                        <img src='images/chat.png' height='17px' title='Reply' onclick='comment_count($data->total_comments)>
+                                        <img src='images/chat.png' height='17px' title='Reply'>
                                     </span>
-                                    <span class='comment-count'>$comments</span>
-                                     <span class='like-icon'>
-                                        <img src='images/heart.png' height='18px' title='Like' onclick='like_count($data->total_likes)'>
+                                    <span class='comment-count'></span>
+                                    <span class='like-icon' data-post-id='{$data->id}'>
+                                        <i class='heart-icon fa fa-heart $liked'></i>
                                     </span>
-                                    <span class='like' >$likes</span>
+                                    <span class='like'>$total_likes</span>
                                 </p>
                             </div>
                         </div>";
@@ -437,9 +463,8 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                             </div>
                             <div class='postuser-name'>
                                 <p>
-                                    <input type='hidden' id='hidden' value='0'>
-                                    <input type='hidden' id='liked' value='0'>
                                     <input type='hidden' id='commented' value='0'>
+                                    <input type='hidden' id='hidden' value='0'>
                                     <span class='post-name'>$data->name </span>
                                     <span class='post-username'>@$data->username</span>
                                     <span class='time' title='$title'>· $print</span>
@@ -450,13 +475,13 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                                 <p class='post-content'>$data->content</p>
                                 <p class='icons'>
                                     <span class='comment-icon'>
-                                        <img src='images/chat.png' height='17px' title='Reply' onclick='comment_count($data->total_comments)'>
+                                        <img src='images/chat.png' height='17px' title='Reply''>
                                     </span>
-                                    <span class='comment-count'>$comments</span>
-                                     <span class='like-icon'>
-                                        <img src='images/heart.png' height='18px' title='Like' onclick='like_count($data->total_likes)'>
+                                    <span class='comment-count'></span>
+                                     <span class='like-icon' data-post-id='{$data->id}'>
+                                        <i class='heart-icon fa fa-heart $liked'></i>
                                     </span>
-                                    <span class='like'>$likes</span>
+                                    <span class='like'>$total_likes</span>
                                 </p>
                             </div>
                         </div>";
@@ -483,7 +508,7 @@ if (isset($_POST['action']) && $_POST['action'] == "count_posts") {
 //----------------------- Delete Post------------------//
 
 if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
-    $id = $_POST['id'];
+    $id = $_POST['post_id'];
 
     $get_img = "SELECT media FROM twitter_posts WHERE id = '$id'";
     $run_query = $conn->query($get_img);
@@ -494,9 +519,58 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
     $del = "DELETE FROM twitter_posts WHERE id = '$id'";
     $run = $conn->query($del);
     if ($run) {
-        unlink('posts/' . $media);
+        if ($media) {
+            unlink('posts/' . $media);
+        }
+        echo 'Deleted';
     }
 }
 
 
-?>
+//----------------------- Like Post------------------//
+
+if (isset($_POST['action']) && $_POST['action'] == 'like') {
+
+    $username = $_SESSION['username'];
+
+    // Step 1: Get user ID
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "User fetch error: " . $conn->error;
+        exit;
+    }
+
+    $data = $run->fetch_object();
+    $id = $data->id;
+    $post_id = $_POST['post_id'];
+    $type = $_POST['type'];
+
+    // Step 2: Check if already liked
+    $sel = "SELECT * FROM twitter_likes WHERE user_id = $id AND liked_id = $post_id";
+    $res = $conn->query($sel);
+    if (!$res) {
+        echo "Like check error: " . $conn->error;
+        exit;
+    }
+
+    if ($res->num_rows > 0) {
+        // Unlike
+        $delete = "DELETE FROM twitter_likes WHERE user_id = $id AND liked_id = $post_id";
+        $result = $conn->query($delete);
+        if (!$result) {
+            echo "Delete error: " . $conn->error;
+        } else {
+            echo "Disliked";
+        }
+    } else {
+        // Like
+        $insert = "INSERT INTO twitter_likes (user_id, liked_id, likeable_type) VALUES ($id, $post_id, '$type')";
+        $result = $conn->query($insert);
+        if (!$result) {
+            echo "Insert error: " . $conn->error;
+        } else {
+            echo "Liked";
+        }
+    }
+}
