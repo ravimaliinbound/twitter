@@ -38,25 +38,26 @@ include_once 'headers.php'
                         <label for="edit-name">Name</label>
                         <input type="text" class="form-control" id="edit-name" aria-describedby="nameHelp"
                             placeholder="Enter Name" name="edit-name" maxlength="15">
-                            <span id="err-editname" class="error"></span>
-                            <span class="length name-span">15</span>
+                        <span id="err-editname" class="error"></span>
+                        <span class="length name-span">15</span>
                     </div>
                     <div class="form-group">
                         <label for="edit-username">Username</label>
                         <input type="text" class="form-control" id="edit-username" aria-describedby="usernameHelp"
                             placeholder="Enter Username" name="edit-username" maxlength="15">
-                            <span id="err-editusername" class="error"></span>
-                            <span class="length username-span">15</span>
+                        <span id="err-editusername" class="error"></span>
+                        <span class="length username-span">15</span>
                     </div>
                     <div class="form-group">
                         <label for="edit-email">Email</label>
                         <input type="email" class="form-control" id="edit-email" placeholder="Enter Email"
                             name="edit-email">
-                            <span id="err-editemail" class="error"></span>
+                        <span id="err-editemail" class="error"></span>
                     </div>
                     <div class="form-group">
                         <label for="edit-bio">Bio</label>
-                        <input type="text" class="form-control" id="edit-bio" placeholder="Enter Bio" name="edit-bio" maxlength="150">
+                        <input type="text" class="form-control" id="edit-bio" placeholder="Enter Bio" name="edit-bio"
+                            maxlength="150">
                         <span class="length bio-span">150</span>
                     </div>
                     <div class="form-group">
@@ -125,6 +126,52 @@ include_once 'headers.php'
         </div>
     </div>
 </div>
+
+
+
+<!--------------------Comment Modal--------------------->
+<div class="modal" id="comment-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="" id="comment_form">
+                    <div class="parent_div">
+                        <div class="comment_profile_pic">
+                            <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
+                                class="comment_dp">
+                        </div>
+                        <div class="comment_user">
+                            <p>
+                                <span class="comment_name"></span>
+                                <span class="comment_username"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="text" name="comment_input" id="comment_input" placeholder="Post your reply"
+                            maxlength="500">
+                        <span class="comment_span">500</span>
+                        <p class="comment-err-msg"></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="">
+                <button type="submit" class="comment_reply_btn">Reply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="profile">
     <div class="profile-name">

@@ -256,7 +256,7 @@
 
 /* Main Footer css */
 .footers {
-    width: 16%;
+    width: 18%;
     margin-left: 1028px;
     position: fixed;
     padding: 10px;
@@ -270,6 +270,8 @@
     border: 1px solid rgb(239, 243, 244);
     border-radius: 5px;
     padding: 10px;
+    width: 18%;
+    position: fixed;
     color: black;
 }
 
@@ -478,6 +480,7 @@
     cursor: pointer;
 }
 
+
 .post-btn a,
 .post-button a {
     text-decoration: none;
@@ -492,205 +495,49 @@
     margin-left: 30px;
 }
 
-/* Explore Tab */
-.explore {
-    width: 40%;
-    border: 1px solid rgb(239, 243, 244);
-    position: absolute;
-    border-radius: 5px;
-    margin-left: 250px;
+.parent_div {
+    display: flex;
 }
 
-.exp {
-    margin-top: 20px;
-}
-
-.explore-search-div {
-    border: 1px solid rgb(239, 243, 244);
-    padding: 10px;
-    width: 80%;
-    border-radius: 20px;
-    margin-left: 30px;
-}
-
-.explore-search-input {
-    border: none;
-    width: 90%;
+.comment_user {
+    margin-top: 5px;
     margin-left: 10px;
 }
 
-.explore-setting {
-    margin-top: 10px;
-    margin-left: 30px;
+.comment_name {
+    font-size: 18px;
+    font-weight: 500;
 }
 
-.explore-setting a {
-    color: black;
-    font-size: 20px;
-}
-
-.explore-list li {
-    list-style: none;
-    display: inline-block;
-    margin-top: 20px;
-    margin-left: -3px;
-}
-
-.explore-list a {
-    text-decoration: none;
-    padding: 10px 35px;
+.comment_username {
     color: grey;
-    font-weight: 500;
 }
 
-.explore-foryou {
-    margin-top: 130px;
+#comment_input {
+    margin-top: 8px;
+    margin-left: 40px;
+    width: 380px;
+    border: none;
 }
 
-.todays-news {
+#comment_input::placeholder {
     font-size: 20px;
-    font-weight: 600;
 }
 
-.foryou-news-heading {
-    text-decoration: none;
-    font-size: 20px;
-    padding: 20px 86.9px;
-    color: black;
-    width: 100%;
-    font-weight: 500;
+.comment_reply_btn {
+    color: white;
+    background-color: grey;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin-left: 350px;
+    margin-bottom: 10px;
 }
 
-.foryou-news-heading:hover {
-    background-color: rgb(247, 247, 247);
-    color: black;
-}
-
-.news-div {
-    margin-top: 30px;
-}
-
-.explore-fix {
-    position: fixed;
-    border-right: 1px solid rgb(239, 243, 244);
-    border-bottom: 1px solid rgb(239, 243, 244);
-    width: 40%;
-    background-color: white;
-}
-
-.explore-fix:hover {
-    cursor: pointer;
-}
-
-.trending {
-    margin-top: 140px;
-}
-
-.trend-hover {
-    padding: 10px;
-}
-
-.trending a {
-    text-decoration: none;
-}
-
-.trend {
-    font-size: 15px;
-}
-
-.title {
-    font-weight: 700;
-}
-
-.trend-hover:hover {
-    cursor: pointer;
-    background-color: rgb(247, 247, 247);
-}
-
-.news {
-    margin-top: 140px;
-}
-
-.news-hover {
-    padding: 10px;
-}
-
-.news a {
-    text-decoration: none;
-}
-
-.newss {
-    font-size: 15px;
-}
-
-.news-title {
-    font-weight: 700;
-}
-
-.news-hover:hover {
-    cursor: pointer;
-    background-color: rgb(247, 247, 247);
-}
-
-.sport {
-    margin-top: 140px;
-}
-
-.sports-hover {
-    padding: 10px;
-}
-
-.sports-hover a {
-    text-decoration: none;
-}
-
-.sports {
-    font-size: 15px;
-}
-
-.sports-title {
-    font-weight: 700;
-}
-
-.sports-hover:hover {
-    cursor: pointer;
-    background-color: rgb(247, 247, 247);
-}
-
-.entertainment {
-    margin-top: 140px;
-}
-
-.enter-hover {
-    padding: 10px;
-}
-
-.enter-hover a {
-    text-decoration: none;
-}
-
-.enter {
-    font-size: 15px;
-}
-
-.enter-title {
-    font-weight: 700;
-}
-
-.enter-hover:hover {
-    cursor: pointer;
-    background-color: rgb(247, 247, 247);
-}
-
-.dots {
-    margin-left: 550px;
-    padding: 10px;
-    border-radius: 50%;
-}
-
-.dots:hover {
-    background-color: rgb(225, 238, 246);
-    color: rgb(48, 203, 255);
+.comment-err-msg {
+    color: red;
+    margin-left: 40px;
+    margin-top: 20px;
 }
 
 /* Notification Tab */
@@ -788,7 +635,10 @@
     font-size: 20px;
     font-weight: 700;
 }
-
+.user_pro-name {
+    font-size: 20px;
+    font-weight: 700;
+}
 .cover {
     margin-top: -8px;
     height: 200px;
@@ -798,7 +648,16 @@
     width: 100%;
     background-repeat: no-repeat;
 }
-
+.user_cover {
+    margin-top: -8px;
+    height: 200px;
+    /* background: rgb(207, 217, 222); */
+    background: url('images/Capture.PNG');
+    background-size: 700px 200px;
+    width: 100%;
+    background-size: 800px 250px;
+    background-repeat: no-repeat;
+}
 .covers {
     height: 160px;
 }
@@ -816,8 +675,37 @@
     background-color: rgb(231, 231, 231);
 }
 
+.user_profile-pic {
+    height: 100px;
+    width: 100px;
+    margin-left: 50px;
+    margin-top: -50px;
+    border-radius: 50%;
+    background-color: rgb(231, 231, 231);
+}
+
 .edit-btn {
     margin-top: 30px;
+}
+
+.follow-btn {
+    margin-top: 10px;
+}
+
+.follow {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 550px;
+    width: fit-content;
+    background-color: black;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.follow:hover {
+    color: white;
 }
 
 .edit-profile-pic {
@@ -1075,6 +963,10 @@
 }
 
 .profile_pics {
+    background-color: #d4d4d4;
+}
+
+.user_profile_pics {
     background-color: #d4d4d4;
 }
 

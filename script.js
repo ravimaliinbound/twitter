@@ -18,6 +18,19 @@ function open_model() {
     $("#post_modal").modal('show');
 }
 
+/*------------------- Show For You Posst-----------------*/
+function show_foryou_post() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_foryou_post" },
+        success: function (response) {
+            // var data =  JSON.parse(response)
+            $(".for_you_post").html(response);
+            // $(".for_you_post").html(data.post_data);
+        }
+    });
+}
 //-------------------- Post Validate----------------//
 function validate_post(e) {
     var isValid = true;
@@ -62,7 +75,7 @@ function validate_post_modal(e) {
 }
 //-----------------Insert Post-------------//
 function insert_post() {
-    var input = $(".index_input").val();
+    var input = $(".index_input").val().trim();
     var forms = $('#media_form')[0];
     var formData = new FormData(forms);
     formData.append('input', input);
@@ -81,13 +94,14 @@ function insert_post() {
             $('#media_form')[0].reset();
             show_post();
             count_posts();
-            $(".post-btn a").css('background-color', 'grey')
+            $(".post-btn a").css('background-color', 'grey');
+            show_foryou_post();
         }
     });
 }
 //------------------Insert Post With Modal-------------//
 function insert_post_modal() {
-    var input = $(".index_inputs").val();
+    var input = $(".index_inputs").val().trim();
     var form = $('#post_media_form')[0];
     var formData = new FormData(form);
     formData.append('input', input);
@@ -299,22 +313,47 @@ function show_post() {
         url: "action.php",
         type: "post",
         data: { "action": "show_post" },
-        success: function (data) {
-            $(".posts").html(data);
+        success: function (response) {
+            var data = JSON.parse(response);
+            $(".posts").html(data.post_data);
+            $(".comment_name").text(data.name)
+            $(".comment_username").text('@' + data.username)
         }
-    })
+    });
 }
 
-
-//-------------------- Likes Count----------------------//
-function like_count(like) {
-    console.log(like)
-    var like_inp = $("#liked").val();
-    if (like_inp == 0) {
-        like++;
-    }
-    console.log(like)
+/*---------------- Show Other User----------------*/
+function show_user(username) {
+    $.ajax({
+        url: 'action.php',
+        type: 'post',
+        data: { 'action': 'show_user', 'username': username },
+        success: function (response) {
+            var data = JSON.parse(response);
+            $(".user_pro-name").text(data.name)
+            $(".user_username").text(data.username)
+            $(".user_joined").text(data.joined)
+            var profile = data.profile;
+            var cover = data.cover;
+            if (profile == "") {
+                $(".user_profile_pics").attr('src', 'images/profile_pic.png');
+            } else {
+                $(".user_profile_pics").attr('src', 'profile_pic/' + profile);
+            }
+            if (cover == "") {
+                $(".user_cover").css('background', 'rgb(207, 217, 222)');
+            } else {
+                var imageUrl = 'cover_pic/' + cover;
+                $(".user_cover").css({
+                    'background': 'url(' + imageUrl + ')',
+                    'background-size': '800px 250px',
+                    'width': '100%'
+                });
+            }
+        }
+    });
 }
+
 
 
 //------------------Footer Who to follow-----------------//
@@ -516,12 +555,59 @@ function loginvalidate(e) {
     return isValid;
 }
 
+//-------------------- Comment Validate----------------//
+function validate_comment(e) {
+    var isValid = true;
+
+    var comment = $("#comment_input").val();
+    if (comment == "") {
+        $(".comment-err-msg").text("Comment can't be blank");
+        isValid = false;
+    }
+    else {
+        $(".comment-err-msg").text("");
+    }
+    return isValid;
+}
+
 //----------------------------------------------Document.ready-------------------------------------------------//
 
 $(document).ready(function () {
     count_posts();
-//---------------Post Like -------------------//
-     $(document).on('click', '.like-icon', function () {
+
+
+    /*-------------- Open Comment Modal----------------------*/
+    $(document).on('click', '.open_comment_modal', function () {
+        $("#comment-modals").modal("show");
+        var post_id = $(this).data('post-id');
+        $("#commented").val(post_id);
+        $(".comment-err-msg").text("");
+    });
+
+    //---------------Comment Insert-------------------//
+    $(document).on('click', '.comment_reply_btn', function () {
+        var post_id = $("#commented").val();
+        var comment = $("#comment_input").val();
+        console.log(post_id)
+        if (!validate_comment()) {
+            return false;
+        }
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
+            success: function (data) {
+                console.log(data)
+                $("#comment-modal").modal("hide");
+                $(".comment_span").text(500);
+                $(".comment_reply_btn").css('background-color', 'grey')
+                $("#comment_form")[0].reset();
+                show_post();
+            }
+        })
+    });
+    //---------------Post Like -------------------//
+    $(document).on('click', '.like-icon', function () {
         var post_id = $(this).data('post-id');
         var heartIcon = $(this).children('i.heart-icon');
 
@@ -530,15 +616,21 @@ $(document).ready(function () {
         $.ajax({
             url: 'action.php',
             type: 'POST',
-            data: { "post_id": post_id, "action": "like", "type" : "post" },
+            data: { "post_id": post_id, "action": "like", "type": "post" },
             success: function (response) {
                 console.log(response);
                 show_post();
+                show_foryou_post();
             }
         });
     });
 
-    
+
+    /*----------Comment Input Outline---------*/
+    $("#comment_input").focus(function () {
+        $(this).css("outline", " none")
+    });
+
 
     $(".remove-btn").click(function () {
         $('.remove').text("");
@@ -789,18 +881,72 @@ $(document).ready(function () {
 
     //---------------------- Limit Characters while Editing User details-------------------------//
     var length = 15;
-    var bio = 150;
+    var post = 500;
     $("#edit-name").keyup(function () {
-        var len = length - $(this).val().length;
+        var len = length - $(this).val().trim().length;
         $(".name-span").text(len);
+        if (len < 11) {
+            $(".name-span").css("color", "red");
+        }
+        else {
+            $(".name-span").css("color", "black");
+        }
     });
     $("#edit-username").keyup(function () {
-        var len = length - $(this).val().length;
+        var len = length - $(this).val().trim().length;
         $(".username-span").text(len);
+        if (len < 11) {
+            $(".username-span").css("color", "red");
+        }
+        else {
+            $(".commusername-spanent_span").css("color", "black");
+        }
     });
     $("#edit-bio").keyup(function () {
-        var len = bio - $(this).val().length;
+        var len = bio - $(this).val().trim().length;
         $(".bio-span").text(len);
+        if (len < 11) {
+            $(".bio-span").css("color", "red");
+        }
+        else {
+            $(".bio-span").css("color", "black");
+        }
+    });
+    $(".index_input").keyup(function () {
+        var len = post - $(this).val().trim().length;
+        $(".index_input_span").text(len);
+        if (len < 11) {
+            $(".index_input_span").css("color", "red");
+        }
+        else {
+            $(".index_input_span").css("color", "black");
+        }
+    });
+    $(".index_inputs").keyup(function () {
+        var len = post - $(this).val().trim().length;
+        $(".index_inputs_span").text(len);
+        if (len < 11) {
+            $(".index_inputs_span").css("color", "red");
+        }
+        else {
+            $(".index_inputs_span").css("color", "black");
+        }
+    });
+    $("#comment_input").keyup(function () {
+        var len = post - $(this).val().trim().length;
+        $(".comment_span").text(len);
+        if ($(this).val().trim() != "") {
+            $(".comment-err-msg").text("");
+        }
+        else {
+            $(".comment-err-msg").text("Comment can't be blank");
+        }
+        if (len < 11) {
+            $(".comment_span").css("color", "red");
+        }
+        else {
+            $(".comment_span").css("color", "black");
+        }
     });
 
 
@@ -917,7 +1063,7 @@ $(document).ready(function () {
     });
 
 
-    //------------------------------------- Modal Post Validation----------------------------//
+    /*------------------------------------- Modal Post Validation----------------------------*/
 
     $("#index-images").change(function () {
         var image = $("#index-images").val();
@@ -943,7 +1089,7 @@ $(document).ready(function () {
         }
     });
 
-    //-----------------Disable Post Button-------------//
+    /*-----------------Disable Post Button-------------*/
 
     if ($(".index_input").val() == "") {
         $(".post-btn a").css('background-color', 'grey')
@@ -952,15 +1098,20 @@ $(document).ready(function () {
         $(".post-btn a").css('background-color', 'black')
     }
     $(".index_input, .index_inputs").keyup(function () {
-        if ($(this).val() == "") {
+        if ($(this).val().trim() == "") {
             $(".post-btn a").css('background-color', 'grey')
         }
         else {
             $(".post-btn a").css('background-color', 'black')
         }
     });
-   
-
-
+    $("#comment_input").keyup(function () {
+        if ($(this).val().trim() == "") {
+            $(".comment_reply_btn").css('background-color', 'grey')
+        }
+        else {
+            $(".comment_reply_btn").css('background-color', 'black')
+        }
+    });
 });
 

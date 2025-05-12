@@ -6,7 +6,9 @@
     </div>
     <div class="index-inp">
         <form action="" id="content_form">
-            <input type="text" placeholder="What's happening?" name="index-input" class="index_input">
+            <input type="text" placeholder="What's happening?" name="index-input" class="index_input" maxlength="500"
+                style="width: 630px">
+            <span class="index_input_span">500</span>
         </form>
     </div>
 </div>

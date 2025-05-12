@@ -65,7 +65,7 @@ if (!isset($_SESSION['login'])) {
                         <i class="fa-solid fa-house"></i><span id="home">Home</span>
                     </li>
                 </a>
-                <a href="explore.php">
+                <a href="#">
                     <li>
                         <i class="fa-solid fa-magnifying-glass"></i><span id="explore">Explore</span>
                     </li>
@@ -164,7 +164,8 @@ if (!isset($_SESSION['login'])) {
                             <div class="index-inp">
                                 <form action="" id="post_content_form">
                                     <input type="text" placeholder="What's happening?" name="index-input"
-                                        class="index_inputs">
+                                        class="index_inputs" style=" width: 380px">
+                                        <span class="index_inputs_span">500</span>
                                 </form>
                             </div>
                         </div>

@@ -21,9 +21,14 @@ include_once 'headers.php'
     <?php
     include_once 'index-post.php';
     ?>
+    <div class="for_you_post"></div>
 </div>
-
 
 <?php
 include_once 'footers.php';
 ?>
+<script>
+    $(document).ready(function () {
+        show_foryou_post();
+    });
+</script>
