@@ -7,11 +7,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
     $username = $_SESSION['username'];
     $sel_id = "SELECT id FROM twitter_users WHERE username = '$username'";
     $run_id = $conn->query($sel_id);
-    $arr_id = null;
     while ($data = $run_id->fetch_object()) {
-        $arr_id = $data->id;
+        $user_id = $data->id;
     }
-    $sel = "SELECT * FROM twitter_users WHERE id = '$arr_id'";
+    $sel = "SELECT * FROM twitter_users WHERE id = '$user_id'";
     $run = $conn->query($sel);
 
     $data = [];
@@ -111,7 +110,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
         $arr_footer .=
             " <div style = 'display: flex;' class='background'>
                 <div class='show-img' style='margin-top: 6px;' href='user_profile.php'  onclick='show_user(`$data->username`)'>
-                    <a href='user_profile.php' onclick='show_user(`$data->username`)'>
+                    <a onclick='show_user(`$data->username`)'>
                         <img src='images/profile_pic.png' height='40px' style='border-radius: 50%'>
                     </a>
                 </div>
@@ -324,15 +323,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
         $arr_footer .=
             " <div style = 'display: flex;' class= 'background-follow'>
                 <div class='showw-img' style='margin-top: 6px;'   onclick='show_user(`$data->username`)'>
-                    <a href='user_profile.php'><img src='images/profile_pic.png' 
+                    <a ><img src='images/profile_pic.png' 
                         height='40px' width= '40px' style='border-radius: 50%'>
                     </a>
                 </div>
                 <div class='show-to-followw-data' style='width:50%'   onclick='show_user(`$data->username`)'>
                     <p>
-                        <a href='user_profile.php' class='show-to-followw-name'>$data->name</a><br>
-                        <a href='user_profile.php' class='show-to-followw-username' >@$data->username</a><br>
-                        <a href='user_profile.php' class='show-to-followw-username' >$data->bio</a>
+                        <a class='show-to-followw-name'>$data->name</a><br>
+                        <a class='show-to-followw-username' >@$data->username</a><br>
+                        <a class='show-to-followw-username' >$data->bio</a>
                     </p>
                 </div>
                 <div class='show-to-followw-btn'>
@@ -629,7 +628,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
     }
 }
 
-/*----------------------------- Comment Insert-----------------------*/
+/*-----------------------------Show Other User Profile-----------------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'show_user') {
     $username = $_POST['username'];
 
@@ -648,9 +647,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_user') {
 }
 
 
+
 /*------------------------Show For You Posts---------------------*/
 
 if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
+    $username  = $_SESSION['username'];
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "User fetch error: " . $conn->error;
+        exit;
+    }
+
+    $data = $run->fetch_object();
+    $id = $data->id;
     $select = 'SELECT * FROM twitter_posts ORDER BY id DESC';
     $run = $conn->query($select);
     $data = '';
@@ -678,7 +688,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
 
         /*----------------- Check user has liked the post or not--------------------*/
         $check_query = "SELECT * FROM twitter_likes 
-                WHERE user_id = $user_id 
+                WHERE user_id = $id 
                 AND liked_id = $post_id 
                 AND likeable_type = 'post'";
 
@@ -741,6 +751,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                             <div class='postuser-name'>
                                 <p>
                                     <input type='hidden' id='commented' value='0'>
+                                    <input type='hidden' id='commented_foryou' value='0'>
                                     <input type='hidden' id='hidden' value='0'>
                                     <span class='post-name'>$user_data->name </span>
                                     <span class='post-username'>@$user_data->username</span>
@@ -751,7 +762,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                                     <img src='posts/$data->media' alt='Post Image'>
                                 </div>
                                 <p class='icons'>
-                                    <span class='comment-icon open_comment_modal' data-post-id='{$data->id}'>
+                                    <span class='comment-icon open_comment_modal_foryou' data-post-id='{$data->id}'>
                                         <img src='images/chat.png' height='17px' title='Reply'>
                                     </span>
                                     <span class='comment-count'>$total_comments</span>
@@ -770,6 +781,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                             <div class='postuser-name'>
                                 <p>
                                     <input type='hidden' id='commented' value='0'>
+                                    <input type='hidden' id='commented_foryou' value='0'>
                                     <input type='hidden' id='hidden' value='0'>
                                     <span class='post-name'>$user_data->name </span>
                                     <span class='post-username'>@$user_data->username</span>
@@ -777,7 +789,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                                 </p>
                                 <p class='post-content'>$data->content</p>
                                 <p class='icons'>
-                                    <span class='comment-icon open_comment_modal' data-post-id='{$data->id}'>
+                                    <span class='comment-icon open_comment_modal_foryou' data-post-id='{$data->id}'>
                                         <img src='images/chat.png' height='17px' title='Reply'>
                                     </span>
                                     <span class='comment-count'>$total_comments</span>

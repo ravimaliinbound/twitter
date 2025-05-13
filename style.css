@@ -524,7 +524,8 @@
     font-size: 20px;
 }
 
-.comment_reply_btn {
+.comment_reply_btn,
+.comment_reply_btn_forYou {
     color: white;
     background-color: grey;
     border: none;
@@ -635,10 +636,12 @@
     font-size: 20px;
     font-weight: 700;
 }
+
 .user_pro-name {
     font-size: 20px;
     font-weight: 700;
 }
+
 .cover {
     margin-top: -8px;
     height: 200px;
@@ -648,6 +651,7 @@
     width: 100%;
     background-repeat: no-repeat;
 }
+
 .user_cover {
     margin-top: -8px;
     height: 200px;
@@ -658,6 +662,7 @@
     background-size: 800px 250px;
     background-repeat: no-repeat;
 }
+
 .covers {
     height: 160px;
 }

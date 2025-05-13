@@ -317,6 +317,7 @@ function show_post() {
             var data = JSON.parse(response);
             $(".posts").html(data.post_data);
             $(".comment_name").text(data.name)
+            $(".comment_name_foryou").text(data.name)
             $(".comment_username").text('@' + data.username)
         }
     });
@@ -324,34 +325,7 @@ function show_post() {
 
 /*---------------- Show Other User----------------*/
 function show_user(username) {
-    $.ajax({
-        url: 'action.php',
-        type: 'post',
-        data: { 'action': 'show_user', 'username': username },
-        success: function (response) {
-            var data = JSON.parse(response);
-            $(".user_pro-name").text(data.name)
-            $(".user_username").text(data.username)
-            $(".user_joined").text(data.joined)
-            var profile = data.profile;
-            var cover = data.cover;
-            if (profile == "") {
-                $(".user_profile_pics").attr('src', 'images/profile_pic.png');
-            } else {
-                $(".user_profile_pics").attr('src', 'profile_pic/' + profile);
-            }
-            if (cover == "") {
-                $(".user_cover").css('background', 'rgb(207, 217, 222)');
-            } else {
-                var imageUrl = 'cover_pic/' + cover;
-                $(".user_cover").css({
-                    'background': 'url(' + imageUrl + ')',
-                    'background-size': '800px 250px',
-                    'width': '100%'
-                });
-            }
-        }
-    });
+    window.location.href = 'user_profile.php?username=' + username;
 }
 
 
@@ -570,15 +544,60 @@ function validate_comment(e) {
     return isValid;
 }
 
+//-------------------- Comment Validate For You----------------//
+function validate_comment_foryou(e) {
+    var isValid = true;
+
+    var comment = $("#comment_input_foryou").val();
+    if (comment == "") {
+        $(".comment-err-msg-foryou").text("Comment can't be blank");
+        isValid = false;
+    }
+    else {
+        $(".comment-err-msg-foryou").text("");
+    }
+    return isValid;
+}
+
 //----------------------------------------------Document.ready-------------------------------------------------//
 
 $(document).ready(function () {
     count_posts();
 
+    /*-------------- Open Comment For You Modal----------------------*/
+    $(document).on('click', '.open_comment_modal_foryou', function () {
+        $("#comment-modal-foryou").modal("show");
+        var post_id = $(this).data('post-id');
+        $("#commented_foryou").val(post_id);
+        $(".comment-err-msg").text("");
+        show_post();
+    });
 
+    //---------------For You Comment Insert-------------------//
+    $(document).on('click', ' .comment_reply_btn_forYou', function () {
+        var post_id = $("#commented_foryou").val();
+        var comment = $("#comment_input_foryou").val();
+        console.log(post_id)
+        if (!validate_comment_foryou()) {
+            return false;
+        }
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
+            success: function (data) {
+                console.log(data)
+                $("#comment-modal").modal("hide");
+                $(".comment_span").text(500);
+                $(".comment_reply_btn").css('background-color', 'grey')
+                $("#comment_form")[0].reset();
+                show_post();
+            }
+        })
+    });
     /*-------------- Open Comment Modal----------------------*/
     $(document).on('click', '.open_comment_modal', function () {
-        $("#comment-modals").modal("show");
+        $("#comment-modal").modal("show");
         var post_id = $(this).data('post-id');
         $("#commented").val(post_id);
         $(".comment-err-msg").text("");
@@ -628,6 +647,10 @@ $(document).ready(function () {
 
     /*----------Comment Input Outline---------*/
     $("#comment_input").focus(function () {
+        $(this).css("outline", " none")
+    });
+    /*---------- For youComment Input Outline---------*/
+    $("#comment_input_foryou").focus(function () {
         $(this).css("outline", " none")
     });
 
