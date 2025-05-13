@@ -222,7 +222,7 @@ if (!isset($_SESSION['login'])) {
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="" id="comment_form">
+                <form action="" id="comment_form_foryou">
                     <div class="parent_div">
                         <div class="comment_profile_pic">
                             <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
@@ -238,7 +238,7 @@ if (!isset($_SESSION['login'])) {
                     <div>
                         <input type="text" name="comment_input_foryou" id="comment_input_foryou" placeholder="Post your reply"
                             maxlength="500">
-                        <span class="comment_span">500</span>
+                        <span class="comment_span_foryou">500</span>
                         <p class="comment-err-msg-foryou"></p>
                     </div>
                 </form>

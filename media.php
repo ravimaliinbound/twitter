@@ -9,16 +9,16 @@ include_once 'profile-post.php'
         <a href="replies.php">
             <li>Replies</li>
         </a>
-        <a href="highlight.php">
+        <a href="#">
             <li>Highlights</li>
         </a>
-        <a href="article.php">
+        <a href="#">
             <li>Articles</li>
         </a>
         <a href="media.php" class="profile-menu-item">
             <li style="color: black">Media</li>
         </a>
-        <a href="likes.php">
+        <a href="#">
             <li>Likes</li>
         </a>
     </ul>

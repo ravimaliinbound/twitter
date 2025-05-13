@@ -20,7 +20,7 @@ include_once 'headers.php'
                     <input type="hidden" id="edit_username_check" value="0">
                     <input type="hidden" id="edit_email_check" value="0">
                     <div class="edit_cover_pic_div">
-                        <div class="cover covers" id="cover_edit"></div>
+                        <div class="covers" id="cover_edit"></div>
                         <label for="edit-cover-pic">
                             <div class="edit-icon"><img src="images/camera.png" alt="" height="50px">
                             </div>
@@ -206,7 +206,7 @@ include_once 'headers.php'
                 <span class="following">15</span> Following
             </span>
             <span class="follower">1</span>
-            <span>Follower</span>
+            <span class="followers">Follower</span>
         </p>
     </div>
     <!-- </div> -->

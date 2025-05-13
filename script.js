@@ -1,3 +1,4 @@
+
 //-----------Fetch Data-----------//
 function fetch_data() {
     $.ajax({
@@ -13,6 +14,113 @@ function fetch_data() {
         }
     });
 }
+/*------------------- Follow Unfollow----------------------*/
+function follow_unfollow(current_user, other_user) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "follow_unfollow", 'current_user': current_user, 'other_user': other_user },
+        success: function (data) {
+            console.log(data)
+        }
+    });
+}
+
+/*--------------------- Fetch Follower Count------------------*/
+function fetch_follower(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "fetch_follower", 'username': username },
+        success: function (data) {
+            if (data > 999) {
+                var followers = data / 100 + 'K';
+            }
+            else {
+                var followers = data;
+            }
+            $(".user_follower").text(followers);
+            if (data == 1) {
+                $(".follower_followers").text("Follower");
+            } else {
+                $(".follower_followers").text("Followers");
+            }
+        }
+    });
+}
+
+/*--------------------- Show Following Posts------------------*/
+function following_post() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "following_post" },
+        success: function (data) {
+            $(".following_post").html(data)
+        }
+    });
+}
+
+/*--------------------- Fetch Follower Count------------------*/
+function fetch_following(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "fetch_following", 'username': username },
+        success: function (data) {
+            if (data > 999) {
+                var following = data / 100 + 'K';
+            }
+            else {
+                var following = data;
+            }
+            $(".user_following").text(following);
+        }
+    });
+}
+
+/*--------------------- Fetch Follower Count For Current Logged in User------------------*/
+function follower() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "follower"},
+        success: function (data) {
+            if (data > 999) {
+                var followers = data / 100 + 'K';
+            }
+            else {
+                var followers = data;
+            }
+            $(".follower").text(followers);
+            if (data == 1) {
+                $(".followers").text("Follower");
+            } else {
+                $(".followers").text("Followers");
+            }
+        }
+    });
+}
+
+/*--------------------- Fetch Follower Count For Current Logged in User------------------*/
+function following() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "following" },
+        success: function (data) {
+            if (data > 999) {
+                var following = data / 100 + 'K';
+            }
+            else {
+                var following = data;
+            }
+            $(".following").text(following);
+        }
+    });
+}
+
+
 //-------------- Open Post Model------------//
 function open_model() {
     $("#post_modal").modal('show');
@@ -25,9 +133,29 @@ function show_foryou_post() {
         type: "post",
         data: { "action": "show_foryou_post" },
         success: function (response) {
-            // var data =  JSON.parse(response)
             $(".for_you_post").html(response);
-            // $(".for_you_post").html(data.post_data);
+        }
+    });
+}
+/*------------------- Show Other User Post-----------------*/
+function show_user_post(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_user_post", 'username': username },
+        success: function (response) {
+            $(".other_user_post").html(response);
+        }
+    });
+}
+/*------------------- Show Other User Media-----------------*/
+function show_user_media(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_user_media", 'username': username },
+        success: function (response) {
+            $(".show_user_media").html(response);
         }
     });
 }
@@ -36,7 +164,7 @@ function validate_post(e) {
     var isValid = true;
 
     var image = $("#index-image").val();
-    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
 
     if (!imgPattern.test(image)) {
         $(".post-err-msg").text("Select a valid file");
@@ -58,7 +186,7 @@ function validate_post_modal(e) {
     var isValid = true;
 
     var image = $("#index-images").val();
-    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
 
     if (!imgPattern.test(image)) {
         $(".modal-post-err-msg").text("Select a valid file");
@@ -143,6 +271,7 @@ function edit_user() {
             $("#edit-user").modal('hide');
             edit_profile();
             fetch_data();
+            show_post();
         }
     })
 }
@@ -228,7 +357,13 @@ function edit_profile() {
                 $(".profile_pics").attr('src', 'profile_pic/' + profile);
             }
             if (cover == "") {
-                $(".cover").css('background', 'rgb(207, 217, 222)');
+                $(".cover").css('background', 'url(cover_pic/cover.png)');
+                $(".covers").css({
+                    'background': 'url(cover_pic/cover.png)',
+                    'background-size': '800px 250px',
+                    'width': '100%',
+                    'height': '100%'
+                });
             } else {
                 var imageUrl = 'cover_pic/' + cover;
                 $(".cover").css({
@@ -239,7 +374,8 @@ function edit_profile() {
                 $(".covers").css({
                     'background': 'url(' + imageUrl + ')',
                     'background-size': '800px 250px',
-                    'width': '82%'
+                    'width': '100%',
+                    'background-repeat': 'no-repeat'
                 });
             }
         }
@@ -304,9 +440,27 @@ function count_posts() {
 
             }
         }
-    })
+    });
 }
 
+
+//----------------- Other User Post Count-----------------//
+function other_user_post_count(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { 'action': 'other_user_post_count', 'username': username },
+        success: function (data) {
+            $(".user_post_count").text(data)
+            if (data == 1) {
+                $(".user-post-posts").text('post');
+            } else {
+                $(".user-post-posts").text('posts');
+
+            }
+        }
+    });
+}
 //----------------------- Show Posts---------------------//
 function show_post() {
     $.ajax({
@@ -563,13 +717,17 @@ function validate_comment_foryou(e) {
 
 $(document).ready(function () {
     count_posts();
+    following();
+    follower();
 
     /*-------------- Open Comment For You Modal----------------------*/
     $(document).on('click', '.open_comment_modal_foryou', function () {
         $("#comment-modal-foryou").modal("show");
         var post_id = $(this).data('post-id');
+        var username = $(this).data('username');
         $("#commented_foryou").val(post_id);
-        $(".comment-err-msg").text("");
+        $("#other_username").val(username);
+        $(".comment-err-msg-foryou").text("");
         show_post();
     });
 
@@ -577,7 +735,7 @@ $(document).ready(function () {
     $(document).on('click', ' .comment_reply_btn_forYou', function () {
         var post_id = $("#commented_foryou").val();
         var comment = $("#comment_input_foryou").val();
-        console.log(post_id)
+        var username = $("#other_username").val();
         if (!validate_comment_foryou()) {
             return false;
         }
@@ -587,13 +745,16 @@ $(document).ready(function () {
             data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
             success: function (data) {
                 console.log(data)
-                $("#comment-modal").modal("hide");
-                $(".comment_span").text(500);
-                $(".comment_reply_btn").css('background-color', 'grey')
-                $("#comment_form")[0].reset();
+                $("#comment-modal-foryou").modal("hide");
+                $(".comment_span_foryou").text(500);
+                $(".comment_reply_btn_forYou").css('background-color', 'grey')
+                $("#comment_form_foryou")[0].reset();
                 show_post();
+                show_foryou_post();
+                following_post();
+                show_user_post(username);
             }
-        })
+        });
     });
     /*-------------- Open Comment Modal----------------------*/
     $(document).on('click', '.open_comment_modal', function () {
@@ -607,7 +768,6 @@ $(document).ready(function () {
     $(document).on('click', '.comment_reply_btn', function () {
         var post_id = $("#commented").val();
         var comment = $("#comment_input").val();
-        console.log(post_id)
         if (!validate_comment()) {
             return false;
         }
@@ -622,12 +782,16 @@ $(document).ready(function () {
                 $(".comment_reply_btn").css('background-color', 'grey')
                 $("#comment_form")[0].reset();
                 show_post();
+                show_foryou_post();
+                following_post();
+                show_user_post(username);
             }
         })
     });
     //---------------Post Like -------------------//
     $(document).on('click', '.like-icon', function () {
         var post_id = $(this).data('post-id');
+        var username = $(this).data('username');
         var heartIcon = $(this).children('i.heart-icon');
 
         heartIcon.toggleClass('liked');
@@ -640,10 +804,11 @@ $(document).ready(function () {
                 console.log(response);
                 show_post();
                 show_foryou_post();
+                following_post();
+                show_user_post(username);
             }
         });
     });
-
 
     /*----------Comment Input Outline---------*/
     $("#comment_input").focus(function () {
@@ -678,7 +843,7 @@ $(document).ready(function () {
         $(this).css("outline", " none")
     });
     $(".footer-search-input").blur(function () {
-        $(".footer-search-div").css("border", "1px solid black");
+        $(".footer-search-div").css("border", "1px solid rgb(239, 243, 244)");
     });
 
     //-------------- Explore Search-------------//
@@ -971,6 +1136,22 @@ $(document).ready(function () {
             $(".comment_span").css("color", "black");
         }
     });
+    $("#comment_input_foryou").keyup(function () {
+        var len = post - $(this).val().trim().length;
+        $(".comment_span_foryou").text(len);
+        if ($(this).val().trim() != "") {
+            $(".comment-err-msg-foryou").text("");
+        }
+        else {
+            $(".comment-err-msg-foryou").text("Comment can't be blank");
+        }
+        if (len < 11) {
+            $(".comment_span_foryou").css("color", "red");
+        }
+        else {
+            $(".comment_span_foryou").css("color", "black");
+        }
+    });
 
 
     //---------------------- Validation For Edit---------------------------//
@@ -1063,7 +1244,7 @@ $(document).ready(function () {
 
     $("#index-image").change(function () {
         var image = $("#index-image").val();
-        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
 
         if (!imgPattern.test(image)) {
             $(".post-err-msg").text("Select a valid file");
@@ -1090,7 +1271,7 @@ $(document).ready(function () {
 
     $("#index-images").change(function () {
         var image = $("#index-images").val();
-        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG)$/;
+        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
 
         if (!imgPattern.test(image)) {
             $(".modal-post-err-msg").text("Select a valid file");
@@ -1134,6 +1315,14 @@ $(document).ready(function () {
         }
         else {
             $(".comment_reply_btn").css('background-color', 'black')
+        }
+    });
+    $("#comment_input_foryou").keyup(function () {
+        if ($(this).val().trim() == "") {
+            $(".comment_reply_btn_forYou").css('background-color', 'grey')
+        }
+        else {
+            $(".comment_reply_btn_forYou").css('background-color', 'black')
         }
     });
 });

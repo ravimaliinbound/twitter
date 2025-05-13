@@ -33,12 +33,12 @@ include_once 'header.php';
                     <input type="hidden" name="" id="email_check" value="0">
                     <input type="hidden" name="" id="username_check" value="0">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" maxlength="15">
                         <p><span class="text-danger remove" id="errname"></span></p>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" placeholder="Enter username"
-                            name="username">
+                            name="username" maxlength="15">
                         <p><span class="text-danger remove" id="errusername"></span></p>
                     </div>
                     <div class="form-group">

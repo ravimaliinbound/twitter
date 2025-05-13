@@ -3,8 +3,7 @@
         <i class="fa-solid fa-magnifying-glass"></i><input type="text" class="footer-search-input"
             name="footer-search-input" placeholder="Search">
     </div>
-</div>
-<div class="footerss">
+    <div class="footerss">
     <p style="margin-top: 55px;" class="who-to-follow"></p>
     <div class="show-to-follow" style="display: block; width: 280px;">
 
@@ -17,6 +16,8 @@
     <a href="#" class="f-anchor"> Ads info |</a>
     <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
 </div>
+</div>
+
 </div> <!-- closing div of container of header -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

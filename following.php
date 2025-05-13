@@ -21,13 +21,14 @@ include_once 'headers.php'
     <?php
     include_once 'index-post.php';
     ?>
+    <div class="following_post"></div>
 </div>
-<div class="footers">
-    <div class="footer-search-div">
-        <i class="fa-solid fa-magnifying-glass"></i><input type="text" class="footer-search-input"
-            name="footer-search-input" placeholder="Search">
-    </div>
-</div>
+
 <?php
 include_once 'footers.php';
 ?>
+<script>
+    $(document).ready(function(){
+        following_post();
+    })
+</script>

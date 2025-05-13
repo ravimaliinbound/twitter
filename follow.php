@@ -21,3 +21,6 @@ include_once 'headers.php'
             name="footer-search-input" placeholder="Search">
     </div>
 </div>
+<?php
+include_once 'footers.php'
+    ?>
