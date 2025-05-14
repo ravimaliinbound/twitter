@@ -11,7 +11,10 @@ include_once 'notifications.php';
     </ul>
 </div>
 </div>
-<p style="margin-top: 130px; padding: 0 20px;">Notifications</p>
+<div class="show_notifications">
+   
+
+</div>
 </div>
 <?php
 include_once 'footers.php';

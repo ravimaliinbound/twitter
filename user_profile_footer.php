@@ -15,6 +15,10 @@ $username = $_SESSION['other_user'];
         other_user_post_count(username);
         fetch_follower(username);
         fetch_following(username);
+
+
+
+
         $.ajax({
             url: 'action.php',
             type: 'POST',
@@ -47,6 +51,110 @@ $username = $_SESSION['other_user'];
                 }
             }
         });
+
+        /*---------------Follow Unfollow-----------------------*/
+        $(".follow").click(function () {
+            if ($(this).text() == 'Unfollow') {
+                var conf = confirm("Do you really want to unfollow @" + username + '?');
+                if (conf == true) {
+                    $.ajax({
+                        url: "action.php",
+                        type: "post",
+                        data: { "action": "unfollow", 'other_user': username },
+                        success: function (data) {
+                            console.log(data)
+                            $(".follow").text('Follow')
+                            $('.follow').css({
+                                'background-color': 'black',
+                                'color': 'white'
+                            });
+                            fetch_following(username);
+                            fetch_follower(username);
+                        }
+                    });
+                }
+            }
+            if ($(this).text() == 'Follow') {
+                $.ajax({
+                    url: "action.php",
+                    type: "post",
+                    data: { "action": "follow_unfollow", 'other_user': username },
+                    success: function (data) {
+                        console.log(data)
+                        following_post();
+                        fetch_following(username);
+                        fetch_follower(username);
+                    }
+                });
+            }
+            $(this).css({
+                'background-color': 'white',
+                'color': 'black',
+                'border': '1px solid'
+            });
+            $(this).text("Following")
+        });
+
+
+
+        /*--------------------Show Unfollow Option on Mouseenter-----------------------*/
+        $(document).on('mouseenter', '.follow', function () {
+            if ($(this).text() == 'Following') {
+                $(this).css({
+                    'background-color': 'rgb(255, 216, 216)',
+                    'border': '1px solid rgb(255, 158, 158)',
+                    'color': 'red'
+                });
+                $(this).text("Unfollow");
+            }
+        });
+        $(document).on('mouseout', '.follow', function () {
+            if ($(this).text() == 'Following') {
+                $(this).css({
+                    'background-color': 'white',
+                    'border': '1px solid black',
+                    'color': 'black'
+                });
+                $(this).text("Following");
+            }
+            if ($(this).text() == 'Unfollow') {
+                $(this).css({
+                    'background-color': 'white',
+                    'border': '1px solid black',
+                    'color': 'black'
+                });
+                $(this).text("Following");
+            }
+        });
+        /*------------------- Check if already followed other user--------------------------*/
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'action': 'follow_check', 'other_user': username },
+            success: function (data) {
+                console.log(data)
+                if (data == 'No') {
+                    $(".follow").text("Follow")
+                } else {
+                    $(".follow").text("Following");
+                    $(this).css({
+                        'background-color': 'white',
+                        'border': '1px solid black',
+                        'color': 'black'
+                    });
+                }
+            }
+        });
+
+        console.log($('.follow').text())
+        if ($('.follow').text() == 'Following') {
+            $('.follow').css({
+                'background-color': 'white',
+                'border': '1px solid black',
+                'color': 'black'
+            });
+        }
+
     });
 </script>
 <?php

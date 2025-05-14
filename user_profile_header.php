@@ -20,7 +20,7 @@ include_once 'headers.php'
     </div>
 
     <div class="follow-btn">
-        <a href="#" class="follow">Follow</a>
+        <a href="#" class="follow"></a>
     </div>
     <div class="profile-data">
         <p>

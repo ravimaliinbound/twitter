@@ -14,14 +14,20 @@ function fetch_data() {
         }
     });
 }
-/*------------------- Follow Unfollow----------------------*/
-function follow_unfollow(current_user, other_user) {
+
+/*---------------- Show Notifications----------------------*/
+function show_notifications() {
     $.ajax({
-        url: "action.php",
-        type: "post",
-        data: { "action": "follow_unfollow", 'current_user': current_user, 'other_user': other_user },
+        url: 'action.php',
+        type: 'post',
+        data: { 'action': 'show_notifications' },
         success: function (data) {
-            console.log(data)
+            if (data == "") {
+                $(".show_notifications").html("<p class='empty_n'>You will seen notifications here.<p>")
+            }
+            else {
+                $(".show_notifications").html(data)
+            }
         }
     });
 }
@@ -84,7 +90,7 @@ function follower() {
     $.ajax({
         url: "action.php",
         type: "post",
-        data: { "action": "follower"},
+        data: { "action": "follower" },
         success: function (data) {
             if (data > 999) {
                 var followers = data / 100 + 'K';
@@ -223,6 +229,7 @@ function insert_post() {
             show_post();
             count_posts();
             $(".post-btn a").css('background-color', 'grey');
+            $(".index_input_span").text('500');
             show_foryou_post();
         }
     });
@@ -246,7 +253,11 @@ function insert_post_modal() {
         success: function (data) {
             $('#post_content_form')[0].reset();
             $('#post_media_form')[0].reset();
-            $("#post_modal").modal('hide');
+            if (data == "") {
+                $("#post_modal").modal('hide');
+            }
+            $(".post-btn a").css('background-color', 'grey')
+            $(".index_inputs_span").text('500');
             show_post();
             count_posts();
         }
@@ -497,7 +508,7 @@ function footer() {
                 $(".show_more").text("Show More");
                 $(".who-to-follow").text("Who to follow");
             }
-            $(".show-to-follow").html(response.arr)
+            $(".show-to-follow").html(response.arr);
         }
     });
 }
@@ -719,6 +730,77 @@ $(document).ready(function () {
     count_posts();
     following();
     follower();
+    show_notifications();
+
+    /*--------------------Follow-----------------------*/
+    $(document).on('click', '.n_following, .not_following', function () {
+        var other_user = $(this).data('other_user');
+        if ($(this).text() == 'Unfollow') {
+            var conf = confirm("Do you really want to unfollow @" + other_user + '?');
+            if (conf == true) {
+                $.ajax({
+                    url: "action.php",
+                    type: "post",
+                    data: { "action": "unfollow", 'other_user': other_user },
+                    success: function (data) {
+                        console.log(data)
+                        footer()
+                        following_post();
+                        show_more();
+                        following();
+                        follower();
+                    }
+                });
+
+            }
+        }
+        if ($(this).text() == 'Follow') {
+            $.ajax({
+                url: "action.php",
+                type: "post",
+                data: { "action": "follow_unfollow", 'other_user': other_user },
+                success: function (data) {
+                    console.log(data);
+                    following_post();
+                    following();
+                    follower();
+                }
+            });
+        }
+        $(this).text("Following");
+        following();
+        follower();
+    });
+
+    /*--------------------Show Unfollow Option on Mouseenter-----------------------*/
+    $(document).on('mouseenter', '.n_following, .not_following', function () {
+        if ($(this).text() == 'Following') {
+            $(this).css({
+                'background-color': 'rgb(255, 216, 216)',
+                'border': '1px solid rgb(255, 158, 158)',
+                'color': 'red'
+            });
+            $(this).text("Unfollow");
+        }
+    });
+    $(document).on('mouseout', '.n_following, .not_following', function () {
+        if ($(this).text() == 'Following') {
+            $(this).css({
+                'background-color': 'white',
+                'border': '1px solid black',
+                'color': 'black'
+            });
+            $(this).text("Following");
+        }
+        if ($(this).text() == 'Unfollow') {
+            $(this).css({
+                'background-color': 'white',
+                'border': '1px solid black',
+                'color': 'black'
+            });
+            $(this).text("Following");
+        }
+    });
 
     /*-------------- Open Comment For You Modal----------------------*/
     $(document).on('click', '.open_comment_modal_foryou', function () {
@@ -784,7 +866,6 @@ $(document).ready(function () {
                 show_post();
                 show_foryou_post();
                 following_post();
-                show_user_post(username);
             }
         })
     });

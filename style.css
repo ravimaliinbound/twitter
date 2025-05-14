@@ -306,7 +306,7 @@
     font-weight: 600;
 }
 
-.show-to-follow-btn a {
+.n_following {
     background-color: black;
     text-decoration: none;
     color: white;
@@ -314,9 +314,14 @@
     border-radius: 25px;
 }
 
+.n_following:hover {
+    color: white;
+}
+
 .show-to-follow-btn {
     margin-top: 12px;
     margin-left: 10px;
+    margin-right: -25px;
 }
 
 .show_more {
@@ -552,7 +557,42 @@
     border-radius: 5px;
     margin-left: 250px;
 }
-
+.show_notifications{
+    margin-top: 120px;
+}
+.n_parent{
+    display: flex;
+    padding: 20px;
+}
+.n_parent:hover{
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+.n_img img{
+    border-radius: 50%;
+}
+.n_userdata{
+    margin-left: 15px;
+}
+.n_name{
+    font-size: 18px;
+    font-weight: 500;
+}
+.n_username{
+    color: grey;
+    font-size: 18px;
+    font-weight: 400;
+}
+.empty_n{
+    font-size: 25px;
+    margin-top: 130px;
+    margin-left: 200px;
+}
+.n_time{
+    color: grey;
+    font-size: 18px;
+    font-weight: 400;
+}
 .notification-fix {
     position: fixed;
     border-right: 1px solid rgb(239, 243, 244);
@@ -755,7 +795,12 @@
     margin-top: 20px;
     margin-left: 20px;
 }
-
+.follow_people{
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: 500;
+    margin-left: 190px;
+}
 .following {
     font-weight: 600;
 }
@@ -1076,9 +1121,11 @@
     background-color: rgb(236, 236, 236);
 
 }
-.post_menu span{
+
+.post_menu span {
     color: grey;
 }
+
 .post_menu ul {
     margin: 0;
     padding: 0;
@@ -1132,18 +1179,24 @@
     font-weight: 700;
 }
 
-.show-to-followw-btn a {
+.not_following {
     background-color: black;
     text-decoration: none;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 35px;
     border-radius: 25px;
 }
+
+.not_following:hover {
+    color: white;
+}
+
 
 .show-to-followw-btn {
     margin-top: 12px;
     margin-left: 100px;
 }
+
 
 .show-to-followw-data {
     margin-left: 10px;
@@ -1164,7 +1217,8 @@
 }
 
 .background {
-    padding: 10px;
+    padding: 10px 0;
+    width: 330px;
 }
 
 .background:hover {
