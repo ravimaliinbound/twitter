@@ -1,21 +1,46 @@
 <div class="footers">
-    <div class="footer-search-div">
-        <i class="fa-solid fa-magnifying-glass"></i><input type="text" class="footer-search-input"
-            name="footer-search-input" placeholder="Search">
-    </div>
+    <?php
+    include_once 'footer_search.php';
+    ?>
     <div class="footerss">
-    <p style="margin-top: 55px;" class="who-to-follow"></p>
-    <div class="show-to-follow" style="display: block; width: 280px;">
+        <p style="margin-top: 55px;" class="who-to-follow"></p>
+        <div class="show-to-follow" style="display: block; width: 280px;">
 
+        </div>
+        <p><a href="follow.php" class="show_more"></a></p>
+        <a href="#" class="f-anchor">Terms of Service |</a>
+        <a href="#" class="f-anchor"> Privacy Policy |</a>
+        <a href="#" class="f-anchor"> Cookie Policy |</a>
+        <a href="#" class="f-anchor"> Accessibility |</a>
+        <a href="#" class="f-anchor"> Ads info |</a>
+        <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
     </div>
-    <p><a href="follow.php" class="show_more"></a></p>
-    <a href="#" class="f-anchor">Terms of Service |</a>
-    <a href="#" class="f-anchor"> Privacy Policy |</a>
-    <a href="#" class="f-anchor"> Cookie Policy |</a>
-    <a href="#" class="f-anchor"> Accessibility |</a>
-    <a href="#" class="f-anchor"> Ads info |</a>
-    <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
 </div>
+<!--------------------Search Model--------------------->
+<div class="modal" id="searches">
+    <div class="modal-dialog modal-dialog-right modal-sm right">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="search_div">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--------------------Search Model--------------------->
+<div class="modal" id="empty">
+    <div class="modal-dialog modal-dialog-right modal-sm right">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div>
+                   <p class="try">Try searching for people.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div> <!-- closing div of container of header -->

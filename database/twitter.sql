@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2025 at 04:02 PM
+-- Generation Time: May 15, 2025 at 04:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,16 @@ INSERT INTO `twitter_comments` (`id`, `user_id`, `post_id`, `comment`, `created_
 (55, 9, 251, 'dfdfv', '2025-05-14 10:26:45', '2025-05-14 10:26:45'),
 (56, 9, 244, 'cdcdc', '2025-05-14 11:25:16', '2025-05-14 11:25:16'),
 (57, 9, 244, 'sdsdc', '2025-05-14 11:25:22', '2025-05-14 11:25:22'),
-(58, 9, 244, 'sdcdfc', '2025-05-14 11:25:25', '2025-05-14 11:25:25');
+(58, 9, 244, 'sdcdfc', '2025-05-14 11:25:25', '2025-05-14 11:25:25'),
+(62, 9, 261, 'dcdc', '2025-05-15 09:32:27', '2025-05-15 09:32:27'),
+(63, 9, 261, 'sdcdc', '2025-05-15 09:33:04', '2025-05-15 09:33:04'),
+(64, 9, 274, 'dcdcsdc', '2025-05-15 09:38:15', '2025-05-15 09:38:15'),
+(65, 9, 261, 'Ravi Mali', '2025-05-15 09:38:23', '2025-05-15 09:38:23'),
+(66, 17, 261, 'Good afternoon...!', '2025-05-15 09:59:49', '2025-05-15 09:59:49'),
+(67, 9, 277, 'Good evening', '2025-05-15 13:53:08', '2025-05-15 13:53:08'),
+(68, 9, 235, 'Nice...', '2025-05-15 13:54:03', '2025-05-15 13:54:03'),
+(69, 15, 277, 'Hii, good evening..!', '2025-05-15 13:54:37', '2025-05-15 13:54:37'),
+(70, 17, 244, 'ddfvdfvfv', '2025-05-15 14:01:00', '2025-05-15 14:01:00');
 
 -- --------------------------------------------------------
 
@@ -98,8 +107,16 @@ CREATE TABLE `twitter_followers` (
 --
 
 INSERT INTO `twitter_followers` (`id`, `follower_id`, `following_id`, `created_at`, `updated_at`) VALUES
-(266, 9, 14, '2025-05-14 13:51:48', '2025-05-14 13:51:48'),
-(267, 14, 9, '2025-05-14 14:00:31', '2025-05-14 14:00:31');
+(282, 14, 9, '2025-05-15 04:25:43', '2025-05-15 04:25:43'),
+(283, 15, 9, '2025-05-15 04:26:11', '2025-05-15 04:26:11'),
+(284, 16, 9, '2025-05-15 04:27:36', '2025-05-15 04:27:36'),
+(286, 21, 9, '2025-05-15 04:29:06', '2025-05-15 04:29:06'),
+(287, 9, 14, '2025-05-15 04:57:01', '2025-05-15 04:57:01'),
+(309, 9, 17, '2025-05-15 10:05:18', '2025-05-15 10:05:18'),
+(326, 17, 9, '2025-05-15 13:51:35', '2025-05-15 13:51:35'),
+(328, 17, 15, '2025-05-15 13:51:42', '2025-05-15 13:51:42'),
+(330, 17, 16, '2025-05-15 13:52:12', '2025-05-15 13:52:12'),
+(331, 9, 19, '2025-05-15 13:53:38', '2025-05-15 13:53:38');
 
 -- --------------------------------------------------------
 
@@ -287,8 +304,6 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (394, 9, 245, 'post', '2025-05-13 15:58:19', '2025-05-13 15:58:19'),
 (396, 9, 243, 'post', '2025-05-13 15:58:22', '2025-05-13 15:58:22'),
 (397, 9, 242, 'post', '2025-05-13 15:58:24', '2025-05-13 15:58:24'),
-(398, 9, 241, 'post', '2025-05-13 15:58:26', '2025-05-13 15:58:26'),
-(399, 9, 235, 'post', '2025-05-13 15:58:31', '2025-05-13 15:58:31'),
 (401, 9, 233, 'post', '2025-05-13 15:58:34', '2025-05-13 15:58:34'),
 (402, 9, 232, 'post', '2025-05-13 15:58:35', '2025-05-13 15:58:35'),
 (404, 9, 254, 'post', '2025-05-13 16:06:29', '2025-05-13 16:06:29'),
@@ -303,7 +318,18 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (434, 9, 48, 'post', '2025-05-14 15:54:01', '2025-05-14 15:54:01'),
 (436, 9, 251, 'post', '2025-05-14 15:56:53', '2025-05-14 15:56:53'),
 (437, 9, 244, 'post', '2025-05-14 16:55:19', '2025-05-14 16:55:19'),
-(438, 9, 261, 'post', '2025-05-14 17:08:25', '2025-05-14 17:08:25');
+(438, 9, 261, 'post', '2025-05-14 17:08:25', '2025-05-14 17:08:25'),
+(439, 16, 274, 'post', '2025-05-14 22:22:30', '2025-05-14 22:22:30'),
+(440, 15, 274, 'post', '2025-05-15 09:57:49', '2025-05-15 09:57:49'),
+(441, 17, 274, 'post', '2025-05-15 09:58:44', '2025-05-15 09:58:44'),
+(442, 21, 274, 'post', '2025-05-15 09:59:09', '2025-05-15 09:59:09'),
+(498, 9, 274, 'post', '2025-05-15 11:06:08', '2025-05-15 11:06:08'),
+(502, 17, 261, 'post', '2025-05-15 19:22:07', '2025-05-15 19:22:07'),
+(503, 17, 277, 'post', '2025-05-15 19:22:45', '2025-05-15 19:22:45'),
+(504, 9, 277, 'post', '2025-05-15 19:23:01', '2025-05-15 19:23:01'),
+(505, 9, 241, 'post', '2025-05-15 19:23:52', '2025-05-15 19:23:52'),
+(506, 15, 277, 'post', '2025-05-15 19:24:38', '2025-05-15 19:24:38'),
+(507, 17, 244, 'post', '2025-05-15 19:30:53', '2025-05-15 19:30:53');
 
 -- --------------------------------------------------------
 
@@ -313,20 +339,35 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 
 CREATE TABLE `twitter_notifications` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `type` enum('like','follow','comment','reply') DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `user_id` int(11) NOT NULL,
+  `from_user_id` int(11) NOT NULL,
+  `type` enum('follow','like','comment') NOT NULL,
+  `message` text DEFAULT NULL,
+  `comment_content` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `twitter_notifications`
 --
 
-INSERT INTO `twitter_notifications` (`id`, `user_id`, `type`, `message`, `created_at`, `updated_at`) VALUES
-(13, 14, 'follow', '@ravi started to following you.', '2025-05-14 13:51:48', '2025-05-14 13:51:48'),
-(14, 9, 'follow', '@vishal started to following you.', '2025-05-14 14:00:31', '2025-05-14 14:00:31');
+INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `type`, `message`, `comment_content`, `created_at`, `updated_at`) VALUES
+(14, 9, 14, 'follow', '@vishal started to following you.', NULL, '2025-05-15 09:55:43', '2025-05-15 09:55:43'),
+(15, 9, 15, 'follow', '@kamlesh started to following you.', NULL, '2025-05-15 09:56:11', '2025-05-15 09:56:11'),
+(16, 9, 16, 'follow', '@vikram started to following you.', NULL, '2025-05-15 09:57:36', '2025-05-15 09:57:36'),
+(19, 14, 9, 'follow', '@ravi started to following you.', NULL, '2025-05-15 10:27:01', '2025-05-15 10:27:01'),
+(32, 16, 9, 'comment', '@ravi commented on your post.', 'dcdcsdc', '2025-05-15 15:08:15', '2025-05-15 15:08:15'),
+(41, 9, 17, 'comment', '@jagdish commented on your post.', 'Good afternoon...!', '2025-05-15 15:29:49', '2025-05-15 15:29:49'),
+(46, 17, 9, 'follow', '@ravi started to following you.', NULL, '2025-05-15 15:35:18', '2025-05-15 15:35:18'),
+(63, 9, 17, 'follow', '@jagdish started to following you.', NULL, '2025-05-15 19:21:35', '2025-05-15 19:21:35'),
+(65, 15, 17, 'follow', '@jagdish started to following you.', NULL, '2025-05-15 19:21:42', '2025-05-15 19:21:42'),
+(67, 16, 17, 'follow', '@jagdish started to following you.', NULL, '2025-05-15 19:22:12', '2025-05-15 19:22:12'),
+(68, 17, 9, 'comment', '@ravi commented on your post.', 'Good evening', '2025-05-15 19:23:08', '2025-05-15 19:23:08'),
+(69, 19, 9, 'follow', '@ravi started to following you.', NULL, '2025-05-15 19:23:38', '2025-05-15 19:23:38'),
+(70, 14, 9, 'comment', '@ravi commented on your post.', 'Nice...', '2025-05-15 19:24:03', '2025-05-15 19:24:03'),
+(71, 17, 15, 'comment', '@kamlesh commented on your post.', 'Hii, good evening..!', '2025-05-15 19:24:37', '2025-05-15 19:24:37'),
+(72, 17, 17, 'comment', '@jagdish commented on your post.', 'ddfvdfvfv', '2025-05-15 19:31:00', '2025-05-15 19:31:00');
 
 -- --------------------------------------------------------
 
@@ -404,7 +445,9 @@ INSERT INTO `twitter_posts` (`id`, `user_id`, `content`, `media`, `created_at`, 
 (258, 20, NULL, 'Screenshot (4)1747129424.png', '2025-05-13 09:43:44', '2025-05-13 09:43:44'),
 (259, 21, 'Hello...!', NULL, '2025-05-13 09:50:00', '2025-05-13 09:50:00'),
 (260, 9, NULL, 'bag1747136061.png', '2025-05-13 11:34:21', '2025-05-13 11:34:21'),
-(261, 9, 'Good Morning...!', NULL, '2025-05-14 04:07:58', '2025-05-14 04:07:58');
+(261, 9, 'Good Morning...!', NULL, '2025-05-14 04:07:58', '2025-05-14 04:07:58'),
+(274, 16, 'I am working at 10:22 PM', NULL, '2025-05-14 16:52:27', '2025-05-14 16:52:27'),
+(277, 17, 'Good Evening...!', NULL, '2025-05-15 13:52:42', '2025-05-15 13:52:42');
 
 -- --------------------------------------------------------
 
@@ -452,7 +495,7 @@ INSERT INTO `twitter_users` (`id`, `name`, `username`, `email`, `password`, `dob
 (14, 'Vishal Mali', 'vishal', 'vishal@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2000-01-05', '', 'iphone151747054065.png', 'audi1747054065.png', 'May 2025', '2025-05-09 05:43:41', '2025-05-09 05:43:41'),
 (15, 'Kamlesh Mali', 'kamlesh', 'kamlesh@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1999-11-13', 'Welcome to my profile', 'user1747054348.jpg', 'Capture1747054348.PNG', 'May 2025', '2025-05-09 05:44:20', '2025-05-09 05:44:20'),
 (16, 'Vikram Mali', 'vikram', 'vikram@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2002-05-10', '', 'happy1747054575.png', 'Capture1747054575.PNG', 'May 2025', '2025-05-09 05:44:51', '2025-05-09 05:44:51'),
-(17, 'Jagdish Mali', 'jagdish', 'jagdish@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1998-01-01', '', 'grok1747055000.png', 'background1747055000.PNG', 'May 2025', '2025-05-09 05:45:26', '2025-05-09 05:45:26'),
+(17, 'Jagdish Mali', 'jagdish', 'jagdish@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1998-01-01', 'Agrawal Kitchen Solutions', 'grok1747055000.png', 'background1747055000.PNG', 'May 2025', '2025-05-09 05:45:26', '2025-05-09 05:45:26'),
 (19, 'Kishan Lal', 'kishanlal', 'kishanlal@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1975-01-01', '', 'verified1747054706.png', 'Capture1747054706.PNG', 'May 2025', '2025-05-09 05:46:56', '2025-05-09 05:46:56'),
 (20, 'Ravi Mali', 'ravimali', 'ravimali@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', 'BCA Gold Medalist, Science day 1st Rank on district level ', 'user1746769874.jpg', 'Capture1746769812.PNG', 'May 2025', '2025-05-09 05:47:58', '2025-05-09 05:47:58'),
 (21, 'Suresh Mali', 'suresh', 'suresh@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2000-01-01', '', '', '', 'May 2025', '2025-05-13 05:59:33', '2025-05-13 05:59:33');
@@ -489,7 +532,8 @@ ALTER TABLE `twitter_likes`
 --
 ALTER TABLE `twitter_notifications`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `from_user_id` (`from_user_id`);
 
 --
 -- Indexes for table `twitter_posts`
@@ -521,31 +565,31 @@ ALTER TABLE `twitter_users`
 -- AUTO_INCREMENT for table `twitter_comments`
 --
 ALTER TABLE `twitter_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `twitter_followers`
 --
 ALTER TABLE `twitter_followers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
 
 --
 -- AUTO_INCREMENT for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=439;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=508;
 
 --
 -- AUTO_INCREMENT for table `twitter_notifications`
 --
 ALTER TABLE `twitter_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `twitter_posts`
 --
 ALTER TABLE `twitter_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=274;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=278;
 
 --
 -- AUTO_INCREMENT for table `twitter_replies`
@@ -568,7 +612,7 @@ ALTER TABLE `twitter_users`
 --
 ALTER TABLE `twitter_comments`
   ADD CONSTRAINT `twitter_comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`),
-  ADD CONSTRAINT `twitter_comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `twitter_posts` (`id`);
+  ADD CONSTRAINT `twitter_comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `twitter_posts` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `twitter_followers`
@@ -587,7 +631,8 @@ ALTER TABLE `twitter_likes`
 -- Constraints for table `twitter_notifications`
 --
 ALTER TABLE `twitter_notifications`
-  ADD CONSTRAINT `twitter_notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`);
+  ADD CONSTRAINT `twitter_notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `twitter_notifications_ibfk_2` FOREIGN KEY (`from_user_id`) REFERENCES `twitter_users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `twitter_posts`

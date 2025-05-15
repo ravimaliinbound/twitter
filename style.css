@@ -265,10 +265,45 @@
     color: black;
 }
 
+.footerss {
+    margin-top: 20px;
+}
+
 .footer-search-div {
     border: 1px solid rgb(239, 243, 244);
     padding: 10px;
     border-radius: 20px;
+}
+
+.search_user {
+    display: flex;
+    padding: 0;
+}
+
+.search_user:hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+
+#searches,
+#empty {
+    backdrop-filter: brightness(200%);
+}
+
+.try {
+    margin-left: 30px;
+    margin-top: 20px;
+    color: grey;
+    font-size: 18px;
+}
+
+.serach_data {
+    margin-left: 10px;
+}
+
+.right {
+    margin-right: 260px;
+    margin-top: 70px;
 }
 
 .f-anchor {
@@ -557,42 +592,52 @@
     border-radius: 5px;
     margin-left: 250px;
 }
-.show_notifications{
+
+.show_notifications {
     margin-top: 120px;
 }
-.n_parent{
+
+.n_parent {
     display: flex;
     padding: 20px;
 }
-.n_parent:hover{
+
+.n_parent:hover {
     background-color: #f7f7f7;
     cursor: pointer;
 }
-.n_img img{
+
+.n_img img {
     border-radius: 50%;
 }
-.n_userdata{
+
+.n_userdata {
     margin-left: 15px;
 }
-.n_name{
+
+.n_name {
     font-size: 18px;
     font-weight: 500;
 }
-.n_username{
+
+.n_username {
     color: grey;
     font-size: 18px;
     font-weight: 400;
 }
-.empty_n{
+
+.empty_n {
     font-size: 25px;
     margin-top: 130px;
     margin-left: 200px;
 }
-.n_time{
+
+.n_time {
     color: grey;
     font-size: 18px;
     font-weight: 400;
 }
+
 .notification-fix {
     position: fixed;
     border-right: 1px solid rgb(239, 243, 244);
@@ -670,7 +715,56 @@
     border-radius: 5px;
     color: black;
 }
+.follow_user{
+    margin-top: 20px;
+    padding-left: 30px;
+}
 
+
+.follow_active {
+    border-bottom: 3px solid deepskyblue;
+    padding: 0 40px;
+    padding-bottom: 10px;
+}
+
+.ul_list a {
+    text-decoration: none;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 20px;
+}
+
+.ul_list a:hover {
+    background-color: rgb(236, 236, 236);
+
+}
+
+.ul_list span {
+    color: grey;
+}
+
+.ul_list ul {
+    margin: 0;
+    padding: 0;
+    margin-right: -13px;
+    margin-bottom: 25px;
+}
+
+.ul_list li {
+    list-style: none;
+    display: inline-block;
+    margin-top: 10px;
+    width: 48.71%;
+
+}
+.see_followers:hover,
+.see_following:hover {
+    cursor: pointer;
+}
+.see_following, .see_followers{
+    color: black;
+    text-decoration: none;
+}
 .profile-name {
     padding: 0 50px;
 }
@@ -795,12 +889,14 @@
     margin-top: 20px;
     margin-left: 20px;
 }
-.follow_people{
+
+.follow_people {
     margin-top: 20px;
     font-size: 25px;
     font-weight: 500;
     margin-left: 190px;
 }
+
 .following {
     font-weight: 600;
 }
@@ -1223,6 +1319,7 @@
 
 .background:hover {
     background-color: rgb(247, 247, 247);
+    cursor: pointer;
 }
 
 .background-follow {

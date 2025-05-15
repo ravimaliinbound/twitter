@@ -203,10 +203,11 @@ include_once 'headers.php'
         </p>
         <p>
             <span>
-                <span class="following">15</span> Following
+                <a href="see_following.php" class="following see_following">15</a> 
+                <a href="see_following.php" class="see_following">Following</a>
             </span>
-            <span class="follower">1</span>
-            <span class="followers">Follower</span>
+            <a href="see_followers.php" class="follower see_followers">1</a>
+            <a href="see_followers.php" class="followers see_followers">Follower</a>
         </p>
     </div>
     <!-- </div> -->

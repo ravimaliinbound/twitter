@@ -129,7 +129,10 @@ function following() {
 
 //-------------- Open Post Model------------//
 function open_model() {
+    $(".index_inputs").val("");
+    $(".post-btn a").css("background-color", "grey")
     $("#post_modal").modal('show');
+    $(".index_inputs_span").text("500");
 }
 
 /*------------------- Show For You Posst-----------------*/
@@ -151,6 +154,30 @@ function show_user_post(username) {
         data: { "action": "show_user_post", 'username': username },
         success: function (response) {
             $(".other_user_post").html(response);
+        }
+    });
+}
+
+/*------------------- Show Following-----------------*/
+function show_following() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_following" },
+        success: function (response) {
+            $(".following_list").html(response);
+        }
+    });
+}
+/*------------------- Show Followers-----------------*/
+function show_followers() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_followers" },
+        success: function (response) {
+            console.log(response)
+            $(".followers_list").html(response);
         }
     });
 }
@@ -393,14 +420,22 @@ function edit_profile() {
     });
 }
 
-//-------------Before Delete-------------//
+//-------------Before Delete Post-------------//
 function before_delete(id) {
     $('#deleteModal').modal('show');
     $("#hidden").val(id);
 }
+
+//-------------Before Delete Notification-------------//
+function before_delete_notification(id) {
+    console.log(id)
+    $('#delete_n_Modal').modal('show');
+    $("#n_hidden").val(id);
+}
+
 //--------------------- Delete Post-----------------//
 function delete_post() {
-    var conf = confirm("Do You Really Want To Delete?")
+    var conf = confirm("Do you really want to delete this post?");
     if (conf == true) {
         var id = $("#hidden").val();
         $.ajax({
@@ -412,6 +447,24 @@ function delete_post() {
                 show_media();
                 count_posts();
                 show_post();
+                console.log(data)
+            }
+        });
+    }
+}
+
+//--------------------- Delete Post-----------------//
+function delete_notification() {
+    var conf = confirm("Do you really want to delete this notification?");
+    if (conf == true) {
+        var id = $("#n_hidden").val();
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { 'action': 'delete_notification', 'id': id },
+            success: function (data) {
+                $('#delete_n_Modal').modal('hide');
+                show_notifications();
                 console.log(data)
             }
         });
@@ -492,8 +545,6 @@ function show_post() {
 function show_user(username) {
     window.location.href = 'user_profile.php?username=' + username;
 }
-
-
 
 //------------------Footer Who to follow-----------------//
 function footer() {
@@ -731,6 +782,76 @@ $(document).ready(function () {
     following();
     follower();
     show_notifications();
+
+
+    $(document).on('click', '.edit', function () {
+        $('.error').text("");
+        $(".username-span, .name-span").text("15");
+        $(".bio-span").text("150");
+        $(".username-span, .name-span, .bio-span").css("color", "black");
+    });
+
+    /*------------- See Followers----------------*/
+    $(document).on('click', '.see_followers', function () {
+        see_followers();
+    });
+
+    /*------------- See Following----------------*/
+    $(document).on('click', '.see_following', function () {
+        see_following();
+    });
+
+    /*--------------------Search Users on keyup-----------------------*/
+    $(document).on('keyup', '.footer-search-input', function () {
+        var search = $(this).val().trim();
+        if (search != "") {
+            $.ajax({
+                url: "action.php",
+                type: "post",
+                data: { "action": "search", 'search': search },
+                success: function (data) {
+                    if (data != "") {
+                        $("#searches").modal("show")
+                        $("#empty").modal("hide")
+                        $(".search_div").html(data)
+                    } else {
+                        $("#empty").modal("show");
+                        $("#searches").modal("hide")
+                        $(".try").text("No such user found.");
+                    }
+                }
+            });
+        } else {
+            $(".try").text("Try searching for people.");
+            $("#empty").modal("show")
+            $("#searches").modal("hide")
+        }
+    });
+    /*--------------------Search Users on focus-----------------------*/
+    $(document).on('focus', '.footer-search-input', function () {
+        var search = $(this).val().trim();
+        if (search != "") {
+            $.ajax({
+                url: "action.php",
+                type: "post",
+                data: { "action": "search", 'search': search },
+                success: function (data) {
+                    if (data != "") {
+                        $("#searches").modal("show")
+                        $("#empty").modal("hide")
+                        $(".search_div").html(data)
+                    } else {
+                        $("#empty").modal("show")
+                        $(".try").text("No such user found.");
+                    }
+                }
+            });
+        } else {
+            $(".try").text("Try searching for people.");
+            $("#empty").modal("show")
+            $("#searches").modal("hide")
+        }
+    });
 
     /*--------------------Follow-----------------------*/
     $(document).on('click', '.n_following, .not_following', function () {
@@ -1133,24 +1254,28 @@ $(document).ready(function () {
 
     //--------------Logout----------------//
     $("#logout").click(function () {
-        $.ajax({
-            url: "action.php",
-            type: "post",
-            data: { "action": "logout" },
-            success: function () {
-                $("#left-panel").hide();
-                $("#logout-loader").show();
-                $("body").css("background-color", "grey");
-                setTimeout(function () {
-                    window.location = 'login.php';
-                }, 300);
-            }
-        });
+        var conf = confirm('Are you sure to logout?');
+        if (conf == true) {
+            $.ajax({
+                url: "action.php",
+                type: "post",
+                data: { "action": "logout" },
+                success: function () {
+                    $("#left-panel").hide();
+                    $("#logout-loader").show();
+                    $("body").css("background-color", "grey");
+                    setTimeout(function () {
+                        window.location = 'login.php';
+                    }, 300);
+                }
+            });
+        }
     });
 
     //---------------------- Limit Characters while Editing User details-------------------------//
     var length = 15;
     var post = 500;
+    var bio = 150;
     $("#edit-name").keyup(function () {
         var len = length - $(this).val().trim().length;
         $(".name-span").text(len);

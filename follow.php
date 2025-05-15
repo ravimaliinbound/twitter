@@ -16,11 +16,15 @@ include_once 'headers.php'
     </div>
 </div>
 <div class="footers">
-    <div class="footer-search-div">
-        <i class="fa-solid fa-magnifying-glass"></i><input type="text" class="footer-search-input"
-            name="footer-search-input" placeholder="Search">
+    <?php
+    include_once 'footer_search.php';
+    ?>
+    <div class="footerss">
+        <a href="#" class="f-anchor">Terms of Service |</a>
+        <a href="#" class="f-anchor"> Privacy Policy |</a>
+        <a href="#" class="f-anchor"> Cookie Policy |</a>
+        <a href="#" class="f-anchor"> Accessibility |</a>
+        <a href="#" class="f-anchor"> Ads info |</a>
+        <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
     </div>
 </div>
-<?php
-include_once 'footers.php'
-    ?>

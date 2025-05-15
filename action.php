@@ -52,8 +52,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_unfollow') {
         $insert_follow = "INSERT INTO twitter_followers(follower_id, following_id) VALUES ('$follower_id', '$following_id')";
         $run_insert = $conn->query($insert_follow);
         if ($run_insert) {
-            $insert_notification = "INSERT INTO twitter_notifications(user_id, type, message) 
-            VALUES ('$following_id', 'follow', '@$current_user started to following you.')";
+            $insert_notification = "INSERT INTO twitter_notifications(user_id,from_user_id, type, message) 
+            VALUES ('$following_id','$follower_id', 'follow', '@$current_user started to following you.')";
             $run_notification = $conn->query($insert_notification);
             if ($run_notification) {
                 echo "Following";
@@ -78,7 +78,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
     $unfollow = "DELETE FROM twitter_followers WHERE follower_id = '$follower_id' AND following_id = '$following_id'";
     $run_unfollow = $conn->query($unfollow);
     if ($run_unfollow) {
-        $delete_notification = "DELETE FROM twitter_notifications WHERE user_id = '$following_id' AND type = 'follow'";
+        $delete_notification = "DELETE FROM twitter_notifications WHERE 
+        from_user_id = '$follower_id' AND user_id = '$following_id' AND type = 'follow'";
         $run_notification = $conn->query($delete_notification);
         if ($run_notification) {
             echo "Unfollowed";
@@ -300,11 +301,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
         }
         // Set button text based on follow status
         $btn_text = $is_following ? "Following" : "Follow";
+        $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
         $arr_footer .=
             " <div style = 'display: flex;' class='background'>
                 <div class='show-img' style='margin-top: 6px;' href='user_profile.php'  onclick='show_user(`$data->username`)'>
                     <a onclick='show_user(`$data->username`)'>
-                        <img src='images/profile_pic.png' height='40px' style='border-radius: 50%'>
+                        <img src=$profile height='40px' style='border-radius: 50%'>
                     </a>
                 </div>
                 <div class='show-to-follow-data' href='user_profile.php'  onclick='show_user(`$data->username`)'>
@@ -538,11 +540,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
         }
         // Set button text based on follow status
         $btn_text = $is_following ? "Following" : "Follow";
+        $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
         $arr_footer .=
             " <div style = 'display: flex;' class= 'background-follow'>
                 <div class='showw-img' style='margin-top: 6px;'   onclick='show_user(`$data->username`)'>
-                    <a ><img src='images/profile_pic.png' 
-                        height='40px' width= '40px' style='border-radius: 50%'>
+                    <a ><img src=$profile height='40px' width= '40px' style='border-radius: 50%'>
                     </a>
                 </div>
                 <div class='show-to-followw-data' style='width:50%' onclick='show_user(`$data->username`)'>
@@ -812,13 +814,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
 }
 
 
+//----------------------- Delete Post------------------//
+
+if (isset($_POST['action']) && $_POST['action'] == 'delete_notification') {
+    $id = $_POST['id'];
+
+    $del = "DELETE FROM twitter_notifications WHERE id = '$id'";
+    $run = $conn->query($del);
+    echo 'Deleted';
+}
+
+
 //----------------------- Like Post------------------//
 
 if (isset($_POST['action']) && $_POST['action'] == 'like') {
 
     $username = $_SESSION['username'];
 
-    // Step 1: Get user ID
+    // Get user ID
     $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
     $run = $conn->query($fetch_id_query);
     if (!$run) {
@@ -831,7 +844,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'like') {
     $post_id = $_POST['post_id'];
     $type = $_POST['type'];
 
-    // Step 2: Check if already liked
+    // Check if already liked
     $sel = "SELECT * FROM twitter_likes WHERE user_id = $id AND liked_id = $post_id";
     $res = $conn->query($sel);
     if (!$res) {
@@ -845,8 +858,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'like') {
         $result = $conn->query($delete);
         if (!$result) {
             echo "Delete error: " . $conn->error;
-        } else {
-            echo "Disliked";
         }
     } else {
         // Like
@@ -854,8 +865,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'like') {
         $result = $conn->query($insert);
         if (!$result) {
             echo "Insert error: " . $conn->error;
-        } else {
-            echo "Liked";
         }
     }
 }
@@ -871,13 +880,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
     $u_data = $u_result->fetch_object();
     $user_id = $u_data->id;
 
+    $get_user_id = "SELECT user_id FROM twitter_posts WHERE id = '$post_id'";
+    $get_result = $conn->query($get_user_id);
+    $get_data = $get_result->fetch_object();
+    $get_user_id = $get_data->user_id;
+
 
     $insert = "INSERT INTO twitter_comments (user_id, post_id, comment) VALUES ($user_id, $post_id, '$comment')";
     $result = $conn->query($insert);
     if (!$result) {
         echo "Insert error: " . $conn->error;
     } else {
-        echo "Commented";
+        $insert_notification = "INSERT INTO twitter_notifications(user_id,from_user_id, type, message, comment_content) 
+            VALUES ('$get_user_id','$user_id', 'comment', '@$username commented on your post.', '$comment')";
+        $run_notification = $conn->query($insert_notification);
+        if ($run_notification) {
+            echo "Following";
+        }
     }
 }
 
@@ -895,16 +914,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_notifications') {
     $fetch_notifications = "SELECT * FROM twitter_notifications WHERE user_id = '$id' ORDER BY id DESC";
     $run_notifications = $conn->query($fetch_notifications);
     while ($n_data = $run_notifications->fetch_object()) {
+        $fetch_user = "SELECT * FROM twitter_users WHERE id = '$n_data->from_user_id'";
+        $run_user = $conn->query($fetch_user);
+        $users_data = $run_user->fetch_object();
+        $profile = $users_data->profile_pic ? 'profile_pic/' . $users_data->profile_pic . '' : 'images/profile_pic.png';
         $notifications .= "<div class='n_parent'>
                             <div class='n_img'>
-                                <img src='images/profile_pic.png' alt='' height='40px'>
+                                <img src=$profile alt='' height='40px'>
                             </div>
                             <div class='n_userdata'>
                                 <p>
-                                    <span class='n_name'>Ravi</span>
-                                    <span class='n_username'>@ravi</span>
-                                    <span class='n_time'>· May 12</span><br>
-                                    <span class='n_msg'>$n_data->message</span>
+                                    <input type='hidden' id='n_hidden' value='0'>
+                                    <span class='n_name'>$users_data->name</span>
+                                    <span class='n_username'>@$users_data->username</span>
+                                    <span class='post-delete-icon'>
+                                        <i class='fa-solid fa-ellipsis' onclick='before_delete_notification($n_data->id)'></i>
+                                    </span><br>
+                                    <span class='n_msg'>$n_data->message</span><br>
+                                    <span class='n_comment'>$n_data->comment_content</span>
                                 </p>
                             </div>
                         </div>";
@@ -1385,4 +1412,99 @@ if (isset($_POST['action']) && $_POST['action'] == "following_post") {
     }
 
     echo $post_data;
+}
+
+//---------------------Search User-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'search') {
+    $search = $_POST['search'];
+    $username = $_SESSION['username'];
+    $sel_footer = "SELECT * FROM twitter_users  WHERE (username LIKE '%$search%' OR name LIKE '%$search%') AND username != '$username' ";
+    $run_footer = $conn->query($sel_footer);
+    $search = "";
+    while ($data = $run_footer->fetch_object()) {
+        $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
+
+        $search .= "<div class='search_user' onclick='show_user(`$data->username`)'>
+                        <div class='post-user-info' style='margin-top: 10px'>
+                            <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                        </div>
+                        <div class='serach_data' style='margin-top: 10px'>
+                            <p>
+                                <span class='post-name'>$data->name</span><br>
+                                <span class='post-username'>@$data->username</span>
+                            </p>
+                        </div>
+                    </div>";
+    }
+    echo $search;
+}
+//---------------------Show Following-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'show_following') {
+    $username = $_SESSION['username'];
+
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "Data fetch error: " . $conn->error;
+        exit;
+    }
+    $dataa = $run->fetch_object();
+    $id = $dataa->id;
+
+    $sel_footer = "SELECT * FROM twitter_users JOIN twitter_followers ON
+                    twitter_users.id = twitter_followers.following_id 
+                    WHERE twitter_followers.follower_id = '$id'";
+    $run_footer = $conn->query($sel_footer);
+    $search = "";
+    while ($data = $run_footer->fetch_object()) {
+        $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
+        $search .= "<div class='search_user' onclick='show_user(`$data->username`)'>
+                        <div class='post-user-info' style='margin-top: 10px'>
+                            <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                        </div>
+                        <div class='serach_data' style='margin-top: 10px'>
+                            <p>
+                                <span class='post-name'>$data->name</span><br>
+                                <span class='post-username'>@$data->username</span>
+                            </p>
+                        </div>
+                    </div>";
+    }
+    echo $search;
+}
+
+
+//---------------------Show Followers-------------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'show_followers') {
+    $username = $_SESSION['username'];
+
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "Data fetch error: " . $conn->error;
+        exit;
+    }
+    $dataa = $run->fetch_object();
+    $id = $dataa->id;
+
+    $sel_footer = "SELECT * FROM twitter_users JOIN twitter_followers ON
+                    twitter_users.id = twitter_followers.follower_id 
+                    WHERE twitter_followers.following_id = '$id'";
+    $run_footer = $conn->query($sel_footer);
+    $search = "";
+    while ($data = $run_footer->fetch_object()) {
+        $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
+        $search .= "<div class='search_user' onclick='show_user(`$data->username`)'>
+                        <div class='post-user-info' style='margin-top: 10px'>
+                            <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                        </div>
+                        <div class='serach_data' style='margin-top: 10px'>
+                            <p>
+                                <span class='post-name'>$data->name</span><br>
+                                <span class='post-username'>@$data->username</span>
+                            </p>
+                        </div>
+                    </div>";
+    }
+    echo $search;
 }
