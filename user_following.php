@@ -5,7 +5,7 @@ include_once 'headers.php'
     <h4 class="follow_user">Ravi Mali</h4>
     <div class="ul_list">
         <ul>
-            <a href="see_followers.php">
+            <a href="user_followers.php">
                 <li>
                     <span>Followers</span>
                 </li>
@@ -17,10 +17,9 @@ include_once 'headers.php'
             </a>
         </ul>
     </div>
-    <div class="following_list">
+     <div class="user_following_list">
 
     </div>
-     
 </div>
 
 <?php
@@ -29,13 +28,11 @@ if (isset($_GET['username'])) {
     $_SESSION['other_user'] = $username;
 }
 $username = $_SESSION['other_user'];
-$current_user = $_SESSION['username'];
 ?>
 <script>
     $(document).ready(function () {
         var username = '<?php echo $username?>';
-         var current_user = "<?php echo $current_user; ?>";
-        $(".follow_user").text("@"+current_user);
+        $(".follow_user").text("@"+username);
         show_following();
         see_user_following(username);
     });

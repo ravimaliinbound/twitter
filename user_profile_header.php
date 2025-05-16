@@ -34,11 +34,10 @@ include_once 'headers.php'
         </p>
         <p>
             <span>
-                <span class="user_following">15</span> Following
+                <a href="user_following.php" class="user_following see_user_following">15</a>
+                <a href="user_following.php" class="see_user_following">Following</a>
             </span>
-            <span class="user_follower"></span>
-            <span class="follower_followers"></span>
+            <a href="user_followers.php" class="user_follower see_user_followers">1</a>
+            <a href="user_followers.php" class="follower_followers see_user_followers">Follower</a>
         </p>
     </div>
-
-  

@@ -166,6 +166,9 @@ function show_following() {
         data: { "action": "show_following" },
         success: function (response) {
             $(".following_list").html(response);
+            if (response == "") {
+                $(".following_list").html("<h3 class='no'>No Following Yet.<h3>");
+            }
         }
     });
 }
@@ -176,11 +179,58 @@ function show_followers() {
         type: "post",
         data: { "action": "show_followers" },
         success: function (response) {
-            console.log(response)
             $(".followers_list").html(response);
+            if (response == "") {
+                $(".user_followers_list").html("<h3 class='no'>No Followers Yet.<h3>");
+            }
         }
     });
 }
+
+/*------------------- Show User's Following-----------------*/
+function see_user_following(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_following", "username": username },
+        success: function (response) {
+            $(".user_following_list").html(response);
+            if (response == "") {
+                $(".user_following_list").html("<h3 class='no'>No Following Yet.<h3>");
+            }
+        }
+    });
+}
+
+/*------------------- Show User's Followers-----------------*/
+function see_user_followers(username) {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_followers", "username": username },
+        success: function (response) {
+            $(".user_followers_list").html(response);
+            if (response == "") {
+                $(".user_followers_list").html("<h3 class='no'>No Followers Yet.<h3>");
+            }
+        }
+    });
+}
+/*------------------- Show Comments-----------------*/
+function show_comments() {
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "show_comments" },
+        success: function (response) {
+            $(".replies").html(response);
+            if (response == "") {
+                $(".replies").html("<h3 class='no'>No Comments Yet.<h3>");
+            }
+        }
+    });
+}
+
 /*------------------- Show Other User Media-----------------*/
 function show_user_media(username) {
     $.ajax({
@@ -189,6 +239,9 @@ function show_user_media(username) {
         data: { "action": "show_user_media", 'username': username },
         success: function (response) {
             $(".show_user_media").html(response);
+            if (response == "") {
+                $(".show_user_media").html("<h3 class='no'>No Media Yet.<h3>");
+            }
         }
     });
 }
@@ -321,12 +374,16 @@ function validate_edit(e) {
     // Patterns
     var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
     var usernamePattern = /^[a-zA-Z]{1,15}$/;
+    var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
+
 
     // Input Values
     var name = $('#edit-name').val().trim();
     var username = $('#edit-username').val().trim();
     var email = $('#edit-email').val().trim();
     var dob = $('#edit-dob').val().trim();
+    var profile = $("#edit-profile-pic").val();
+    var cover = $("#edit-cover-pic").val();
 
     // ----------- Name Validation ------------
     if (name == "") {
@@ -340,6 +397,23 @@ function validate_edit(e) {
     else if (!usernamePattern.test(username)) {
         $("#err-editusername").text("Enter a valid username");
         isValid = false;
+    }
+    //------------ Image Validation-----------
+    if (!imgPattern.test(profile)) {
+        $("#err-profile").text("Profile image is not valid");
+        isValid = false;
+    }
+
+    if (profile == "") {
+        $("#err-profile").text("");
+    }
+    if (!imgPattern.test(cover)) {
+        $("#err-cover").text("Cover image is not valid");
+        isValid = false;
+    }
+
+    if (cover == "") {
+        $("#err-cover").text("");
     }
     // ----------- Email Validation ------------
     if (email == "") {
@@ -428,7 +502,6 @@ function before_delete(id) {
 
 //-------------Before Delete Notification-------------//
 function before_delete_notification(id) {
-    console.log(id)
     $('#delete_n_Modal').modal('show');
     $("#n_hidden").val(id);
 }
@@ -447,7 +520,6 @@ function delete_post() {
                 show_media();
                 count_posts();
                 show_post();
-                console.log(data)
             }
         });
     }
@@ -465,7 +537,6 @@ function delete_notification() {
             success: function (data) {
                 $('#delete_n_Modal').modal('hide');
                 show_notifications();
-                console.log(data)
             }
         });
     }
@@ -791,15 +862,20 @@ $(document).ready(function () {
         $(".username-span, .name-span, .bio-span").css("color", "black");
     });
 
-    /*------------- See Followers----------------*/
-    $(document).on('click', '.see_followers', function () {
-        see_followers();
+    /*----------Profile Pic---------*/
+    $.ajax({
+        url: "action.php",
+        type: "post",
+        data: { "action": "profile_pic" },
+        success: function (data) {
+            if (data == "") {
+                $(".post_profile_pic").attr('src', 'images/profile_pic.png');
+            } else {
+                $(".post_profile_pic").attr('src', 'profile_pic/' + data);
+            }
+        }
     });
 
-    /*------------- See Following----------------*/
-    $(document).on('click', '.see_following', function () {
-        see_following();
-    });
 
     /*--------------------Search Users on keyup-----------------------*/
     $(document).on('keyup', '.footer-search-input', function () {
@@ -864,7 +940,6 @@ $(document).ready(function () {
                     type: "post",
                     data: { "action": "unfollow", 'other_user': other_user },
                     success: function (data) {
-                        console.log(data)
                         footer()
                         following_post();
                         show_more();
@@ -881,7 +956,6 @@ $(document).ready(function () {
                 type: "post",
                 data: { "action": "follow_unfollow", 'other_user': other_user },
                 success: function (data) {
-                    console.log(data);
                     following_post();
                     following();
                     follower();
@@ -947,7 +1021,6 @@ $(document).ready(function () {
             type: 'post',
             data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
             success: function (data) {
-                console.log(data)
                 $("#comment-modal-foryou").modal("hide");
                 $(".comment_span_foryou").text(500);
                 $(".comment_reply_btn_forYou").css('background-color', 'grey')
@@ -979,7 +1052,6 @@ $(document).ready(function () {
             type: 'post',
             data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
             success: function (data) {
-                console.log(data)
                 $("#comment-modal").modal("hide");
                 $(".comment_span").text(500);
                 $(".comment_reply_btn").css('background-color', 'grey')
@@ -1003,7 +1075,6 @@ $(document).ready(function () {
             type: 'POST',
             data: { "post_id": post_id, "action": "like", "type": "post" },
             success: function (response) {
-                console.log(response);
                 show_post();
                 show_foryou_post();
                 following_post();
@@ -1472,6 +1543,32 @@ $(document).ready(function () {
         }
     });
 
+    //------------ Image Validation-----------
+
+    $("#edit-profile-pic").change(function () {
+        var profile = $("#edit-profile-pic").val();
+        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
+        if (!imgPattern.test(profile)) {
+            $("#err-profile").text("Profile image is not valid");
+            isValid = false;
+        }
+
+        if (profile == "") {
+            $("#err-profile").text("");
+        }
+    });
+    $("#edit-cover-pic").change(function () {
+        var cover = $("#edit-cover-pic").val();
+        var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
+        if (!imgPattern.test(cover)) {
+            $("#err-cover").text("Cover image is not valid");
+            isValid = false;
+        }
+
+        if (cover == "") {
+            $("#err-cover").text("");
+        }
+    });
 
     /*------------------------------------- Modal Post Validation----------------------------*/
 

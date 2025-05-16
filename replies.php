@@ -1,6 +1,6 @@
 <?php
-include_once 'profile-post.php'
-    ?>
+include_once 'profile-post.php';
+?>
 
 <div class="profile-menu" style="margin-left: -28px;">
     <ul style="width: 100%;">
@@ -25,9 +25,18 @@ include_once 'profile-post.php'
     </ul>
 </div>
 <hr style="border: 1px solid rgb(219, 223, 244);">
+<div class="replies">
+    
 
+</div>
 </div>
 
 <?php
 include_once 'footers.php';
 ?>
+
+<script>
+    $(document).ready(function(){
+        show_comments();
+    })
+</script>

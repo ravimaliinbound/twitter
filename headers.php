@@ -158,7 +158,7 @@ if (!isset($_SESSION['login'])) {
                         <div class="index-post-form">
                             <div class="index-sess">
                                 <a href="profile.php" class="pro-fname">
-                                    <img src="images/profile_pic.png" alt="">
+                                    <img src="images/profile_pic.png" alt="" class="post_profile_pic">
                                 </a>
                             </div>
                             <div class="index-inp">

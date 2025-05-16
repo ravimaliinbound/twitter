@@ -16,9 +16,21 @@ include_once 'headers.php'
     </div>
 </div>
 <div class="footers">
-    <?php
-    include_once 'footer_search.php';
-    ?>
+    <div class="follow_footer">
+        <p class="what">What's happening</p>
+        <div class="trending">
+            <span>Politics · Trending</span>
+            <p>#BJP</p>
+            <span>Trending</span>
+            <p>#War2</p>
+            <span>Trending</span>
+            <p>Sehwag</p>
+            <span>Trending</span>
+            <p>#stufflistingsarmy </p>
+            <span>Music · Trending</span>
+            <p>To Me</p>
+        </div>
+    </div>
     <div class="footerss">
         <a href="#" class="f-anchor">Terms of Service |</a>
         <a href="#" class="f-anchor"> Privacy Policy |</a>

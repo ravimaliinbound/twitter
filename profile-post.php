@@ -34,7 +34,10 @@ include_once 'headers.php'
                             </div>
                         </label>
                     </div>
-                    <div class="form-group" style="margin-top: 100px;">
+
+                    <div class="form-group" style="margin-top: 100px;"><br>
+                        <span id="err-profile" class="error"></span><br>
+                        <span id="err-cover" class="error"></span><br>
                         <label for="edit-name">Name</label>
                         <input type="text" class="form-control" id="edit-name" aria-describedby="nameHelp"
                             placeholder="Enter Name" name="edit-name" maxlength="15">

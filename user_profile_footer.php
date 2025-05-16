@@ -5,11 +5,13 @@ if (isset($_GET['username'])) {
     $_SESSION['other_user'] = $username;
 }
 $username = $_SESSION['other_user'];
+$current_user = $_SESSION['username'];
 ?>
 
 <script>
     $(document).ready(function () {
         var username = '<?php echo $username; ?>';
+        var current_user = '<?php echo $current_user; ?>';
         show_user_post(username);
         show_user_media(username);
         other_user_post_count(username);
@@ -17,7 +19,15 @@ $username = $_SESSION['other_user'];
         fetch_following(username);
 
 
-
+        /*------------- See User's Following----------------*/
+        $(document).on('click', '.see_user_following', function () {
+            see_user_following(username);
+            console.log(username)
+        });
+        /*------------- See User's Followers----------------*/
+        $(document).on('click', '.see_user_followers', function () {
+            see_user_followers(username);
+        });
 
         $.ajax({
             url: 'action.php',
@@ -26,6 +36,9 @@ $username = $_SESSION['other_user'];
             success: function (response) {
                 var data = JSON.parse(response);
                 $(".user_pro-name").text(data.name);
+                if(data.username==current_user){
+                    window.location = 'profile.php';
+                }
                 $(".user_bio").text(data.bio);
                 $(".user_username").text("@" + data.username);
                 $(".user_joined").text(data.joined);
@@ -132,12 +145,11 @@ $username = $_SESSION['other_user'];
             type: 'post',
             data: { 'action': 'follow_check', 'other_user': username },
             success: function (data) {
-                console.log(data)
                 if (data == 'No') {
                     $(".follow").text("Follow")
                 } else {
                     $(".follow").text("Following");
-                    $(this).css({
+                    $(".follow").css({
                         'background-color': 'white',
                         'border': '1px solid black',
                         'color': 'black'
@@ -146,7 +158,6 @@ $username = $_SESSION['other_user'];
             }
         });
 
-        console.log($('.follow').text())
         if ($('.follow').text() == 'Following') {
             $('.follow').css({
                 'background-color': 'white',
