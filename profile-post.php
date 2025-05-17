@@ -70,11 +70,13 @@ include_once 'headers.php'
                     </div>
                     <div class="form-group" style="display: none;">
                         <label for="edit-profile-pic">Profile Image</label>
-                        <input type="file" class="form-control" id="edit-profile-pic" name="edit-profile-pic">
+                        <input type="file" class="form-control" id="edit-profile-pic" name="edit-profile-pic"
+                            accept="image/png, image/jpeg, image/jpg, image/avif, image/gif">
                     </div>
                     <div class="form-group" style="display: none;">
                         <label for="edit-cover-pic">Cover Image</label>
-                        <input type="file" class="form-control" id="edit-cover-pic" name="edit-cover-pic">
+                        <input type="file" class="form-control" id="edit-cover-pic" name="edit-cover-pic"
+                            accept="image/png, image/jpeg, image/jpg, image/avif, image/gif">
                     </div>
                 </form>
             </div>
@@ -206,7 +208,7 @@ include_once 'headers.php'
         </p>
         <p>
             <span>
-                <a href="see_following.php" class="following see_following">15</a> 
+                <a href="see_following.php" class="following see_following">15</a>
                 <a href="see_following.php" class="see_following">Following</a>
             </span>
             <a href="see_followers.php" class="follower see_followers">1</a>

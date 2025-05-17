@@ -165,7 +165,7 @@ if (!isset($_SESSION['login'])) {
                                 <form action="" id="post_content_form">
                                     <input type="text" placeholder="What's happening?" name="index-input"
                                         class="index_inputs" style=" width: 380px">
-                                        <span class="index_inputs_span">500</span>
+                                    <span class="index_inputs_span">500</span>
                                 </form>
                             </div>
                         </div>
@@ -175,7 +175,8 @@ if (!isset($_SESSION['login'])) {
                                     <label for="index-images">
                                         <img src="images/image.png" alt="" height="16px" class="post-image-hover">
                                     </label>
-                                    <input type="file" id="index-images" style="display: none;" name="index-image">
+                                    <input type="file" id="index-images" style="display: none;" name="index-image"
+                                        accept="image/png, image/jpeg, image/jpg, image/avif, image/gif, video/*">
                                 </form>
                             </div>
                             <div class="post-icons">
@@ -209,47 +210,10 @@ if (!isset($_SESSION['login'])) {
             </div>
         </div>
 
-        
-<!--------------------Comment Modal For All Users Posts--------------------->
-<div class="modal" id="comment-modal-foryou">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="" id="comment_form_foryou">
-                    <div class="parent_div">
-                        <div class="comment_profile_pic">
-                            <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
-                                class="comment_dp">
-                        </div>
-                        <div class="comment_user">
-                            <p>
-                                <span class="comment_name_foryou"></span>
-                                <span class="comment_username"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <input type="text" name="comment_input_foryou" id="comment_input_foryou" placeholder="Post your reply"
-                            maxlength="500">
-                        <span class="comment_span_foryou">500</span>
-                        <p class="comment-err-msg-foryou"></p>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="">
-                <button type="submit" class="comment_reply_btn_forYou">Reply</button>
-            </div>
-        </div>
-    </div>
-</div>
+        <!--------------------Comment Modal For All Users Posts--------------------->
+        <?php
+        include_once 'comment_modal.php';
+        ?>
 
         <!-- </div>  -->

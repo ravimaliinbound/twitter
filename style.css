@@ -297,7 +297,7 @@
     font-size: 18px;
 }
 
-.serach_data {
+.search_data {
     margin-left: 10px;
 }
 
@@ -555,19 +555,22 @@
     font-size: 20px;
 }
 
-#comment_input_foryou {
+#comment_input_foryou,
+#comment_input_modal {
     margin-top: 8px;
     margin-left: 40px;
     width: 380px;
     border: none;
 }
 
-#comment_input_foryou::placeholder {
+#comment_input_foryou::placeholder,
+#comment_input_modal::placeholder {
     font-size: 20px;
 }
 
 .comment_reply_btn,
-.comment_reply_btn_forYou {
+.comment_reply_btn_forYou,
+.comment_reply_modal {
     color: white;
     background-color: grey;
     border: none;
@@ -720,9 +723,11 @@
     display: flex;
     margin-left: 20px;
 }
-.c_user_data:hover{
+
+.c_user_data:hover {
     cursor: pointer;
 }
+
 .c_usernames {
     margin-top: 2px;
     margin-left: 10px;
@@ -740,6 +745,12 @@
     padding-left: 28px;
     margin-left: 40px;
     border-left: 2px solid rgb(195, 197, 197);
+}
+
+.comment_img {
+    padding: 20px;
+    height: 400px;
+    width: 100%;
 }
 
 .follow_user {
@@ -810,9 +821,11 @@
 }
 
 .no {
-    margin-top: 30px;
-    margin-left: 250px;
-    margin-bottom: 30px;
+    padding-top: 30px;
+    padding-left: 250px;
+    padding-bottom: 30px;
+    border: 1px solid rgb(239, 243, 244);
+    border-bottom: none;
 }
 
 .user_pro-name {
@@ -876,7 +889,6 @@
     margin-left: 50px;
     margin-top: -50px;
     border-radius: 50%;
-    background-color: rgb(231, 231, 231);
 }
 
 .user_profile-pic {
@@ -1082,6 +1094,26 @@
     color: grey;
 }
 
+.post_details {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.post_comment {
+    border: 1px solid rgb(247, 247, 247);
+}
+
+.post_comment:hover {
+    background-color: rgb(247, 247, 247);
+    cursor: pointer;
+}
+
+.post_d {
+    margin-top: 20px;
+    margin-left: 35px;
+    font-size: 25px;
+}
+
 .postuser-name {
     margin-top: 7px;
     width: 80%;
@@ -1162,14 +1194,6 @@
     height: 150px;
 }
 
-.profile_pics {
-    background-color: #d4d4d4;
-}
-
-.user_profile_pics {
-    background-color: #d4d4d4;
-}
-
 .edit_profile_pic_div {
     margin-top: -50px;
     margin-left: 30px;
@@ -1203,8 +1227,8 @@
 .myeditpic {
     position: absolute;
     height: 30px;
-    margin-left: -75px;
-    margin-top: -10px;
+    margin-left: -80px;
+    margin-top: -15px;
     background-color: white;
 }
 
@@ -1394,4 +1418,5 @@
 
 .background-follow:hover {
     background-color: rgb(247, 247, 247);
+    cursor: pointer;
 }

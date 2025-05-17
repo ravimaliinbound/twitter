@@ -18,7 +18,8 @@
             <label for="index-image">
                 <img src="images/image.png" alt="" height="16px" class="post-image-hover">
             </label>
-            <input type="file" id="index-image" style="display: none;" name="index-image">
+            <input type="file" id="index-image" style="display: none;" name="index-image"
+                accept="image/png, image/jpeg, image/jpg, image/avif, image/gif, video/*">
         </form>
     </div>
     <div class="post-icons">

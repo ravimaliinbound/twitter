@@ -20,9 +20,33 @@ include_once 'headers.php'
     <div class="following_list">
 
     </div>
-     
-</div>
 
+</div>
+<div class="footers">
+    <div class="follow_footer">
+        <p class="what">What's happening</p>
+        <div class="trending">
+            <span>Politics · Trending</span>
+            <p>#BJP</p>
+            <span>Trending</span>
+            <p>#War2</p>
+            <span>Trending</span>
+            <p>Sehwag</p>
+            <span>Trending</span>
+            <p>#stufflistingsarmy </p>
+            <span>Music · Trending</span>
+            <p>To Me</p>
+        </div>
+    </div>
+    <div class="footerss">
+        <a href="#" class="f-anchor">Terms of Service |</a>
+        <a href="#" class="f-anchor"> Privacy Policy |</a>
+        <a href="#" class="f-anchor"> Cookie Policy |</a>
+        <a href="#" class="f-anchor"> Accessibility |</a>
+        <a href="#" class="f-anchor"> Ads info |</a>
+        <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
+    </div>
+</div>
 <?php
 if (isset($_GET['username'])) {
     $username = $_GET['username'];
@@ -33,9 +57,9 @@ $current_user = $_SESSION['username'];
 ?>
 <script>
     $(document).ready(function () {
-        var username = '<?php echo $username?>';
-         var current_user = "<?php echo $current_user; ?>";
-        $(".follow_user").text("@"+current_user);
+        var username = '<?php echo $username ?>';
+        var current_user = "<?php echo $current_user; ?>";
+        $(".follow_user").text("@" + current_user);
         show_following();
         see_user_following(username);
     });
