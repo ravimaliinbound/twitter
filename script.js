@@ -664,7 +664,10 @@ function show_post() {
 function show_user(username) {
     window.location.href = 'user_profile.php?username=' + username;
 }
-
+/*---------------- Show comemnts In details----------------*/
+function show_comment(id) {
+    window.location.href = 'reply.php?id=' + id;
+}
 //------------------Footer Who to follow-----------------//
 function footer() {
     $.ajax({
@@ -893,6 +896,34 @@ function validate_comment_modal(e) {
     }
     return isValid;
 }
+//-------------------- Comment Validate For Modal----------------//
+function validate_comment_p(e) {
+    var isValid = true;
+
+    var comment = $("#comment_input_p").val();
+    if (comment == "") {
+        $(".comment-err-msg-p").text("Comment can't be blank");
+        isValid = false;
+    }
+    else {
+        $(".comment-err-msg-p").text("");
+    }
+    return isValid;
+}
+//-------------------- Comment Reply Validate----------------//
+function validate_reply(e) {
+    var isValid = true;
+
+    var comment = $("#reply_input_p").val();
+    if (comment == "") {
+        $(".reply-err-msg").text("Comment can't be blank");
+        isValid = false;
+    }
+    else {
+        $(".reply-err-msg").text("");
+    }
+    return isValid;
+}
 //-------------------- Comment Validate For You----------------//
 function validate_comment_foryou(e) {
     var isValid = true;
@@ -992,11 +1023,11 @@ $(document).ready(function () {
     });
 
     /*--------------------Follow-----------------------*/
-    $(document).on('click', '.n_following, .not_following', function () {
+    $(document).on('click', '.n_following, .not_following, .follow-back-btn, .following-btn', function () {
         var other_user = $(this).data('other_user');
-        var $btn = $(this); // Cache $(this)
+        var btn = $(this);
 
-        if ($btn.text() == 'Unfollow') {
+        if (btn.text() == 'Unfollow') {
             var conf = confirm("Do you really want to unfollow @" + other_user + '?');
             if (conf) {
                 $.ajax({
@@ -1004,9 +1035,22 @@ $(document).ready(function () {
                     type: "post",
                     data: { "action": "unfollow", 'other_user': other_user },
                     success: function (data) {
+                        if (data) {
+                            $.ajax({
+                                url: 'action.php',
+                                type: 'post',
+                                data: { 'action': 'follow_back', 'other_user': other_user },
+                                success: function (dataa) {
+                                    if (dataa == 1) {
+                                        btn.text("Follow Back");
+                                    } else {
+                                        btn.text("Follow");
+                                    }
+                                }
+                            })
+                        }
                         // Change button text & style after unfollow
-                        $btn.text("Follow");
-                        $btn.css({
+                        btn.css({
                             "background-color": "black",
                             "color": "#fff",
                             "border": "none"
@@ -1014,26 +1058,28 @@ $(document).ready(function () {
 
                         following_post();
                         show_more();
+                        show_followers();
                         following();
                         follower();
                     }
                 });
             }
-        } else if ($btn.text() == 'Follow') {
+        } else if (btn.text() == 'Follow' || 'Follow Back') {
             $.ajax({
                 url: "action.php",
                 type: "post",
                 data: { "action": "follow_unfollow", 'other_user': other_user },
                 success: function (data) {
                     // Change button text & style after follow
-                    $btn.text("Unfollow");
-                    $btn.css({
-                        "background-color": "#ccc",
+                    btn.text("Following");
+                    btn.css({
+                        "background-color": "#0000",
                         "color": "#000",
-                        "border": "1px solid #999"
+                        "border": "1px solid black"
                     });
 
                     following_post();
+                    show_followers();
                     following();
                     follower();
                 }
@@ -1043,7 +1089,7 @@ $(document).ready(function () {
 
 
     /*--------------------Show Unfollow Option on Mouseenter-----------------------*/
-    $(document).on('mouseenter', '.n_following, .not_following', function () {
+    $(document).on('mouseenter', '.n_following, .follow-back-btn, .following-btn', function () {
         if ($(this).text() == 'Following') {
             $(this).css({
                 'background-color': 'rgb(255, 216, 216)',
@@ -1053,7 +1099,7 @@ $(document).ready(function () {
             $(this).text("Unfollow");
         }
     });
-    $(document).on('mouseout', '.n_following, .not_following', function () {
+    $(document).on('mouseout', '.n_following, .not_following, .follow-back-btn, .following-btn', function () {
         if ($(this).text() == 'Following') {
             $(this).css({
                 'background-color': 'white',
@@ -1119,6 +1165,34 @@ $(document).ready(function () {
             }
         });
     });
+    //---------------Comment Reply-------------------//
+    $(document).on('click', ' .reply_btn', function () {
+        var post_id = $("#a_id").val();
+        var comment = $("#reply_input_p").val();
+        var username = $("#b_username").val();
+        if (!validate_reply()) {
+            return false;
+        }
+        console.log(post_id)
+        console.log(comment)
+        console.log(username)
+        // $.ajax({
+        //     url: 'action.php',
+        //     type: 'post',
+        //     data: { 'post_id': post_id, 'action': 'insert_reply', 'comment': comment },
+        //     success: function (data) {
+        //         $(".reply_span").text(500);
+        //         $(".reply_btn").css('background-color', 'grey')
+        //         $("#reply_form")[0].reset();
+        //         post_details(post_id);
+        //         details_post(post_id);
+        //         show_post();
+        //         show_foryou_post();
+        //         following_post();
+        //         show_user_post(username);
+        //     }
+        // });
+    });
 
     //---------------For You Comment Insert-------------------//
     $(document).on('click', ' .comment_reply_btn_forYou', function () {
@@ -1174,6 +1248,58 @@ $(document).ready(function () {
             }
         })
     });
+
+    //---------------Comment Insert Post-------------------//
+    $(document).on('click', '.comment_btn_p', function () {
+        var post_id = $("#p_id").val();
+        var comment = $("#comment_input_p").val();
+        var username = $("#p_username").val();
+        if (!validate_comment_p()) {
+            return false;
+        }
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
+            success: function (data) {
+                console.log(data)
+                $(".comment_span_p").text(500);
+                $(".comment_btn_p").css('background-color', 'grey')
+                $("#comment_form_p")[0].reset();
+                show_post();
+                post_details(post_id);
+                details_post(post_id);
+                show_foryou_post();
+                following_post();
+                show_user_post(username);
+            }
+        });
+    });
+    //---------------Comment Like -------------------//
+    $(document).on('click', '.comment-like-icon', function () {
+        var comment_id = $(this).data('comment-id');
+        var post_id = $(this).data('post-id');
+        // var username = $(this).data('username');
+        var heartIcon = $(this).children('i.heart-icon');
+        // console.log(username)
+
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "comment_id": comment_id, "action": "comment_like", "type": "comment" },
+            success: function (response) {
+                console.log(response)
+                show_post();
+                post_details(post_id)
+                show_foryou_post();
+                following_post();
+                // show_user_post(username);
+            }
+        });
+    });
+
     //---------------Post Like -------------------//
     $(document).on('click', '.like-icon', function () {
         var post_id = $(this).data('post-id');
@@ -1189,6 +1315,7 @@ $(document).ready(function () {
             success: function (response) {
                 show_post();
                 details_post(post_id);
+                // post_detail(post_id);
                 show_foryou_post();
                 following_post();
                 show_user_post(username);
@@ -1198,6 +1325,14 @@ $(document).ready(function () {
 
     /*----------Comment Input Outline---------*/
     $("#comment_input").focus(function () {
+        $(this).css("outline", " none")
+    });
+    /*----------Comment Input Post outline---------*/
+    $(document).on('focus', "#comment_input_p", function () {
+        $(this).css("outline", " none")
+    });
+    /*----------Reply Input Post outline---------*/
+    $(document).on('focus', "#reply_input_p", function () {
         $(this).css("outline", " none")
     });
     /*---------- For youComment Input Outline---------*/
@@ -1530,6 +1665,38 @@ $(document).ready(function () {
             $(".comment_span").css("color", "black");
         }
     });
+    $(document).on('keyup', "#comment_input_p", function () {
+        var len = post - $(this).val().trim().length;
+        $(".comment_span_p").text(len);
+        if ($(this).val().trim() != "") {
+            $(".comment-err-msg-p").text("");
+        }
+        else {
+            $(".comment-err-msg-p").text("Comment can't be blank");
+        }
+        if (len < 11) {
+            $(".comment_span_p").css("color", "red");
+        }
+        else {
+            $(".comment_span_p").css("color", "black");
+        }
+    });
+    $(document).on('keyup', "#reply_input_p", function () {
+        var len = post - $(this).val().trim().length;
+        $(".reply_span").text(len);
+        if ($(this).val().trim() != "") {
+            $(".reply-err-msg-").text("");
+        }
+        else {
+            $(".reply-err-msg-").text("Comment can't be blank");
+        }
+        if (len < 11) {
+            $(".reply_span").css("color", "red");
+        }
+        else {
+            $(".reply_span").css("color", "black");
+        }
+    });
     $("#comment_input_foryou").keyup(function () {
         var len = post - $(this).val().trim().length;
         $(".comment_span_foryou").text(len);
@@ -1751,6 +1918,22 @@ $(document).ready(function () {
         }
         else {
             $(".comment_reply_btn").css('background-color', 'black')
+        }
+    });
+    $(document).on('keyup', "#comment_input_p", function () {
+        if ($(this).val().trim() == "") {
+            $(".comment_btn_p").css('background-color', 'grey')
+        }
+        else {
+            $(".comment_btn_p").css('background-color', 'black')
+        }
+    });
+    $(document).on('keyup', "#reply_input_p", function () {
+        if ($(this).val().trim() == "") {
+            $(".reply_btn").css('background-color', 'grey')
+        }
+        else {
+            $(".reply_btn").css('background-color', 'black')
         }
     });
     $("#comment_input_foryou").keyup(function () {

@@ -2,7 +2,7 @@
 include_once 'headers.php'
     ?>
 <div class="middle">
-    <h4 class="follow_user">Ravi Mali</h4>
+    <h4 class="follow_user"></h4>
     <div class="ul_list">
         <ul>
             <a href="see_followers.php">
@@ -52,7 +52,7 @@ if (isset($_GET['username'])) {
     $username = $_GET['username'];
     $_SESSION['other_user'] = $username;
 }
-$username = $_SESSION['other_user'];
+$username = isset($_SESSION['other_user'])  ? $_SESSION['other_user'] : "";
 $current_user = $_SESSION['username'];
 ?>
 <script>

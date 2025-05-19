@@ -544,14 +544,17 @@
     color: grey;
 }
 
-#comment_input {
+#comment_input,
+#comment_input_p,
+#reply_input_p {
     margin-top: 8px;
     margin-left: 40px;
     width: 380px;
     border: none;
 }
 
-#comment_input::placeholder {
+#comment_input::placeholder,
+#comment_input_p::placeholder {
     font-size: 20px;
 }
 
@@ -570,7 +573,9 @@
 
 .comment_reply_btn,
 .comment_reply_btn_forYou,
-.comment_reply_modal {
+.comment_reply_modal,
+.comment_btn_p,
+.reply_btn {
     color: white;
     background-color: grey;
     border: none;
@@ -578,6 +583,15 @@
     border-radius: 20px;
     margin-left: 350px;
     margin-bottom: 10px;
+}
+
+.comment_btn_p {
+    text-decoration: none;
+}
+
+.comment_btn_p:hover {
+    color: white;
+    cursor: pointer;
 }
 
 .comment-err-msg,
@@ -1049,7 +1063,8 @@
     padding: 20px;
 }
 
-.post-user-info {
+.post-user-info,
+.parent_div {
     margin-left: 20px;
     width: fit-content;
     height: fit-content;
@@ -1166,15 +1181,23 @@
     padding: 15px;
     border-radius: 50%;
 }
+.comment-icon:hover{
+    cursor: pointer;
+}
+.username_d {
+    color: grey;
+}
 
+.mydiv {
+    border: 1px solid rgb(245, 245, 245);
+}
 
-
-.like-icon {
+.like-icon,
+.comment-like-icon {
     padding: 15px;
     border-radius: 50%;
     margin-left: 220px;
 }
-
 
 .posts {
     margin-top: -17px;
@@ -1363,6 +1386,24 @@
 .suggest p {
     font-size: 22px;
     font-weight: 700;
+}
+
+.follow-back-btn {
+    background-color: black;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: none;
+    width: 120px;
+}
+
+.following-btn {
+    background-color: white;
+    color: black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid;
+    width: 120px;
 }
 
 .not_following {

@@ -8,7 +8,8 @@ include_once 'headers.php';
     <div class='userspost'>
 
     </div>
-    <div class="post_data">
+
+    <div class='post_data'>
 
     </div>
 </div>
@@ -16,6 +17,7 @@ include_once 'headers.php';
 <?php
 include_once 'footers.php';
 ?>
+
 <!--------------------Comment Modal--------------------->
 
 <div class="modal" id="modal_comment">
@@ -33,7 +35,7 @@ include_once 'footers.php';
                     <div class="parent_div">
                         <div class="comment_profile_pic">
                             <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
-                                class="comment_dp">
+                                class="profile_pics">
                         </div>
                         <div class="comment_user">
                             <p>
@@ -62,9 +64,12 @@ include_once 'footers.php';
 <?php
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
+    $_SESSION['id'] = $id;
 }
+$id = $_SESSION['id'];
 ?>
 <script>
+
     function post_details(id) {
         $.ajax({
             url: 'action.php',
@@ -93,9 +98,7 @@ if (isset($_GET['id'])) {
     }
     $(document).ready(function () {
         var id = '<?php echo $id; ?>';
-        console.log(id);
         post_details(id);
         details_post(id);
-
-    })
+    });
 </script>
