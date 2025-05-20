@@ -546,7 +546,8 @@
 
 #comment_input,
 #comment_input_p,
-#reply_input_p,#replyy_input_p {
+#reply_input_p,
+#replyy_input_p {
     margin-top: 8px;
     margin-left: 40px;
     width: 380px;
@@ -1182,9 +1183,11 @@
     padding: 15px;
     border-radius: 50%;
 }
-.comment-icon:hover{
+
+.comment-icon:hover {
     cursor: pointer;
 }
+
 .username_d {
     color: grey;
 }
@@ -1194,10 +1197,16 @@
 }
 
 .like-icon,
-.comment-like-icon {
+.comment-like-icon,
+.reply-like-icon {
     padding: 15px;
     border-radius: 50%;
     margin-left: 220px;
+}
+
+.comment-like-icon:hover,
+.like-icon:hover {
+    cursor: pointer;
 }
 
 .posts {

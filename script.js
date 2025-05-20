@@ -1212,6 +1212,7 @@ $(document).ready(function () {
                 $("#reply_input_p").val("");
                 post_details(post_id);
                 show_post();
+                $("#modal_recomment").modal("hide");
                 show_foryou_post();
                 following_post();
                 show_user_post(username);
@@ -1221,7 +1222,9 @@ $(document).ready(function () {
     //---------------Insert Reply into reply-------------------//
     $(document).on('click', '.replyy_btn', function () {
         var comment = $("#replyy_input_p").val();
+        var comment_id = $(this).data('comment-id');
         console.log(comment)
+        console.log(comment_id)
 
         if (!validate_replyy()) {
             return false;
@@ -1737,10 +1740,10 @@ $(document).ready(function () {
         var len = post - $(this).val().trim().length;
         $(".reply_span").text(len);
         if ($(this).val().trim() != "") {
-            $(".reply-err-msg-").text("");
+            $(".reply-err-msg").text("");
         }
         else {
-            $(".reply-err-msg-").text("Comment can't be blank");
+            $(".reply-err-msg").text("Comment can't be blank");
         }
         if (len < 11) {
             $(".reply_span").css("color", "red");
@@ -1753,10 +1756,10 @@ $(document).ready(function () {
         var len = post - $(this).val().trim().length;
         $(".replyy_span").text(len);
         if ($(this).val().trim() != "") {
-            $(".replyy-err-msg-").text("");
+            $(".replyy-err-msg").text("");
         }
         else {
-            $(".replyy-err-msg-").text("Comment can't be blank");
+            $(".replyy-err-msg").text("Comment can't be blank");
         }
         if (len < 11) {
             $(".replyy_span").css("color", "red");

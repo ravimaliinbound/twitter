@@ -1954,9 +1954,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
 }
 
 //---------------------Show Comment Details-------------------------//
+
 if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
+
     $comment_id = $_POST['id'];
     $username = $_SESSION['username'];
+
+    // Get current logged in user info
     $fetch_id_query = "SELECT * FROM twitter_users WHERE username = '$username'";
     $run = $conn->query($fetch_id_query);
     if (!$run) {
@@ -1966,8 +1970,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
     $user = $run->fetch_object();
     $user_id = $user->id;
 
+    // Get comment details
     $comment_query = "SELECT 
-                        c.id, c.comment, c.created_at, c.user_id AS comment_user_id,
+                        c.id AS comment_id, c.comment, c.created_at, c.user_id AS comment_user_id,
                         u.name AS comment_owner_name, u.username AS comment_owner_username, u.profile_pic AS comment_owner_profile
                     FROM twitter_comments c
                     JOIN twitter_users u ON c.user_id = u.id
@@ -1979,70 +1984,139 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
         echo "Comment not found";
         exit;
     }
-   
-    $show = '';
+
     $comment = $comment_result->fetch_object();
-     // Total post likes
+    date_default_timezone_set("Asia/Kolkata");
+    $today = new DateTime();
+    $comment_date = new DateTime($comment->created_at);
+    $diff = $comment_date->diff($today);
+    $title = $comment_date->format('h:i A - M j, Y');
+
+    if ($diff->format('%i') < 1)
+        $print = $diff->format('%s') . 's';
+    elseif ($diff->format('%h') < 1)
+        $print = $diff->format('%i') . 'm';
+    elseif ($diff->format('%d') == 0)
+        $print = $diff->format('%h') . 'h';
+    elseif ($diff->format('%y') == 0)
+        $print = $comment_date->format('M j');
+    else
+        $print = $comment_date->format('M j Y');
+
+    $profile_pic = $comment->comment_owner_profile ? 'profile_pic/' . $comment->comment_owner_profile : 'images/profile_pic.png';
+    $current_user_profile = $user->profile_pic ? 'profile_pic/' . $user->profile_pic : 'images/profile_pic.png';
+
+    // Total likes on comment
     $like_q = "SELECT COUNT(*) AS total_likes FROM twitter_likes WHERE liked_id = $comment_id AND likeable_type = 'comment'";
     $likes = $conn->query($like_q)->fetch_assoc();
     $total_likes = $likes['total_likes'] ?: '';
 
-    // Check if already liked 
-    $check_like = "SELECT * FROM twitter_likes WHERE user_id = $comment->comment_user_id AND liked_id = $comment_id AND likeable_type = 'comment'";
+    // Check if current user liked this comment
+    $check_like = "SELECT * FROM twitter_likes WHERE user_id = $user_id AND liked_id = $comment_id AND likeable_type = 'comment'";
     $liked = $conn->query($check_like)->num_rows > 0 ? 'liked' : '';
 
-    // Total comments
-    $comment_q = "SELECT COUNT(*) AS total_comments FROM twitter_comments WHERE post_id = $post->id";
-    $comments = $conn->query($comment_q)->fetch_assoc();
-    $total_comments = $comments['total_comments'] ?: '';
-    $show .= "    <div class='mydiv'>
-            <div style='display: flex;'>
-                <div class='post-user-info'>
-                    <img src='images/profile_pic.png' alt='Post' height='40px' style='border-radius: 50%'>
-                </div>
-                <div>
-                    <p style='margin-top: 10px;'>
-                        <span class='name_d'>Ravi Mali </span>
-                        <span class='username_d'>@ravimali</span>
-                        <span class='time' title=''>· 3h</span>
-                    </p>
-                    <p class='post-content'>Good Morning</p>
-                    <div class='comment_media'></div>
-                </div>
-            </div>
-            <div class='post_details'>
-                <p class='icons'>
-                    <span class='comment-icon open_modal_comment' data-post-id=''>
-                        <img src='images/chat.png' height='17px' title='Reply'>
-                    </span>
-                    <span class='comment-count'>12</span>
-                    <span class='like-icon'>
-                        <i class='heart-icon fa fa-heart ' title='Like'></i>
-                    </span>
-                    <span class='like'>4</span>
-                </p>
-            </div>
-        </div>
-        <div>
-            <form action='' id='replyy_form'>
-                <div class='parent_div'>
-                    <div class='profile_profile_pic'>
-                        <img src='images/profile_pic.png' alt='' height='40px' style='border-radius: 50%;'
-                            class='profile_pics'>
+    // Total replies on comment
+    $replies_q = "SELECT COUNT(*) AS total_replies FROM twitter_replies WHERE comment_id = $comment_id";
+    $replies = $conn->query($replies_q)->fetch_assoc();
+    $total_replies = $replies['total_replies'] ?: '';
+
+    // Start HTML output
+    $html = "<div class='mydiv'>
+                <div style='display: flex;'>
+                    <div class='post-user-info'>
+                        <img src='$profile_pic' alt='Post' height='40px' style='border-radius: 50%'>
                     </div>
                     <div>
-                        <input type='text' name='comment_input_foryou' id='replyy_input_p' placeholder='Post your reply'
-                            maxlength='500'>
-                        <span class='replyy_span'>500</span>
-                        <p class='replyy-err-msg error'></p>
-                        <p class='replyy_btn'>Reply</p>
+                        <p style='margin-top: 10px;'>
+                            <span class='name_d'>$comment->comment_owner_name </span>
+                            <span class='username_d'>@$comment->comment_owner_username</span>
+                            <span class='time' title='$title'>· $print</span>
+                        </p>
+                        <p class='post-content'>$comment->comment</p>
+                        <div class='comment_media'></div>
                     </div>
                 </div>
-            </form>
-        </div>";
-        echo $show;
-}
+                <div class='post_details'>
+                    <p class='icons'>
+                        <span class='comment-icon open_modal_recomment' data-comment-id='{$comment->comment_id}'>
+                            <img src='images/chat.png' height='17px' title='Reply'>
+                        </span>
+                        <span class='comment-count'>$total_replies</span>
+                        <span class='reply-like-icon' data-comment-id='{$comment->comment_id}'>
+                            <i class='heart-icon fa fa-heart $liked' title='Like'></i>
+                        </span>
+                        <span class='like'>$total_likes</span>
+                    </p>
+                </div>
+            </div>
+            <div>
+                <form action='' id='replyy_form'>
+                    <input type='hidden' id='reply_to_comment_id' value='{$comment->comment_id}'>
+                    <div class='parent_div'>
+                        <div class='profile_profile_pic'>
+                            <img src='$current_user_profile' alt='' height='40px' style='border-radius: 50%;' class='profile_pics'>
+                        </div>
+                        <div>
+                            <input type='text' name='comment_input_foryou' id='replyy_input_p' placeholder='Post your reply' maxlength='500'>
+                            <span class='replyy_span'>500</span>
+                            <p class='replyy-err-msg error'></p>
+                            <p class='replyy_btn' data-comment-id='{$comment->comment_id}'>Reply</p>
+                        </div>
+                    </div>
+                </form>
+            </div>";
 
+    // Fetch all replies for the comment
+    $reply_query = "SELECT 
+                        r.reply, r.created_at,
+                        u.name AS reply_owner_name, u.username AS reply_owner_username, u.profile_pic AS reply_owner_profile
+                    FROM twitter_replies r
+                    JOIN twitter_users u ON r.user_id = u.id
+                    WHERE r.comment_id = $comment_id
+                    ORDER BY r.created_at DESC";
+
+    $reply_result = $conn->query($reply_query);
+    if ($reply_result && $reply_result->num_rows > 0) {
+        $html .= "<div class='replies_section'>";
+        while ($reply = $reply_result->fetch_object()) {
+            $reply_date = new DateTime($reply->created_at);
+            $reply_diff = $reply_date->diff($today);
+            $reply_title = $reply_date->format('h:i A - M j, Y');
+
+            if ($reply_diff->format('%i') < 1)
+                $reply_print = $reply_diff->format('%s') . 's';
+            elseif ($reply_diff->format('%h') < 1)
+                $reply_print = $reply_diff->format('%i') . 'm';
+            elseif ($reply_diff->format('%d') == 0)
+                $reply_print = $reply_diff->format('%h') . 'h';
+            elseif ($reply_diff->format('%y') == 0)
+                $reply_print = $reply_date->format('M j');
+            else
+                $reply_print = $reply_date->format('M j Y');
+
+            $reply_profile_pic = $reply->reply_owner_profile ? 'profile_pic/' . $reply->reply_owner_profile : 'images/profile_pic.png';
+
+            $html .= "<div class='single_reply' style='margin-top: 10px; padding-left: 50px;'>
+                        <div style='display: flex;'>
+                            <div class='post-user-info'>
+                                <img src='$reply_profile_pic' alt='Reply' height='35px' style='border-radius: 50%'>
+                            </div>
+                            <div>
+                                <p style='margin-top: 5px;'>
+                                    <span class='name_d'>$reply->reply_owner_name</span>
+                                    <span class='username_d'>@$reply->reply_owner_username</span>
+                                    <span class='time' title='$reply_title'>· $reply_print</span>
+                                </p>
+                                <p class='post-content'>$reply->reply</p>
+                            </div>
+                        </div>
+                      </div>";
+        }
+        $html .= "</div>";
+    }
+
+    echo $html;
+}
 
 
 //---------------------Follow Back -------------------------//

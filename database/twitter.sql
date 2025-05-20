@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 05:31 AM
+-- Generation Time: May 20, 2025 at 11:12 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,7 +96,12 @@ INSERT INTO `twitter_comments` (`id`, `user_id`, `post_id`, `comment`, `created_
 (151, 19, 286, 'Amazing...!', '2025-05-19 13:55:42', '2025-05-19 13:55:42'),
 (155, 9, 286, 'ggg', '2025-05-20 03:00:32', '2025-05-20 03:00:32'),
 (156, 9, 286, 'Good Morning...!', '2025-05-20 03:09:42', '2025-05-20 03:09:42'),
-(157, 9, 286, 'dcdcdc', '2025-05-20 03:29:12', '2025-05-20 03:29:12');
+(157, 9, 286, 'dcdcdc', '2025-05-20 03:29:12', '2025-05-20 03:29:12'),
+(158, 15, 286, 'Nice', '2025-05-20 04:17:40', '2025-05-20 04:17:40'),
+(159, 15, 286, 'Amazing...!', '2025-05-20 04:17:47', '2025-05-20 04:17:47'),
+(160, 15, 230, 'sdcsdc', '2025-05-20 04:21:21', '2025-05-20 04:21:21'),
+(161, 15, 230, 'sdcdc', '2025-05-20 04:21:35', '2025-05-20 04:21:35'),
+(167, 9, 286, 'dc', '2025-05-20 08:16:52', '2025-05-20 08:16:52');
 
 -- --------------------------------------------------------
 
@@ -128,12 +133,12 @@ INSERT INTO `twitter_followers` (`id`, `follower_id`, `following_id`, `created_a
 (572, 15, 9, '2025-05-19 12:29:36', '2025-05-19 12:29:36'),
 (582, 19, 17, '2025-05-19 13:50:38', '2025-05-19 13:50:38'),
 (583, 19, 9, '2025-05-19 13:50:39', '2025-05-19 13:50:39'),
-(590, 9, 21, '2025-05-19 13:53:34', '2025-05-19 13:53:34'),
-(591, 9, 16, '2025-05-19 13:53:35', '2025-05-19 13:53:35'),
 (592, 9, 17, '2025-05-19 13:53:35', '2025-05-19 13:53:35'),
 (593, 9, 14, '2025-05-19 13:53:36', '2025-05-19 13:53:36'),
 (594, 9, 15, '2025-05-19 13:53:36', '2025-05-19 13:53:36'),
-(595, 9, 19, '2025-05-19 13:53:37', '2025-05-19 13:53:37');
+(595, 9, 19, '2025-05-19 13:53:37', '2025-05-19 13:53:37'),
+(597, 9, 21, '2025-05-20 08:21:44', '2025-05-20 08:21:44'),
+(598, 9, 16, '2025-05-20 08:21:45', '2025-05-20 08:21:45');
 
 -- --------------------------------------------------------
 
@@ -173,7 +178,6 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (545, 9, 274, 'post', '2025-05-17 15:47:12', '2025-05-17 15:47:12'),
 (559, 9, 216, 'post', '2025-05-17 15:56:33', '2025-05-17 15:56:33'),
 (569, 9, 252, 'post', '2025-05-17 16:01:45', '2025-05-17 16:01:45'),
-(571, 9, 277, 'post', '2025-05-17 17:28:08', '2025-05-17 17:28:08'),
 (572, 17, 286, 'post', '2025-05-17 17:29:56', '2025-05-17 17:29:56'),
 (573, 17, 285, 'post', '2025-05-17 17:34:09', '2025-05-17 17:34:09'),
 (574, 9, 202, 'post', '2025-05-17 17:36:45', '2025-05-17 17:36:45'),
@@ -236,7 +240,21 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (706, 19, 278, 'post', '2025-05-19 19:22:49', '2025-05-19 19:22:49'),
 (707, 19, 151, 'comment', '2025-05-19 19:25:45', '2025-05-19 19:25:45'),
 (715, 9, 151, 'comment', '2025-05-19 22:53:08', '2025-05-19 22:53:08'),
-(718, 9, 286, 'post', '2025-05-19 22:54:24', '2025-05-19 22:54:24');
+(718, 9, 286, 'post', '2025-05-19 22:54:24', '2025-05-19 22:54:24'),
+(720, 15, 158, 'comment', '2025-05-20 09:47:42', '2025-05-20 09:47:42'),
+(723, 15, 230, 'post', '2025-05-20 09:51:23', '2025-05-20 09:51:23'),
+(724, 15, 161, 'comment', '2025-05-20 09:51:37', '2025-05-20 09:51:37'),
+(725, 15, 160, 'comment', '2025-05-20 09:51:38', '2025-05-20 09:51:38'),
+(726, 15, 162, 'comment', '2025-05-20 09:52:00', '2025-05-20 09:52:00'),
+(727, 15, 163, 'comment', '2025-05-20 09:52:17', '2025-05-20 09:52:17'),
+(728, 15, 81, 'comment', '2025-05-20 09:52:18', '2025-05-20 09:52:18'),
+(729, 9, 158, 'comment', '2025-05-20 11:06:11', '2025-05-20 11:06:11'),
+(731, 9, 156, 'comment', '2025-05-20 13:36:26', '2025-05-20 13:36:26'),
+(737, 9, 225, 'post', '2025-05-20 13:37:55', '2025-05-20 13:37:55'),
+(754, 9, 71, 'comment', '2025-05-20 14:09:56', '2025-05-20 14:09:56'),
+(758, 9, 159, 'comment', '2025-05-20 14:17:31', '2025-05-20 14:17:31'),
+(759, 9, 81, 'comment', '2025-05-20 14:18:47', '2025-05-20 14:18:47'),
+(760, 9, 69, 'comment', '2025-05-20 14:19:29', '2025-05-20 14:19:29');
 
 -- --------------------------------------------------------
 
@@ -307,7 +325,6 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (183, 15, 9, 216, 'like', '@ravi liked your post.', NULL, '2025-05-17 15:56:33', '2025-05-17 15:56:33'),
 (192, 19, 9, 252, 'like', '@ravi liked your post.', NULL, '2025-05-17 16:01:45', '2025-05-17 16:01:45'),
 (193, 17, 9, 277, 'comment', '@ravi commented on your post.', 'hello jagdish', '2025-05-17 17:27:48', '2025-05-17 17:27:48'),
-(194, 17, 9, 277, 'like', '@ravi liked your post.', NULL, '2025-05-17 17:28:08', '2025-05-17 17:28:08'),
 (195, 9, 17, 286, 'comment', '@jagdish commented on your post.', 'ff', '2025-05-17 17:29:29', '2025-05-17 17:29:29'),
 (196, 9, 17, 286, 'like', '@jagdish liked your post.', NULL, '2025-05-17 17:29:56', '2025-05-17 17:29:56'),
 (197, 9, 17, 286, 'comment', '@jagdish commented on your post.', 'Congratulations', '2025-05-17 17:30:07', '2025-05-17 17:30:07'),
@@ -368,14 +385,34 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (463, 19, 9, 148, 'like', '@ravi liked your comment.', NULL, '2025-05-19 19:21:22', '2025-05-19 19:21:22'),
 (464, 19, 9, 147, 'like', '@ravi liked your comment.', NULL, '2025-05-19 19:21:22', '2025-05-19 19:21:22'),
 (465, 9, 19, 278, 'like', '@kishanlal liked your post.', NULL, '2025-05-19 19:22:49', '2025-05-19 19:22:49'),
-(472, 21, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:34', '2025-05-19 19:23:34'),
-(473, 16, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:35', '2025-05-19 19:23:35'),
 (474, 17, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:35', '2025-05-19 19:23:35'),
 (475, 14, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:36', '2025-05-19 19:23:36'),
 (476, 15, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:36', '2025-05-19 19:23:36'),
 (477, 19, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:37', '2025-05-19 19:23:37'),
 (478, 9, 19, 286, 'comment', '@kishanlal commented on your post.', 'Amazing...!', '2025-05-19 19:25:42', '2025-05-19 19:25:42'),
-(482, 19, 9, 151, 'like', '@ravi liked your comment.', NULL, '2025-05-19 22:53:08', '2025-05-19 22:53:08');
+(482, 19, 9, 151, 'like', '@ravi liked your comment.', NULL, '2025-05-19 22:53:08', '2025-05-19 22:53:08'),
+(483, 9, 15, 286, 'comment', '@kamlesh commented on your post.', 'Nice', '2025-05-20 09:47:40', '2025-05-20 09:47:40'),
+(484, 9, 15, 286, 'comment', '@kamlesh commented on your post.', 'Amazing...!', '2025-05-20 09:47:47', '2025-05-20 09:47:47'),
+(487, 9, 15, 278, 'comment', '@kamlesh commented on your post.', 'sdcsdcdc', '2025-05-20 09:52:12', '2025-05-20 09:52:12'),
+(488, 14, 15, 81, 'like', '@kamlesh liked your comment.', NULL, '2025-05-20 09:52:18', '2025-05-20 09:52:18'),
+(489, 15, 9, 158, 'like', '@ravi liked your comment.', NULL, '2025-05-20 11:06:11', '2025-05-20 11:06:11'),
+(490, 15, 9, 286, '', '@ravi replied to your comment.', 'dc', '2025-05-20 11:28:31', '2025-05-20 11:28:31'),
+(491, 15, 9, 286, '', '@ravi replied to your comment.', 'sdc', '2025-05-20 11:29:22', '2025-05-20 11:29:22'),
+(492, 15, 9, 286, '', '@ravi replied to your comment.', 'sdcsdc', '2025-05-20 11:29:31', '2025-05-20 11:29:31'),
+(493, 19, 9, 286, '', '@ravi replied to your comment.', 'Thank you...', '2025-05-20 11:48:34', '2025-05-20 11:48:34'),
+(494, 15, 9, 286, '', '@ravi replied to your comment.', 'Thanks', '2025-05-20 11:48:44', '2025-05-20 11:48:44'),
+(495, 15, 9, 286, '', '@ravi replied to your comment.', 'dcsdc', '2025-05-20 13:42:56', '2025-05-20 13:42:56'),
+(496, 15, 9, 286, '', '@ravi replied to your comment.', 'sadss', '2025-05-20 13:43:00', '2025-05-20 13:43:00'),
+(498, 21, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-20 13:51:44', '2025-05-20 13:51:44'),
+(499, 16, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-20 13:51:45', '2025-05-20 13:51:45'),
+(515, 17, 9, 71, 'like', '@ravi liked your comment.', NULL, '2025-05-20 14:09:56', '2025-05-20 14:09:56'),
+(518, 15, 9, 286, '', '@ravi replied to your comment.', 'dcdc', '2025-05-20 14:17:30', '2025-05-20 14:17:30'),
+(519, 15, 9, 159, 'like', '@ravi liked your comment.', NULL, '2025-05-20 14:17:31', '2025-05-20 14:17:31'),
+(520, 15, 9, 286, '', '@ravi replied to your comment.', 'Hello Kamlesh', '2025-05-20 14:17:54', '2025-05-20 14:17:54'),
+(521, 14, 9, 81, 'like', '@ravi liked your comment.', NULL, '2025-05-20 14:18:47', '2025-05-20 14:18:47'),
+(522, 14, 9, 278, '', '@ravi replied to your comment.', 'fvfv', '2025-05-20 14:18:51', '2025-05-20 14:18:51'),
+(523, 15, 9, 277, '', '@ravi replied to your comment.', 'Good afternoon', '2025-05-20 14:19:26', '2025-05-20 14:19:26'),
+(524, 15, 9, 69, 'like', '@ravi liked your comment.', NULL, '2025-05-20 14:19:29', '2025-05-20 14:19:29');
 
 -- --------------------------------------------------------
 
@@ -475,6 +512,28 @@ CREATE TABLE `twitter_replies` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `twitter_replies`
+--
+
+INSERT INTO `twitter_replies` (`id`, `user_id`, `post_id`, `comment_id`, `reply`, `parent_reply_id`, `created_at`, `updated_at`) VALUES
+(25, 9, 286, 159, 'dc', NULL, '2025-05-20 11:28:31', '2025-05-20 11:28:31'),
+(26, 9, 286, 159, 'sdc', NULL, '2025-05-20 11:29:22', '2025-05-20 11:29:22'),
+(27, 9, 286, 159, 'sdcsdc', NULL, '2025-05-20 11:29:31', '2025-05-20 11:29:31'),
+(28, 9, 286, 156, 'sxsx', NULL, '2025-05-20 11:47:25', '2025-05-20 11:47:25'),
+(29, 9, 286, 155, 'fv', NULL, '2025-05-20 11:47:56', '2025-05-20 11:47:56'),
+(30, 9, 286, 151, 'Thank you...', NULL, '2025-05-20 11:48:34', '2025-05-20 11:48:34'),
+(31, 9, 286, 158, 'Thanks', NULL, '2025-05-20 11:48:44', '2025-05-20 11:48:44'),
+(35, 9, 277, 118, 'ssx', NULL, '2025-05-20 13:41:55', '2025-05-20 13:41:55'),
+(36, 9, 286, 157, 'qwsqws', NULL, '2025-05-20 13:42:05', '2025-05-20 13:42:05'),
+(37, 9, 286, 156, 'sdcdsc', NULL, '2025-05-20 13:42:15', '2025-05-20 13:42:15'),
+(38, 9, 286, 158, 'dcsdc', NULL, '2025-05-20 13:42:56', '2025-05-20 13:42:56'),
+(39, 9, 286, 158, 'sadss', NULL, '2025-05-20 13:43:00', '2025-05-20 13:43:00'),
+(40, 9, 286, 159, 'dcdc', NULL, '2025-05-20 14:17:30', '2025-05-20 14:17:30'),
+(41, 9, 286, 159, 'Hello Kamlesh', NULL, '2025-05-20 14:17:54', '2025-05-20 14:17:54'),
+(42, 9, 278, 81, 'fvfv', NULL, '2025-05-20 14:18:51', '2025-05-20 14:18:51'),
+(43, 9, 277, 69, 'Good afternoon', NULL, '2025-05-20 14:19:26', '2025-05-20 14:19:26');
 
 -- --------------------------------------------------------
 
@@ -578,25 +637,25 @@ ALTER TABLE `twitter_users`
 -- AUTO_INCREMENT for table `twitter_comments`
 --
 ALTER TABLE `twitter_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 
 --
 -- AUTO_INCREMENT for table `twitter_followers`
 --
 ALTER TABLE `twitter_followers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=596;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=599;
 
 --
 -- AUTO_INCREMENT for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=720;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=761;
 
 --
 -- AUTO_INCREMENT for table `twitter_notifications`
 --
 ALTER TABLE `twitter_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=483;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
 
 --
 -- AUTO_INCREMENT for table `twitter_posts`
@@ -608,7 +667,7 @@ ALTER TABLE `twitter_posts`
 -- AUTO_INCREMENT for table `twitter_replies`
 --
 ALTER TABLE `twitter_replies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `twitter_users`

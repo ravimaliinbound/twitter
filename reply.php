@@ -29,7 +29,6 @@ $id = $_SESSION['id'];
             type: 'post',
             data: { 'action': 'comment_details', 'id': id },
             success: function (data) {
-            console.log(data)
                 if (data) {
                      $(".user_comment").html(data)
                 } 
