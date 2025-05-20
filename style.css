@@ -546,7 +546,7 @@
 
 #comment_input,
 #comment_input_p,
-#reply_input_p {
+#reply_input_p,#replyy_input_p {
     margin-top: 8px;
     margin-left: 40px;
     width: 380px;
@@ -575,7 +575,8 @@
 .comment_reply_btn_forYou,
 .comment_reply_modal,
 .comment_btn_p,
-.reply_btn {
+.reply_btn,
+.replyy_btn {
     color: white;
     background-color: grey;
     border: none;

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2025 at 03:59 PM
+-- Generation Time: May 20, 2025 at 05:31 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -93,7 +93,10 @@ INSERT INTO `twitter_comments` (`id`, `user_id`, `post_id`, `comment`, `created_
 (140, 9, 285, 'hello', '2025-05-19 12:13:33', '2025-05-19 12:13:33'),
 (144, 9, 286, 'Hello ...', '2025-05-19 13:13:22', '2025-05-19 13:13:22'),
 (147, 19, 286, 'Good job...!', '2025-05-19 13:50:01', '2025-05-19 13:50:01'),
-(151, 19, 286, 'Amazing...!', '2025-05-19 13:55:42', '2025-05-19 13:55:42');
+(151, 19, 286, 'Amazing...!', '2025-05-19 13:55:42', '2025-05-19 13:55:42'),
+(155, 9, 286, 'ggg', '2025-05-20 03:00:32', '2025-05-20 03:00:32'),
+(156, 9, 286, 'Good Morning...!', '2025-05-20 03:09:42', '2025-05-20 03:09:42'),
+(157, 9, 286, 'dcdcdc', '2025-05-20 03:29:12', '2025-05-20 03:29:12');
 
 -- --------------------------------------------------------
 
@@ -232,8 +235,8 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (705, 9, 278, 'post', '2025-05-19 19:22:26', '2025-05-19 19:22:26'),
 (706, 19, 278, 'post', '2025-05-19 19:22:49', '2025-05-19 19:22:49'),
 (707, 19, 151, 'comment', '2025-05-19 19:25:45', '2025-05-19 19:25:45'),
-(710, 9, 286, 'post', '2025-05-19 19:27:25', '2025-05-19 19:27:25'),
-(712, 9, 151, 'comment', '2025-05-19 19:28:31', '2025-05-19 19:28:31');
+(715, 9, 151, 'comment', '2025-05-19 22:53:08', '2025-05-19 22:53:08'),
+(718, 9, 286, 'post', '2025-05-19 22:54:24', '2025-05-19 22:54:24');
 
 -- --------------------------------------------------------
 
@@ -372,7 +375,7 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (476, 15, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:36', '2025-05-19 19:23:36'),
 (477, 19, 9, NULL, 'follow', '@ravi started to following you.', NULL, '2025-05-19 19:23:37', '2025-05-19 19:23:37'),
 (478, 9, 19, 286, 'comment', '@kishanlal commented on your post.', 'Amazing...!', '2025-05-19 19:25:42', '2025-05-19 19:25:42'),
-(480, 19, 9, 151, 'like', '@ravi liked your comment.', NULL, '2025-05-19 19:28:31', '2025-05-19 19:28:31');
+(482, 19, 9, 151, 'like', '@ravi liked your comment.', NULL, '2025-05-19 22:53:08', '2025-05-19 22:53:08');
 
 -- --------------------------------------------------------
 
@@ -464,12 +467,13 @@ INSERT INTO `twitter_posts` (`id`, `user_id`, `content`, `media`, `created_at`, 
 
 CREATE TABLE `twitter_replies` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `comment_id` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `reply` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `comment_id` int(11) NOT NULL,
+  `reply` text NOT NULL,
+  `parent_reply_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -555,9 +559,10 @@ ALTER TABLE `twitter_posts`
 --
 ALTER TABLE `twitter_replies`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `comment_id` (`comment_id`);
+  ADD KEY `fk_reply_user` (`user_id`),
+  ADD KEY `fk_reply_post` (`post_id`),
+  ADD KEY `fk_reply_comment` (`comment_id`),
+  ADD KEY `fk_reply_parent` (`parent_reply_id`);
 
 --
 -- Indexes for table `twitter_users`
@@ -573,7 +578,7 @@ ALTER TABLE `twitter_users`
 -- AUTO_INCREMENT for table `twitter_comments`
 --
 ALTER TABLE `twitter_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `twitter_followers`
@@ -585,13 +590,13 @@ ALTER TABLE `twitter_followers`
 -- AUTO_INCREMENT for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=713;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=720;
 
 --
 -- AUTO_INCREMENT for table `twitter_notifications`
 --
 ALTER TABLE `twitter_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=481;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=483;
 
 --
 -- AUTO_INCREMENT for table `twitter_posts`
@@ -603,7 +608,7 @@ ALTER TABLE `twitter_posts`
 -- AUTO_INCREMENT for table `twitter_replies`
 --
 ALTER TABLE `twitter_replies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `twitter_users`
@@ -651,9 +656,10 @@ ALTER TABLE `twitter_posts`
 -- Constraints for table `twitter_replies`
 --
 ALTER TABLE `twitter_replies`
-  ADD CONSTRAINT `twitter_replies_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`),
-  ADD CONSTRAINT `twitter_replies_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `twitter_posts` (`id`),
-  ADD CONSTRAINT `twitter_replies_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `twitter_comments` (`id`);
+  ADD CONSTRAINT `fk_reply_comment` FOREIGN KEY (`comment_id`) REFERENCES `twitter_comments` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_reply_parent` FOREIGN KEY (`parent_reply_id`) REFERENCES `twitter_replies` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_reply_post` FOREIGN KEY (`post_id`) REFERENCES `twitter_posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_reply_user` FOREIGN KEY (`user_id`) REFERENCES `twitter_users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
