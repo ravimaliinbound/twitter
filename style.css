@@ -20,6 +20,22 @@
     height: 100%;
 }
 
+.single_reply {
+    border: 1px solid rgb(245, 245, 245);
+}
+.highlight{
+    margin-left: 150px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+.highlight h2{
+    font-size: 35px;
+}
+.single_reply:hover {
+    background-color: rgb(247, 247, 247);
+    cursor: pointer;
+}
+
 .forms {
     margin-left: 50px;
     width: 60%;
@@ -547,6 +563,7 @@
 #comment_input,
 #comment_input_p,
 #reply_input_p,
+#replies_input_p,
 #replyy_input_p {
     margin-top: 8px;
     margin-left: 40px;
@@ -573,6 +590,7 @@
 }
 
 .comment_reply_btn,
+.replies_btn,
 .comment_reply_btn_forYou,
 .comment_reply_modal,
 .comment_btn_p,
@@ -589,6 +607,10 @@
 
 .comment_btn_p {
     text-decoration: none;
+}
+
+.replyy_btn:hover {
+    cursor: pointer;
 }
 
 .comment_btn_p:hover {
@@ -610,6 +632,16 @@
     border: 1px solid rgb(239, 243, 244);
     border-radius: 5px;
     margin-left: 250px;
+}
+
+.notif-dot {
+    width: 9px;
+    height: 9px;
+    background: #1DA1F2;
+    /* Twitter blue */
+    border-radius: 50%;
+    display: inline-block;
+    display: none;
 }
 
 .show_notifications {
@@ -1197,14 +1229,17 @@
 }
 
 .like-icon,
+.post-like-icon,
 .comment-like-icon,
-.reply-like-icon {
+.reply-like-icon,
+.replies-like-icon {
     padding: 15px;
     border-radius: 50%;
     margin-left: 220px;
 }
 
 .comment-like-icon:hover,
+.post-like-icon:hover,
 .like-icon:hover {
     cursor: pointer;
 }

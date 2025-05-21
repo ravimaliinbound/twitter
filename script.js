@@ -20,7 +20,6 @@ function comments_details(id) {
         type: 'post',
         data: { 'action': 'comments_details', 'id': id },
         success: function (data) {
-            console.log(data)
             if (data) {
                 $(".user_comment").html(data)
             }
@@ -384,6 +383,7 @@ function insert_post_modal() {
             $(".post-btn a").css('background-color', 'grey')
             $(".index_inputs_span").text('500');
             show_post();
+            show_foryou_post();
             count_posts();
         }
     });
@@ -672,6 +672,9 @@ function show_user(username) {
 function show_comment(id) {
     window.location.href = 'reply.php?id=' + id;
 }
+function show_reply(id) {
+    window.location.href = 'reply.php?reply_id=' + id;
+}
 //------------------Footer Who to follow-----------------//
 function footer() {
     $.ajax({
@@ -928,6 +931,20 @@ function validate_reply(e) {
     }
     return isValid;
 }
+//--------------------  Replies Validate----------------//
+function validate_replies(e) {
+    var isValid = true;
+
+    var comment = $("#replies_input_p").val();
+    if (comment == "") {
+        $(".replies-err-msg").text("Comment can't be blank");
+        isValid = false;
+    }
+    else {
+        $(".replies-err-msg").text("");
+    }
+    return isValid;
+}
 //-------------------- Comment Reply Validate----------------//
 function validate_replyy(e) {
     var isValid = true;
@@ -964,6 +981,24 @@ $(document).ready(function () {
     following();
     follower();
     show_notifications();
+
+    //------------Fetch Notifications----------//
+    setInterval(function () {
+        $.ajax({
+            url: "action.php",
+            type: "POST",
+            data: { 'action': "check" },
+            success: function (res) {
+                var data = JSON.parse(res);
+                if (data.unread > 0) {
+                    $("#notifDot").css('display', 'inline-block');
+                } else {
+                    $("#notifDot").css('display', 'none');
+                }
+            }
+        });
+    }, 100);
+
 
 
     $(document).on('click', '.edit', function () {
@@ -1107,7 +1142,7 @@ $(document).ready(function () {
 
 
     /*--------------------Show Unfollow Option on Mouseenter-----------------------*/
-    $(document).on('mouseenter', '.n_following, .follow-back-btn, .following-btn', function () {
+    $(document).on('mouseenter', '.n_following, .follow-back-btn, .not_following, .following-btn', function () {
         if ($(this).text() == 'Following') {
             $(this).css({
                 'background-color': 'rgb(255, 216, 216)',
@@ -1173,7 +1208,6 @@ $(document).ready(function () {
         if (!validate_comment_modal()) {
             return false;
         }
-        console.log(post_id)
         $.ajax({
             url: 'action.php',
             type: 'post',
@@ -1183,7 +1217,6 @@ $(document).ready(function () {
                 $(".comment_span_foryou").text(500);
                 $(".comment_reply_modal").css('background-color', 'grey')
                 $("#comment_form_modal")[0].reset();
-                post_details(post_id);
                 show_post();
                 show_foryou_post();
                 following_post();
@@ -1206,11 +1239,10 @@ $(document).ready(function () {
             type: 'post',
             data: { 'post_id': post_id, 'action': 'insert_reply', 'reply': comment, 'comment_id': comment_id },
             success: function (data) {
-                console.log(data)
                 $(".reply_span").text(500);
                 $(".reply_btn").css('background-color', 'grey')
                 $("#reply_input_p").val("");
-                post_details(post_id);
+                comments_details(comment_id);
                 show_post();
                 $("#modal_recomment").modal("hide");
                 show_foryou_post();
@@ -1219,32 +1251,52 @@ $(document).ready(function () {
             }
         });
     });
+    //---------------Insert Reply-------------------//
+    $(document).on('click', '.replies_btn', function () {
+        var comment = $("#replies_input_p").val();
+        var reply_id = $('.open_modal_nested_replies').data('reply-id');
+        var comment_id = $("#replies_comment_id").data('comment-id');
+        if (!validate_replies()) {
+            return false;
+        }
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'reply_id': reply_id, 'action': 'insert_replies', 'reply': comment, 'comment_id': comment_id },
+            success: function (data) {
+                $(".reply_span").text(500);
+                $(".reply_btn").css('background-color', 'grey')
+                $("#replies_input_p").val("");
+                // reply_details(reply_id);
+                // comments_details(comment_id);    
+                show_post();
+                $("#modal_replies").modal("hide");
+                show_foryou_post();
+                following_post();
+            }
+        });
+    });
     //---------------Insert Reply into reply-------------------//
     $(document).on('click', '.replyy_btn', function () {
         var comment = $("#replyy_input_p").val();
         var comment_id = $(this).data('comment-id');
-        console.log(comment)
-        console.log(comment_id)
-
         if (!validate_replyy()) {
             return false;
         }
-        // $.ajax({
-        //     url: 'action.php',
-        //     type: 'post',
-        //     data: { 'post_id': post_id, 'action': 'insert_reply', 'reply': comment, 'comment_id': comment_id },
-        //     success: function (data) {
-        //         console.log(data)
-        //         $(".reply_span").text(500);
-        //         $(".reply_btn").css('background-color', 'grey')
-        //         $("#reply_input_p").val("");
-        //         post_details(post_id);
-        //         show_post();
-        //         show_foryou_post();
-        //         following_post();
-        //         show_user_post(username);
-        //     }
-        // });
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'action': 'insert_reply', 'reply': comment, 'comment_id': comment_id },
+            success: function (data) {
+                $(".reply_span").text(500);
+                $(".reply_btn").css('background-color', 'grey')
+                $("#reply_input_p").val("");
+                comments_details(comment_id);
+                show_post();
+                show_foryou_post();
+                following_post();
+            }
+        });
     });
 
     //---------------For You Comment Insert-------------------//
@@ -1277,6 +1329,22 @@ $(document).ready(function () {
         var post_id = $(this).data('post-id');
         $("#commented").val(post_id);
         $(".comment-err-msg").text("");
+    });
+    /*-------------- Open Nested Reply Modal----------------------*/
+    $(document).on('click', '.open_modal_nested_reply', function () {
+        $("#modal_recomment").modal("show");
+        var post_id = $(this).data('post-id');
+        $("#commented").val(post_id);
+        $(".comment-err-msg").text("");
+    });
+    /*-------------- Open Nested Nested Reply Modal----------------------*/
+    $(document).on('click', '.open_modal_nested_replies', function () {
+        $("#modal_replies").modal("show");
+        var post_id = $(this).data('post-id');
+        $("#commented").val(post_id);
+        $(".replies-err-msg").text("");
+        $(".replies_span").text(500);
+        $(".replies_btn").css('background-color', 'grey')
     });
 
     //---------------Comment Insert-------------------//
@@ -1315,7 +1383,6 @@ $(document).ready(function () {
             type: 'post',
             data: { 'post_id': post_id, 'action': 'insert_comment', 'comment': comment },
             success: function (data) {
-                console.log(data)
                 $(".comment_span_p").text(500);
                 $(".comment_btn_p").css('background-color', 'grey')
                 $("#comment_form_p")[0].reset();
@@ -1327,14 +1394,69 @@ $(document).ready(function () {
             }
         });
     });
+    //---------------Reply Like -------------------//
+    $(document).on('click', '.reply-like-icon', function () {
+        var reply_id = $(this).data('reply-id');
+        var comment_id = $(this).data('comment-id');
+        var heartIcon = $(this).children('i.heart-icon');
+
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "reply_id": reply_id, "action": "reply_like", "type": "reply" },
+            success: function (response) {
+                show_post();
+                show_foryou_post();
+                comments_details(comment_id)
+                following_post();
+            }
+        });
+    });
+    //---------------Reply Like -------------------//
+    $(document).on('click', '.replies-like-icon', function () {
+        var reply_id = $(this).data('reply-id');
+        var comment_id = $(this).data('comment-id');
+        var heartIcon = $(this).children('i.heart-icon');
+
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "reply_id": reply_id, "action": "reply_like", "type": "reply" },
+            success: function (response) {
+                show_post();
+                show_foryou_post();
+                reply_details(reply_id)
+                following_post();
+            }
+        });
+    });
+    //------------ Fetch Nested Replies------//
+    $(document).on('click', '.open_modal_nested_reply', function () {
+        let replyId = $(this).data('reply-id');
+        let container = $('#nested-replies-' + replyId);
+
+        $.ajax({
+            url: 'action.php',
+            method: 'POST',
+            data: {
+                action: 'fetch_nested_replies',
+                parent_reply_id: replyId
+            },
+            success: function (data) {
+                container.html(data);
+            }
+        });
+    });
+
     //---------------Comment Like -------------------//
     $(document).on('click', '.comment-like-icon', function () {
         var comment_id = $(this).data('comment-id');
         var post_id = $(this).data('post-id');
-        // var username = $(this).data('username');
         var heartIcon = $(this).children('i.heart-icon');
-        // console.log(username)
-
         heartIcon.toggleClass('liked');
 
         $.ajax({
@@ -1342,12 +1464,29 @@ $(document).ready(function () {
             type: 'POST',
             data: { "comment_id": comment_id, "action": "comment_like", "type": "comment" },
             success: function (response) {
-                console.log(response)
+                show_post();
+                comments_details(comment_id)
+                show_foryou_post();
+                following_post();
+            }
+        });
+    });
+    //---------------Post Like -------------------//
+    $(document).on('click', '.post-like-icon', function () {
+        var comment_id = $(this).data('comment-id');
+        var post_id = $(this).data('post-id');
+        var heartIcon = $(this).children('i.heart-icon');
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "comment_id": comment_id, "action": "comment_like", "type": "comment" },
+            success: function (response) {
                 show_post();
                 post_details(post_id)
                 show_foryou_post();
                 following_post();
-                // show_user_post(username);
             }
         });
     });
@@ -1366,7 +1505,6 @@ $(document).ready(function () {
             data: { "post_id": post_id, "action": "like", "type": "post" },
             success: function (response) {
                 show_post();
-                post_details(post_id);
                 show_foryou_post();
                 following_post();
                 show_user_post(username);
@@ -1384,6 +1522,10 @@ $(document).ready(function () {
     });
     /*----------Reply Input Post outline---------*/
     $(document).on('focus', "#reply_input_p", function () {
+        $(this).css("outline", " none")
+    });
+    /*----------Reply Input Post outline---------*/
+    $(document).on('focus', "#replies_input_p", function () {
         $(this).css("outline", " none")
     });
     /*----------Replyy Input Post outline---------*/
@@ -1752,6 +1894,22 @@ $(document).ready(function () {
             $(".reply_span").css("color", "black");
         }
     });
+    $(document).on('keyup', "#replies_input_p", function () {
+        var len = post - $(this).val().trim().length;
+        $(".replies_span").text(len);
+        if ($(this).val().trim() != "") {
+            $(".replies-err-msg").text("");
+        }
+        else {
+            $(".replies-err-msg").text("Comment can't be blank");
+        }
+        if (len < 11) {
+            $(".replies_span").css("color", "red");
+        }
+        else {
+            $(".replies_span").css("color", "black");
+        }
+    });
     $(document).on('keyup', "#replyy_input_p", function () {
         var len = post - $(this).val().trim().length;
         $(".replyy_span").text(len);
@@ -2005,6 +2163,14 @@ $(document).ready(function () {
         }
         else {
             $(".reply_btn").css('background-color', 'black')
+        }
+    });
+    $(document).on('keyup', "#replies_input_p", function () {
+        if ($(this).val().trim() == "") {
+            $(".replies_btn").css('background-color', 'grey')
+        }
+        else {
+            $(".replies_btn").css('background-color', 'black')
         }
     });
     $(document).on('keyup', "#replyy_input_p", function () {

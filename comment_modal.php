@@ -13,7 +13,7 @@
                     <div class="parent_div">
                         <div class="comment_profile_pic">
                             <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
-                                class="comment_dp">
+                                class="profile_pics">
                         </div>
                         <div class="comment_user">
                             <p>

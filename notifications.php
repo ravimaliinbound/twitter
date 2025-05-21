@@ -5,12 +5,21 @@ include_once 'headers.php';
 <div class="notification">
     <div class="notification-fix">
         <p class="notify">Notifications</p>
-        
 
 
-        <!-- Adding class to active element -->
-<script>
-    $(document).ready(function () {
-        $("#notification").addClass("active_class");
-    });
-</script>
+
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'action.php',
+                    type: 'post',
+                    data: {
+                        'action': 'mark_read'
+                    },
+                    success: function (data) {
+                        $("#notifDot").css('display', 'none'); // Make notifications mark as read
+                    }
+                })
+                $("#notification").addClass("active_class"); // Add active class
+            });
+        </script>

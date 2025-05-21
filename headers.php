@@ -20,7 +20,6 @@ if (!isset($_SESSION['login'])) {
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -72,7 +71,9 @@ if (!isset($_SESSION['login'])) {
                 </a>
                 <a href="notification.php">
                     <li>
-                        <i class="fa-solid fa-bell"></i><span id="notification">Notifications</span>
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="notification">Notifications</span>
+                        <span class="notif-dot" id="notifDot"></span>
                     </li>
                 </a>
                 <a href="#">
