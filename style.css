@@ -23,14 +23,17 @@
 .single_reply {
     border: 1px solid rgb(245, 245, 245);
 }
-.highlight{
+
+.highlight {
     margin-left: 150px;
     padding-bottom: 50px;
     padding-top: 50px;
 }
-.highlight h2{
+
+.highlight h2 {
     font-size: 35px;
 }
+
 .single_reply:hover {
     background-color: rgb(247, 247, 247);
     cursor: pointer;
@@ -563,6 +566,7 @@
 #comment_input,
 #comment_input_p,
 #reply_input_p,
+#nested_reply_input,
 #replies_input_p,
 #replyy_input_p {
     margin-top: 8px;
@@ -595,6 +599,7 @@
 .comment_reply_modal,
 .comment_btn_p,
 .reply_btn,
+.nested_reply_submit_btn,
 .replyy_btn {
     color: white;
     background-color: grey;
@@ -609,7 +614,8 @@
     text-decoration: none;
 }
 
-.replyy_btn:hover {
+.replyy_btn:hover,
+.replies_btn:hover {
     cursor: pointer;
 }
 
@@ -1230,6 +1236,7 @@
 
 .like-icon,
 .post-like-icon,
+.comments-like-icon,
 .comment-like-icon,
 .reply-like-icon,
 .replies-like-icon {

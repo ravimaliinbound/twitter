@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0.5)100%), url("images/background.PNG");
+    background-repeat: no-repeat;
+}
+
+.form {
+    margin: 0 auto;
+    margin-top: 151px;
+    width: 45%;
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 30px;
+}
+
+.img {
+    margin-left: 40%;
+}
+
+.form img {
+    height: 30px;
+    width: 30px;
+    margin-top: 10px;
+}
+.form h3{
+    font-size: 30px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+.form-group{
+    margin-top: 10px;
+}
+.form-group input{
+    padding: 15px;
+}
+.form-group .dob{
+    font-size: 18px;
+    font-weight: 500;
+}
+.form-group .dob-description{
+    font-size: 16px;
+}
+.submit{
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 20px;
+}
+.cancel i{
+    font-size: 20px;
+    color: black;
+    padding: 10px;
+}
+.cancel i:hover{
+    background-color: lightgray;
+    border-radius: 50%;
+}
+
+.footer{
+    font-size: 11.9px;
+}
+.footer a{
+    color: black;
+    text-decoration: none;
+}
+.form-content{
+    padding: 10px;
+}
+.google, .apple{
+    width: 100%;
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}.google:hover, .apple:hover{
+    background-color: rgb(220, 233, 238);
+}
+.apple i, .google i{
+    font-size: 25px;
+    margin: 0 8px;
+}
+.google a, .apple a{
+    color: black;
+    text-decoration: none;
+}
+.or{
+    margin-top: 20px;
+}
+.go-to-signup{
+    padding: 20px;
+}
+.dont{
+    font-size: 20px;
+}
+.go-to-signup a{
+    text-decoration: none;
+}
+.forgot a{
+    font-weight: 500;
+}
+.create-account{
+    background-color: deepskyblue;
+    color: white;
+    margin-top: 0;
+    width: 100%;
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+.create-account a{
+    font-weight: 700;
+    width: 100%;
+    margin-left: 160px;
+    text-decoration: none;
+}
+
+.terms
+{
+    margin-top: 50px;
+}
+
+.terms  a{
+    text-decoration: none;
+}
+.already{
+    margin-top: 50px;
+}
+.already a{
+    text-decoration: none;
+}
+
+.msg{
+    padding: 20px 160px;
+    width: 100%;
+    background-color: rgb(4, 162, 235);
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
+#msg{
+    margin-top: 40px;
+    padding: 20px 150px;
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+}

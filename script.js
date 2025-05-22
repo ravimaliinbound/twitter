@@ -576,6 +576,19 @@ function delete_post() {
         });
     }
 }
+function reply_details(id) {
+    $.ajax({
+        url: 'action.php',
+        type: 'post',
+        data: {
+            action: 'reply_details',
+            id: id
+        },
+        success: function (data) {
+            $(".user_comment").html(data);
+        }
+    });
+}
 
 //--------------------- Delete Post-----------------//
 function delete_notification() {
@@ -1176,9 +1189,12 @@ $(document).ready(function () {
         $("#comment-modal-foryou").modal("show");
         var post_id = $(this).data('post-id');
         var username = $(this).data('username');
-        $("#commented_foryou").val(post_id);
+        $("#post_ids").val(post_id);
         $("#other_username").val(username);
         $(".comment-err-msg-foryou").text("");
+        $("#comment_input_foryou").val("");
+        $(".comment_span_foryou").text(500);
+        $(".comment_reply_btn_forYou").css('background-color', 'grey');
         show_post();
     });
     /*-------------- Open  Model comment----------------------*/
@@ -1189,14 +1205,20 @@ $(document).ready(function () {
         $("#a_id").val(post_id);
         $("#b_username").val(username);
         $(".comment-err-msg-foryou").text("");
+        $("#comment_input_modal").val("");
+        $(".comment_span_foryou").text(500);
+        $(".comment_reply_modal").css('background-color', 'grey')
         show_post();
     });
     /*-------------- Open Model For Reply----------------------*/
     $(document).on('click', '.open_modal_recomment', function () {
         $("#modal_recomment").modal("show");
-        var comment_id = $(this).data('comment-id')
+        var comment_id = $(this).data('comment-id');
         $("#comment_id").val(comment_id);
         $(".reply-err-msg").text("");
+        $("#reply_input_p").val("");
+        $(".reply_span").text(500);
+        $(".reply_btn").css('background-color', 'grey');
         show_post();
     });
 
@@ -1218,6 +1240,7 @@ $(document).ready(function () {
                 $(".comment_reply_modal").css('background-color', 'grey')
                 $("#comment_form_modal")[0].reset();
                 show_post();
+                post_details(post_id);
                 show_foryou_post();
                 following_post();
                 show_user_post(username);
@@ -1243,6 +1266,9 @@ $(document).ready(function () {
                 $(".reply_btn").css('background-color', 'grey')
                 $("#reply_input_p").val("");
                 comments_details(comment_id);
+                if (post_id) {
+                    post_details(post_id);
+                }
                 show_post();
                 $("#modal_recomment").modal("hide");
                 show_foryou_post();
@@ -1251,26 +1277,48 @@ $(document).ready(function () {
             }
         });
     });
-    //---------------Insert Reply-------------------//
-    $(document).on('click', '.replies_btn', function () {
-        var comment = $("#replies_input_p").val();
-        var reply_id = $('.open_modal_nested_replies').data('reply-id');
-        var comment_id = $("#replies_comment_id").data('comment-id');
-        if (!validate_replies()) {
-            return false;
+    // Open the nested reply modal
+    $(document).on('click', '.open_nested_replies_modal', function () {
+        var replyId = $(this).data('reply-id');
+        var commentId = $(this).data('comment-id');
+        var parent_id = $(this).data('parent-id');
+
+        $('#reply_id_input').val(replyId);
+        $('#comment_id_input').val(commentId);
+        $('#parent_id_input').val(parent_id);
+        $('#nested_reply_input').val('');
+        $('.nested_reply_char_count').text(500);
+        $('.nested_reply_error').text('');
+        $('#modal_nested_replies').modal('show');
+        $(".nested_reply_submit_btn").css('background-color', 'grey');
+    });
+    // Submit nested reply
+    $(document).on('click', '.nested_reply_submit_btn', function () {
+        var reply = $('#nested_reply_input').val().trim();
+        var replyId = $('#reply_id_input').val();
+        var commentId = $('#comment_id_input').val();
+        var parent_id = $('#parent_id_input').val();
+
+        if (reply === '') {
+            $('.nested_reply_error').text("Comment can't be blank");
+            return;
         }
+
         $.ajax({
             url: 'action.php',
             type: 'post',
-            data: { 'reply_id': reply_id, 'action': 'insert_replies', 'reply': comment, 'comment_id': comment_id },
+            data: {
+                action: 'insert_repliess',
+                reply: reply,
+                reply_id: replyId,
+                comment_id: commentId
+            },
             success: function (data) {
-                $(".reply_span").text(500);
-                $(".reply_btn").css('background-color', 'grey')
-                $("#replies_input_p").val("");
-                // reply_details(reply_id);
-                // comments_details(comment_id);    
+                $('#modal_nested_replies').modal('hide');
+                $('#nested_reply_input').val('');
+                $('.nested_reply_error').text('');
                 show_post();
-                $("#modal_replies").modal("hide");
+                reply_details(replyId);
                 show_foryou_post();
                 following_post();
             }
@@ -1298,10 +1346,32 @@ $(document).ready(function () {
             }
         });
     });
+    $(document).on('click', '.replies_btn', function () {
+        var reply = $("#replies_input_p").val();
+        var reply_id = $(this).data('reply-id');
+        var comment_id = $(this).data('comment-id');
+        if (!validate_replies()) {
+            return false;
+        }
+        $.ajax({
+            url: 'action.php',
+            type: 'post',
+            data: { 'action': 'insert_replies', 'reply': reply, 'comment_id': comment_id, 'reply_id': reply_id },
+            success: function (data) {
+                $(".reply_span").text(500);
+                $(".reply_btn").css('background-color', 'grey')
+                $("#reply_input_p").val("");
+                reply_details(reply_id);
+                show_post();
+                show_foryou_post();
+                following_post();
+            }
+        });
+    });
 
     //---------------For You Comment Insert-------------------//
     $(document).on('click', ' .comment_reply_btn_forYou', function () {
-        var post_id = $("#commented_foryou").val();
+        var post_id = $("#post_ids").val();
         var comment = $("#comment_input_foryou").val();
         var username = $("#other_username").val();
         if (!validate_comment_foryou()) {
@@ -1336,15 +1406,6 @@ $(document).ready(function () {
         var post_id = $(this).data('post-id');
         $("#commented").val(post_id);
         $(".comment-err-msg").text("");
-    });
-    /*-------------- Open Nested Nested Reply Modal----------------------*/
-    $(document).on('click', '.open_modal_nested_replies', function () {
-        $("#modal_replies").modal("show");
-        var post_id = $(this).data('post-id');
-        $("#commented").val(post_id);
-        $(".replies-err-msg").text("");
-        $(".replies_span").text(500);
-        $(".replies_btn").css('background-color', 'grey')
     });
 
     //---------------Comment Insert-------------------//
@@ -1421,7 +1482,6 @@ $(document).ready(function () {
         var heartIcon = $(this).children('i.heart-icon');
 
         heartIcon.toggleClass('liked');
-
         $.ajax({
             url: 'action.php',
             type: 'POST',
@@ -1454,6 +1514,25 @@ $(document).ready(function () {
 
     //---------------Comment Like -------------------//
     $(document).on('click', '.comment-like-icon', function () {
+        var comment_id = $(this).data('comment-id');
+        var post_id = $(this).data('post-id');
+        var heartIcon = $(this).children('i.heart-icon');
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "comment_id": comment_id, "action": "comment_like", "type": "comment" },
+            success: function (response) {
+                show_post();
+                post_details(post_id)
+                show_foryou_post();
+                following_post();
+            }
+        });
+    });
+    //---------------Comments Like -------------------//
+    $(document).on('click', '.comments-like-icon', function () {
         var comment_id = $(this).data('comment-id');
         var post_id = $(this).data('post-id');
         var heartIcon = $(this).children('i.heart-icon');
@@ -1511,6 +1590,28 @@ $(document).ready(function () {
             }
         });
     });
+    //--------------- Particular Post Like -------------------//
+    $(document).on('click', '.post-like-icon', function () {
+        var post_id = $(this).data('post-id');
+        var username = $(this).data('username');
+        var heartIcon = $(this).children('i.heart-icon');
+
+        heartIcon.toggleClass('liked');
+
+        $.ajax({
+            url: 'action.php',
+            type: 'POST',
+            data: { "post_id": post_id, "action": "like", "type": "post" },
+            success: function (response) {
+                show_post();
+                post_details(post_id)
+                show_foryou_post();
+                following_post();
+                show_user_post(username);
+            }
+        });
+    });
+
 
     /*----------Comment Input Outline---------*/
     $("#comment_input").focus(function () {
@@ -1522,6 +1623,9 @@ $(document).ready(function () {
     });
     /*----------Reply Input Post outline---------*/
     $(document).on('focus', "#reply_input_p", function () {
+        $(this).css("outline", " none")
+    });
+    $(document).on('focus', "#nested_reply_input", function () {
         $(this).css("outline", " none")
     });
     /*----------Reply Input Post outline---------*/
@@ -1894,6 +1998,22 @@ $(document).ready(function () {
             $(".reply_span").css("color", "black");
         }
     });
+    $(document).on('keyup', "#nested_reply_input", function () {
+        var len = post - $(this).val().trim().length;
+        $(".nested_reply_char_count").text(len);
+        if ($(this).val().trim() != "") {
+            $(".nested_reply_error").text("");
+        }
+        else {
+            $(".nested_reply_error").text("Comment can't be blank");
+        }
+        if (len < 11) {
+            $(".nested_reply_char_count").css("color", "red");
+        }
+        else {
+            $(".nested_reply_char_count").css("color", "black");
+        }
+    });
     $(document).on('keyup', "#replies_input_p", function () {
         var len = post - $(this).val().trim().length;
         $(".replies_span").text(len);
@@ -2163,6 +2283,14 @@ $(document).ready(function () {
         }
         else {
             $(".reply_btn").css('background-color', 'black')
+        }
+    });
+    $(document).on('keyup', "#nested_reply_input", function () {
+        if ($(this).val().trim() == "") {
+            $(".nested_reply_submit_btn").css('background-color', 'grey')
+        }
+        else {
+            $(".nested_reply_submit_btn").css('background-color', 'black')
         }
     });
     $(document).on('keyup', "#replies_input_p", function () {

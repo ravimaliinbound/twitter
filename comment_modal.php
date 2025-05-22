@@ -23,6 +23,7 @@
                         </div>
                     </div>
                     <div>
+                        <input type="hidden" id="post_ids">
                         <input type="text" name="comment_input_foryou" id="comment_input_foryou"
                             placeholder="Post your reply" maxlength="500">
                         <span class="comment_span_foryou">500</span>
