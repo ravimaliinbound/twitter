@@ -28,7 +28,7 @@ include_once 'headers.php'
 include_once 'footers.php';
 ?>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         following_post();
-    })
+    });
 </script>

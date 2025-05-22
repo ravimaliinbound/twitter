@@ -42,12 +42,9 @@ include_once 'header.php';
                         <a href="sign-up.php" class="text-white" id="create-account">Create Account</a>
                     </div>
                     <div class="terms">
-                        <p>By signing up, you agree to the <a href="#">Terms of Service </a>and <a
-                                href="#">Privacy
-                                Policy</a>, including <a
-                                href="#">Cookie Use</a>.</p>
+                        <p>By signing up, you agree to the <a href="#">Terms of Service </a>and <a href="#">Privacy
+                                Policy</a>, including <a href="#">Cookie Use</a>.</p>
                     </div>
-
                     <div class="already">
                         <span class="dont">Have an account already?
                             <a href="login.php">Login</a>

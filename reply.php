@@ -86,7 +86,7 @@
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="nested_reply_submit_btn">Reply</button>
-            </div>
+            </div> 
         </div>
     </div>
 </div>

@@ -66,4 +66,4 @@ $current_user = $_SESSION['username'];
         show_followers();
         see_user_followers(username);
     });
-</script>
+</script> 

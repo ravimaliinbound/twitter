@@ -157,6 +157,9 @@ function following() {
 
 //-------------- Open Post Model------------//
 function open_model() {
+    setTimeout(function () {
+        $('.index_inputs').focus();
+    }, 500);
     $(".index_inputs").val("");
     $(".post-btn a").css("background-color", "grey")
     $("#post_modal").modal('show');
@@ -358,6 +361,7 @@ function insert_post() {
         }
     });
 }
+
 //------------------Insert Post With Modal-------------//
 function insert_post_modal() {
     var input = $(".index_inputs").val().trim();
@@ -1143,7 +1147,7 @@ $(document).ready(function () {
                         "color": "#000",
                         "border": "1px solid black"
                     });
-
+                    show_notifications();
                     following_post();
                     show_followers();
                     following();
@@ -1187,6 +1191,9 @@ $(document).ready(function () {
     /*-------------- Open Comment For You Modal----------------------*/
     $(document).on('click', '.open_comment_modal_foryou', function () {
         $("#comment-modal-foryou").modal("show");
+        setTimeout(function () {
+            $('#comment_input_foryou').focus();
+        }, 100);
         var post_id = $(this).data('post-id');
         var username = $(this).data('username');
         $("#post_ids").val(post_id);
@@ -1200,6 +1207,9 @@ $(document).ready(function () {
     /*-------------- Open  Model comment----------------------*/
     $(document).on('click', '.open_modal_comment', function () {
         $("#modal_comment").modal("show");
+         setTimeout(function () {
+            $('#comment_input_modal').focus();
+        }, 100);
         var post_id = $(this).data('post-id');
         var username = $(this).data('username');
         $("#a_id").val(post_id);
@@ -1213,6 +1223,9 @@ $(document).ready(function () {
     /*-------------- Open Model For Reply----------------------*/
     $(document).on('click', '.open_modal_recomment', function () {
         $("#modal_recomment").modal("show");
+        setTimeout(function () {
+            $('#reply_input_p').focus();
+        }, 100);
         var comment_id = $(this).data('comment-id');
         $("#comment_id").val(comment_id);
         $(".reply-err-msg").text("");
@@ -1240,6 +1253,7 @@ $(document).ready(function () {
                 $(".comment_reply_modal").css('background-color', 'grey')
                 $("#comment_form_modal")[0].reset();
                 show_post();
+                show_notifications();
                 post_details(post_id);
                 show_foryou_post();
                 following_post();
@@ -1273,6 +1287,7 @@ $(document).ready(function () {
                 $("#modal_recomment").modal("hide");
                 show_foryou_post();
                 following_post();
+                show_notifications();
                 show_user_post(username);
             }
         });
@@ -1290,6 +1305,9 @@ $(document).ready(function () {
         $('.nested_reply_char_count').text(500);
         $('.nested_reply_error').text('');
         $('#modal_nested_replies').modal('show');
+         setTimeout(function () {
+            $('#nested_reply_input').focus();
+        }, 100);
         $(".nested_reply_submit_btn").css('background-color', 'grey');
     });
     // Submit nested reply
@@ -1321,6 +1339,7 @@ $(document).ready(function () {
                 reply_details(replyId);
                 show_foryou_post();
                 following_post();
+                show_notifications();
             }
         });
     });
@@ -1341,6 +1360,7 @@ $(document).ready(function () {
                 $("#reply_input_p").val("");
                 comments_details(comment_id);
                 show_post();
+                show_notifications();
                 show_foryou_post();
                 following_post();
             }
@@ -1365,6 +1385,7 @@ $(document).ready(function () {
                 show_post();
                 show_foryou_post();
                 following_post();
+                show_notifications();
             }
         });
     });
@@ -1389,6 +1410,7 @@ $(document).ready(function () {
                 show_post();
                 show_foryou_post();
                 following_post();
+                show_notifications();
                 show_user_post(username);
             }
         });
@@ -1403,6 +1425,9 @@ $(document).ready(function () {
     /*-------------- Open Nested Reply Modal----------------------*/
     $(document).on('click', '.open_modal_nested_reply', function () {
         $("#modal_recomment").modal("show");
+        setTimeout(function () {
+            $('#reply_input_p').focus();
+        }, 100);
         var post_id = $(this).data('post-id');
         $("#commented").val(post_id);
         $(".comment-err-msg").text("");
@@ -1426,6 +1451,7 @@ $(document).ready(function () {
                 $("#comment_form")[0].reset();
                 show_post();
                 show_foryou_post();
+                show_notifications();
                 following_post();
             }
         })
@@ -1450,6 +1476,7 @@ $(document).ready(function () {
                 show_post();
                 post_details(post_id);
                 show_foryou_post();
+                show_notifications();
                 following_post();
                 show_user_post(username);
             }
@@ -1472,6 +1499,7 @@ $(document).ready(function () {
                 show_foryou_post();
                 comments_details(comment_id)
                 following_post();
+                show_notifications();
             }
         });
     });
@@ -1489,6 +1517,7 @@ $(document).ready(function () {
             success: function (response) {
                 show_post();
                 show_foryou_post();
+                show_notifications();
                 reply_details(reply_id)
                 following_post();
             }
@@ -1528,6 +1557,7 @@ $(document).ready(function () {
                 post_details(post_id)
                 show_foryou_post();
                 following_post();
+                show_notifications();
             }
         });
     });
@@ -1546,6 +1576,7 @@ $(document).ready(function () {
                 show_post();
                 comments_details(comment_id)
                 show_foryou_post();
+                show_notifications();
                 following_post();
             }
         });
@@ -1566,6 +1597,7 @@ $(document).ready(function () {
                 post_details(post_id)
                 show_foryou_post();
                 following_post();
+                show_notifications();
             }
         });
     });
@@ -1584,6 +1616,7 @@ $(document).ready(function () {
             data: { "post_id": post_id, "action": "like", "type": "post" },
             success: function (response) {
                 show_post();
+                show_notifications();
                 show_foryou_post();
                 following_post();
                 show_user_post(username);
@@ -1606,6 +1639,7 @@ $(document).ready(function () {
                 show_post();
                 post_details(post_id)
                 show_foryou_post();
+                show_notifications();
                 following_post();
                 show_user_post(username);
             }
@@ -1613,37 +1647,18 @@ $(document).ready(function () {
     });
 
 
-    /*----------Comment Input Outline---------*/
-    $("#comment_input").focus(function () {
-        $(this).css("outline", " none")
-    });
-    /*----------Comment Input Post outline---------*/
-    $(document).on('focus', "#comment_input_p", function () {
-        $(this).css("outline", " none")
-    });
-    /*----------Reply Input Post outline---------*/
-    $(document).on('focus', "#reply_input_p", function () {
-        $(this).css("outline", " none")
-    });
-    $(document).on('focus', "#nested_reply_input", function () {
-        $(this).css("outline", " none")
-    });
-    /*----------Reply Input Post outline---------*/
-    $(document).on('focus', "#replies_input_p", function () {
-        $(this).css("outline", " none")
-    });
-    /*----------Replyy Input Post outline---------*/
-    $(document).on('focus', "#replyy_input_p", function () {
-        $(this).css("outline", " none")
-    });
-    /*---------- For youComment Input Outline---------*/
-    $("#comment_input_foryou").focus(function () {
-        $(this).css("outline", " none")
-    });
-    /*---------- For Modal Input Outline---------*/
-    $("#comment_input_modal").focus(function () {
-        $(this).css("outline", " none")
-    });
+    /*---------Input Outline None (on focus)---------*/
+    $(document).on('focus', "#comment_input, #comment_input_p, " +
+        " #reply_input_p, " +
+        " #nested_reply_input, " +
+        " #replies_input_p, " +
+        " #replyy_input_p, " +
+        " #comment_input_foryou," +
+        " #comment_input_modal," +
+        " .index_input," +
+        " .index_inputs", function () {
+            $(this).css("outline", " none")
+        });
 
 
     $(".remove-btn").click(function () {
@@ -1681,10 +1696,6 @@ $(document).ready(function () {
         $(".explore-search-div").css("border", "1px solid black");
     });
 
-    //-------------- Index Post-------------//
-    $(".index_input, .index_inputs").focus(function () {
-        $(this).css("outline", " none")
-    });
 
     //------------------->> Validation <<----------------------//
 
@@ -2326,4 +2337,3 @@ $(document).ready(function () {
         }
     });
 });
-

@@ -629,7 +629,7 @@
     color: red;
     margin-left: 40px;
     margin-top: 20px;
-}
+} 
 
 /* Notification Tab */
 .notification {
@@ -1246,6 +1246,7 @@
 }
 
 .comment-like-icon:hover,
+.replies-like-icon:hover,
 .post-like-icon:hover,
 .like-icon:hover {
     cursor: pointer;

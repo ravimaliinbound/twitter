@@ -1,13 +1,13 @@
 <?php
 include_once 'header.php';
 ?>
-    <title>X. It's what's happening / X</title>
-    <link rel="stylesheet" href="style.css">
+<title>X. It's what's happening / X</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
-       
+
         <div class="parent">
             <div class="img">
                 <img src="images/logo-black.png" alt="">
@@ -29,10 +29,8 @@ include_once 'header.php';
                         <a href="sign-up.php" class="text-white" id="create-account">Create Account</a>
                     </div>
                     <div class="terms">
-                        <p>By signing up, you agree to the <a href="#">Terms of Service </a>and <a
-                                href="#">Privacy
-                                Policy</a>, including <a
-                                href="#kies">Cookie Use</a>.</p>
+                        <p>By signing up, you agree to the <a href="#">Terms of Service </a>and <a href="#">Privacy
+                                Policy</a>, including <a href="#kies">Cookie Use</a>.</p>
                     </div>
                     <div class="already">
                         <p>Already have an account?</p>
@@ -47,5 +45,3 @@ include_once 'header.php';
         <?php
         include_once 'footer.php';
         ?>
-
-        

@@ -22,4 +22,4 @@ include_once 'headers.php';
                 })
                 $("#notification").addClass("active_class"); // Add active class
             });
-        </script>
+        </script> 

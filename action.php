@@ -10,18 +10,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
 
     $data = [];
     $arr = [];
-    while ($fetch = $run->fetch_object()) {
-        $data = $fetch;
-        $arr = array(
-            "id" => $data->id,
-            "name" => $data->name,
-            "username" => $data->username,
-            "email" => $data->email,
-            "bio" => $data->bio,
-            "dob" => $data->dob,
-            "joined_date" => $data->joined_date
-        );
-    }
+    $fetch = $run->fetch_object();
+    $data = $fetch;
+    $arr = array(
+        "id" => $data->id,
+        "name" => $data->name,
+        "username" => $data->username,
+        "email" => $data->email,
+        "bio" => $data->bio,
+        "dob" => $data->dob,
+        "joined_date" => $data->joined_date
+    );
     echo json_encode($arr);
 }
 //-----------Notification Mark as read-------------//
@@ -1076,7 +1075,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
     // Check if already liked
     $sel = "SELECT * FROM twitter_likes WHERE user_id = $user_id AND liked_id = $reply_id AND likeable_type = 'reply'";
     $res = $conn->query($sel);
-    
+
     if (!$res) {
         echo "Like check error: " . $conn->error;
         exit;
@@ -1104,7 +1103,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
         // Like
         $insert = "INSERT INTO twitter_likes (user_id, liked_id, likeable_type) VALUES ($user_id, $reply_id, '$type')";
         $result = $conn->query($insert);
-        
+
         if (!$result) {
             echo "Insert error: " . $conn->error;
         } else {
