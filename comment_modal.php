@@ -12,8 +12,8 @@
                 <form action="" id="comment_form_foryou">
                     <div class="parent_div">
                         <div class="comment_profile_pic">
-                            <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
-                                class="profile_pics">
+                            <img src="images/profile_pic.png" alt="" height="40px"
+                                style="border-radius: 50%; height: 50px; width: 50px" class="profile_pics">
                         </div>
                         <div class="comment_user">
                             <p>

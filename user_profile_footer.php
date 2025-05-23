@@ -9,6 +9,10 @@ $current_user = $_SESSION['username'];
 ?>
 
 <script>
+    //-----------remove follower-------------//
+    function remove_user(username) {
+        $("#remove_follower").modal("show");
+    }
     $(document).ready(function () {
         var username = '<?php echo $username; ?>';
         var current_user = '<?php echo $current_user; ?>';
@@ -36,7 +40,7 @@ $current_user = $_SESSION['username'];
             success: function (response) {
                 var data = JSON.parse(response);
                 $(".user_pro-name").text(data.name);
-                if(data.username==current_user){
+                if (data.username == current_user) {
                     window.location = 'profile.php';
                 }
                 $(".user_bio").text(data.bio);
@@ -147,7 +151,10 @@ $current_user = $_SESSION['username'];
             success: function (data) {
                 if (data == 'No') {
                     $(".follow").text("Follow")
-                } else {
+                }
+                if (data == 'Back') {
+                    $(".follow").text("Follow Back")
+                } else if (data == 'Yes') {
                     $(".follow").text("Following");
                     $(".follow").css({
                         'background-color': 'white',
@@ -168,6 +175,28 @@ $current_user = $_SESSION['username'];
 
     });
 </script>
-<?php
-include_once 'footers.php'
-    ?>
+<div class="footers">
+    <div class="follow_footer">
+        <p class="what">What's happening</p>
+        <div class="trending">
+            <span>Politics · Trending</span>
+            <p>#BJP</p>
+            <span>Trending</span>
+            <p>#War2</p>
+            <span>Trending</span>
+            <p>Sehwag</p>
+            <span>Trending</span>
+            <p>#stufflistingsarmy </p>
+            <span>Music · Trending</span>
+            <p>To Me</p>
+        </div>
+    </div>
+    <div class="footerss">
+        <a href="#" class="f-anchor">Terms of Service |</a>
+        <a href="#" class="f-anchor"> Privacy Policy |</a>
+        <a href="#" class="f-anchor"> Cookie Policy |</a>
+        <a href="#" class="f-anchor"> Accessibility |</a>
+        <a href="#" class="f-anchor"> Ads info |</a>
+        <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
+    </div>
+</div>

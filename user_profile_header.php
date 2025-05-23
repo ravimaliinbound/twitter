@@ -20,7 +20,10 @@ include_once 'headers.php'
     </div>
 
     <div class="follow-btn">
-        <a href="#" class="follow"></a>
+        <!-- <span class='post-delete-icon'>
+            <i class='fa-solid fa-ellipsis' onclick="remove_user(`<?php echo $_SESSION['other_user'] ?>`)"></i>
+        </span> -->
+        <a href="#" class="follow" style="margin-left: 500px;"></a>
     </div>
     <div class="profile-data">
         <p>
@@ -41,3 +44,5 @@ include_once 'headers.php'
             <a href="user_followers.php" class="follower_followers see_user_followers">Follower</a>
         </p>
     </div>
+
+

@@ -51,10 +51,6 @@ if (!isset($_SESSION['login'])) {
     <!-- Left Panel -->
     <div class="container all" style="display: flex; " id="left-panel">
         <div class="slider">
-
-
-
-
             <div class="logo">
                 <img src="images/logo-black.png" alt="" height="30px" width="30px" style="margin-left: 10px;">
             </div>
@@ -218,3 +214,22 @@ if (!isset($_SESSION['login'])) {
         ?>
 
         <!-- </div>  -->
+
+
+
+
+
+        <!-- ------------------------Remove Follower Modal-------------------- -->
+        <!-- <div class="modal" id="remove_follower">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul class="models-ul">
+                            <li onclick="remove()">
+                                <a href="#" class="text-danger" id="delete-modal">Remove Follower</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> -->

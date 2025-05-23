@@ -35,7 +35,7 @@ include_once 'headers.php'
                         </label>
                     </div>
 
-                    <div class="form-group" style="margin-top: 100px;"><br>
+                    <div class="form-group"><br>
                         <span id="err-profile" class="error"></span><br>
                         <span id="err-cover" class="error"></span><br>
                         <label for="edit-name">Name</label>

@@ -174,6 +174,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_check') {
     $check = "SELECT * FROM twitter_followers WHERE follower_id = '$follower_id' AND following_id= '$following_id'";
     $check_result = $conn->query($check);
     $followed = $check_result->num_rows > 0 ? 'Yes' : 'No';
+    if ($followed == 'No') {
+        $check = "SELECT * FROM twitter_followers WHERE follower_id = '$following_id' AND following_id= '$follower_id'";
+        $check_result = $conn->query($check);
+        $followed = $check_result->num_rows > 0 ? 'Back' : 'No';
+
+    }
     echo $followed;
 }
 
@@ -352,7 +358,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
     $dataa = $run->fetch_object();
     $follower_id = $dataa->id;
 
-    $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username'";
+    $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username' ORDER BY rand()";
     $run_footer = $conn->query($sel_footer);
     $count = $run_footer->num_rows;
     $arr_footer = "";
@@ -369,14 +375,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
         if ($is_following) {
             continue;
         }
+        // Check if this user is already following logged-in user
+        $check_follow = "SELECT * FROM twitter_followers WHERE follower_id = '$data->id' AND following_id = '$follower_id'";
+        $run_check = $conn->query($check_follow);
+        $is_follow = $run_check->num_rows > 0;
+
         // Set button text based on follow status
-        $btn_text = $is_following ? "Following" : "Follow";
+        $btn_text = $is_follow ? "Follow Back" : "Follow";
         $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
         $arr_footer .=
             " <div style = 'display: flex;' class='background'>
                 <div class='show-img' style='margin-top: 6px;' href='user_profile.php'  onclick='show_user(`$data->username`)'>
                     <a onclick='show_user(`$data->username`)'>
-                        <img src=$profile height='40px' style='border-radius: 50%'>
+                        <img src=$profile height='50px' width='50px' style='border-radius: 50%'>
                     </a>
                 </div>
                 <div class='show-to-follow-data' href='user_profile.php'  onclick='show_user(`$data->username`)'>
@@ -594,7 +605,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
     $dataa = $run->fetch_object();
     $follower_id = $dataa->id;
 
-    $sel_footer = "SELECT * FROM twitter_users  WHERE username != '$username' LIMIT 0,50";
+    $sel_footer = "SELECT * FROM twitter_users  WHERE username != '$username' ORDER BY rand() LIMIT 0,50";
     $run_footer = $conn->query($sel_footer);
     $arr_footer = "";
     while ($data = $run_footer->fetch_object()) {
@@ -605,16 +616,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
         $check_follow = "SELECT * FROM twitter_followers WHERE follower_id = '$follower_id' AND following_id = '$data->id'";
         $run_check = $conn->query($check_follow);
         $is_following = $run_check->num_rows > 0;
-        if ($is_following) {
-            continue;
-        }
+
+        // Check if this user is already following logged-in user
+        $check_follow = "SELECT * FROM twitter_followers WHERE follower_id = '$data->id' AND following_id = '$follower_id'";
+        $run_check = $conn->query($check_follow);
+        $is_follow = $run_check->num_rows > 0;
+
         // Set button text based on follow status
-        $btn_text = $is_following ? "Following" : "Follow";
+        $btn_text = $is_follow ? "Follow Back" : "Follow";
         $profile = $data->profile_pic ? 'profile_pic/' . $data->profile_pic . '' : 'images/profile_pic.png';
         $arr_footer .=
             " <div style = 'display: flex;' class= 'background-follow'>
                 <div class='showw-img' style='margin-top: 6px;'   onclick='show_user(`$data->username`)'>
-                    <a ><img src=$profile height='40px' width= '40px' style='border-radius: 50%'>
+                    <a ><img src=$profile height='50px' width='50px' style='border-radius: 50%'>
                     </a>
                 </div>
                 <div class='show-to-followw-data' style='width:50%' onclick='show_user(`$data->username`)'>
@@ -764,7 +778,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
 
             $post_data .= "<div class='user-post'>
                             <div class='post-user-info' onclick='show_user(`$data->username`)'>
-                                <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                                <img src=$profile alt='Post' height='40px' style='border-radius: 50%; width : 50px'>
                             </div>
                             <div class='postuser-name'>
                                 <p>
@@ -869,12 +883,32 @@ if (isset($_POST['action']) && $_POST['action'] == "other_user_post_count") {
 
 if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
     $id = $_POST['post_id'];
-
+    echo $id;
     $get_img = "SELECT media FROM twitter_posts WHERE id = '$id'";
     $run_query = $conn->query($get_img);
 
     $fetch = $run_query->fetch_object();
-    $media = $fetch->media;
+    $media = isset($fetch->media) ? $fetch->media : "";
+
+    $del = "DELETE FROM twitter_posts WHERE id = '$id'";
+    $run = $conn->query($del);
+    if ($run) {
+        if ($media) {
+            unlink('posts/' . $media);
+        }
+        echo 'Deleted';
+    }
+}
+//----------------------- Delete Post------------------//
+
+if (isset($_POST['action']) && $_POST['action'] == 'delete_posts') {
+    $id = $_POST['post_id'];
+    echo $id;
+    $get_img = "SELECT media FROM twitter_posts WHERE id = '$id'";
+    $run_query = $conn->query($get_img);
+
+    $fetch = $run_query->fetch_object();
+    $media = isset($fetch->media) ? $fetch->media : "";
 
     $del = "DELETE FROM twitter_posts WHERE id = '$id'";
     $run = $conn->query($del);
@@ -1048,24 +1082,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_like') {
 if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
 
     $username = $_SESSION['username'];
+
     // Get user ID
     $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
     $run = $conn->query($fetch_id_query);
     if (!$run) {
-        echo "Data fetch error: " . $conn->error;
+        echo json_encode(['status' => 'error', 'message' => 'Data fetch error: ' . $conn->error]);
         exit;
     }
 
     $data = $run->fetch_object();
     $user_id = $data->id;
-    $reply_id = $_POST['reply_id'];
+    $reply_id = (int) $_POST['reply_id'];
     $type = $_POST['type']; // should be 'reply'
 
     // Get Reply Owner (for notification)
     $fetch_owner = "SELECT user_id FROM twitter_replies WHERE id = $reply_id";
     $run_owner = $conn->query($fetch_owner);
     if (!$run_owner || $run_owner->num_rows == 0) {
-        echo "Reply not found.";
+        echo json_encode(['status' => 'error', 'message' => 'Reply not found']);
         exit;
     }
 
@@ -1077,19 +1112,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
     $res = $conn->query($sel);
 
     if (!$res) {
-        echo "Like check error: " . $conn->error;
+        echo json_encode(['status' => 'error', 'message' => 'Like check error: ' . $conn->error]);
         exit;
     }
+
+    $liked = false;
 
     if ($res->num_rows > 0) {
         // Unlike
         $delete = "DELETE FROM twitter_likes WHERE user_id = $user_id AND liked_id = $reply_id AND likeable_type = 'reply'";
         $result = $conn->query($delete);
 
-        if (!$result) {
-            echo "Delete error: " . $conn->error;
-        } else {
-            // Delete notification only if not self-like
+        if ($result) {
+            // Delete notification
             if ($user_id != $reply_owner_id) {
                 $delete_notif = "DELETE FROM twitter_notifications 
                                  WHERE user_id = $reply_owner_id 
@@ -1104,10 +1139,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
         $insert = "INSERT INTO twitter_likes (user_id, liked_id, likeable_type) VALUES ($user_id, $reply_id, '$type')";
         $result = $conn->query($insert);
 
-        if (!$result) {
-            echo "Insert error: " . $conn->error;
-        } else {
-            // Insert notification only if not self-like
+        if ($result) {
+            $liked = true;
+
+            // Insert notification
             if ($user_id != $reply_owner_id) {
                 $message = "@$username liked your reply.";
                 $insert_notification = "INSERT INTO twitter_notifications(user_id, from_user_id, type, message, post_id) 
@@ -1116,7 +1151,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
             }
         }
     }
+
+    // Get updated like count
+    $like_result = $conn->query("SELECT COUNT(*) AS total FROM twitter_likes WHERE liked_id = $reply_id AND likeable_type = 'reply'");
+    $like_data = $like_result->fetch_assoc();
+    $like_count = $like_data['total'];
+
+    echo json_encode([
+        'status' => 'success',
+        'new_like_count' => $like_count,
+        'liked' => $liked
+    ]);
+    exit;
 }
+
 
 /*----------------------------- Comment Insert-----------------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
@@ -1347,8 +1395,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_user') {
     ]);
 }
 
-
-
 /*------------------------Show For You Posts---------------------*/
 
 if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
@@ -1369,6 +1415,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
     while ($data = $run->fetch_object()) {
         $user_id = $data->user_id;
 
+
         /*--------------- Total Likes---------------*/
         $post_id = $data->id;
         $query = "SELECT COUNT(*) AS total_likes 
@@ -1385,7 +1432,13 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
         } else {
             echo "Error: " . $conn->error;
         }
-
+        if ($user_id == $id) {
+            $del = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='before_deletes($post_id)'></i>
+                    </span>";
+        } else {
+            $del = "";
+        }
 
         /*----------------- Check user has liked the post or not--------------------*/
         $check_query = "SELECT * FROM twitter_likes 
@@ -1447,7 +1500,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
         if ($data->media != "") {
             $post_data .= "<div class='user-post'>
                             <div class='post-user-info' onclick='show_user(`$user_data->username`)'>
-                                <img src= $profile alt='Post' height='40px' style='border-radius: 50%'>
+                                <img src= $profile alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                             </div>
                             <div class='postuser-name'>
                                 <p>
@@ -1457,6 +1510,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                                     <span class='post-name' onclick='show_user(`$user_data->username`)'>$user_data->name </span>
                                     <span class='post-username' onclick='show_user(`$user_data->username`)'>@$user_data->username</span>
                                     <span class='time' title='$title'>· $print</span>
+                                    $del
                                 </p>
                                 <div class='for_posts' onclick='post_details(`$data->id`)'>
                                     <p class='post-content'>$data->content</p>
@@ -1479,7 +1533,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
         } else {
             $post_data .= "<div class='user-post'>
                             <div class='post-user-info' onclick='show_user(`$user_data->username`)'>
-                                <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                                <img src=$profile alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                             </div>
                             <div class='postuser-name'>
                                 <p>
@@ -1489,6 +1543,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                                     <span class='post-name' onclick='show_user(`$user_data->username`)'>$user_data->name </span>
                                     <span class='post-username' onclick='show_user(`$user_data->username`)'>@$user_data->username</span>
                                     <span class='time' title='$title'>· $print</span>
+                                    $del
                                 </p>
                                  <div class='for_posts' onclick='post_details(`$data->id`)'>
                                     <p class='post-content'>$data->content</p>
@@ -1536,7 +1591,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_user_post") {
     $data = $run->fetch_object();
     $user_id = $data->id;
 
-    // Fetch posts with user info + likes/comments count + if liked by current user
+    // Fetch posts with user info, likes/comments count, if liked by current user
     $query = "
         SELECT p.*, u.name, u.username, u.profile_pic,
             (SELECT COUNT(*) FROM twitter_likes WHERE liked_id = p.id AND likeable_type = 'post') AS total_likes,
@@ -1641,7 +1696,7 @@ if (isset($_POST['action']) && $_POST['action'] == "following_post") {
         exit;
     }
 
-    // Fetch posts with user info and likes/comments count + if logged user liked post
+    // Fetch posts with user info and likes/comments count, if logged user liked post
     $query = "
         SELECT p.*, u.username, u.name, u.profile_pic,
             (SELECT COUNT(*) FROM twitter_likes WHERE liked_id = p.id AND likeable_type = 'post') AS total_likes,
@@ -1695,7 +1750,7 @@ if (isset($_POST['action']) && $_POST['action'] == "following_post") {
 
         $post_data .= "<div class='user-post'>
             <div class='post-user-info' onclick='show_user(`$data->username`)'>
-                <img src='$profile' alt='Post' height='40px' style='border-radius: 50%'>
+                <img src='$profile' alt='Post' height='50px' width='50px' style='border-radius: 50%'>
             </div>
             <div class='postuser-name'>
                 <p onclick='show_user(`$data->username`)'>
@@ -1955,8 +2010,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_comments') {
                                 <span class='c_name' onclick='show_user(`$data->post_owner_username`)'>$data->post_owner_name</span>
                                 <span class='c_username' onclick='show_user(`$data->post_owner_username`)'>@$data->post_owner_username</span>
                                 <span class='post-delete-icon'>
-                                <i class='fa-solid fa-trash text-danger' onclick='delete_comment($data->comment_id)'></i>
-                            </span>
+                                    <i class='fa-solid fa-trash del_trash' onclick='delete_comment($data->comment_id)'></i>
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -2047,7 +2102,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
     $html .= "<div class='mydiv'>
                 <div style='display: flex;'>
                     <div class='post-user-info'>
-                        <img src='$profile_pic' alt='Post' height='40px' style='border-radius: 50%'>
+                        <img src='$profile_pic' alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                     </div>
                     <div>
                         <p style='margin-top: 10px;'>
@@ -2055,7 +2110,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
                             <span class='username_d'>@$post->post_owner_username</span>
                             <span class='time' title='$title'>· $print</span>
                         </p>
-                        <p class='post-content'>$post->content</p>
+                        <p class='post-content' style='overflow-wrap: anywhere; padding: 0 20px;'>$post->content</p>
                         <div class='comment_media'>$media</div>
                     </div>
                 </div>
@@ -2079,7 +2134,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
                     <input type='hidden' id='b_username' value='0'>
                     <div class='parent_div'>
                         <div class='comment_profile_pic'>
-                            <img src='$current_user_profile' alt='' height='40px' style='border-radius: 50%;' class='profile_pics'>
+                            <img src='$current_user_profile' alt='' height='50px' width='50px' style='border-radius: 50%;' class='profile_pics'>
                         </div>
                         <div>
                             <input type='text' name='comment_input_foryou' id='comment_input_p' placeholder='Post your reply' maxlength='500'>
@@ -2131,7 +2186,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
 
         $html .= "<div class='post_comment' style='display: flex;'>
                     <div class='post-user-info' onclick='show_user(`$comment->username`)'>
-                        <img src='$c_pic' alt='' height='40px' style='border-radius: 50%;'>
+                        <img src='$c_pic' alt='' height='50px' width='50px' style='border-radius: 50%;'>
                     </div>
                     <div>
                         <p style='margin-top: 10px;' onclick='show_user(`$comment->username`)'>
@@ -2140,7 +2195,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
                             <span class='time'>· $print</span>
                         </p>
                         <div onclick='show_comment(`$comment->comment_id`)'>
-                            <p class='comment_content'>$comment->comment</p>
+                            <p class='comment_content' style='overflow-wrap: anywhere; padding: 0 20px;'>$comment->comment</p>
                         </div>
                         <div class=''>
                             <p class='icons'>
@@ -2232,7 +2287,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
     $html = "<div class='mydiv'>
                 <div style='display: flex;'>
                     <div class='post-user-info'>
-                        <img src='$profile_pic' alt='Post' height='40px' style='border-radius: 50%'>
+                        <img src='$profile_pic' alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                     </div>
                     <div>
                         <p style='margin-top: 10px;'>
@@ -2240,7 +2295,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
                             <span class='username_d'>@$comment->comment_owner_username</span>
                             <span class='time' title='$title'>· $print</span>
                         </p>
-                        <p class='post-content'>$comment->comment</p>
+                        <p class='post-content' style='overflow-wrap: anywhere; padding: 0 20px;'>$comment->comment</p>
                         <div class='comment_media'></div>
                     </div>
                 </div>
@@ -2262,7 +2317,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
                     <input type='hidden' id='reply_t_comment_id' value='{$comment->comment_id}'>
                     <div class='parent_div'>
                         <div class='profile_profile_pic'>
-                            <img src='$current_user_profile' alt='' height='40px' style='border-radius: 50%;' class='profile_pics'>
+                            <img src='$current_user_profile' alt='' height='50px' width='50px' style='border-radius: 50%;' class='profile_pics'>
                         </div>
                         <div>
                             <input type='text' name='comment_input_foryou' id='replyy_input_p' placeholder='Post your reply' maxlength='500'>
@@ -2276,7 +2331,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
 
     // Fetch all replies for the comment
     $reply_query = "SELECT 
-                        r.id AS reply_id, r.reply, r.created_at,
+                        r.id AS reply_id, r.parent_reply_id AS parent_id, r.reply, r.created_at,
                         u.name AS reply_owner_name, u.username AS reply_owner_username, u.profile_pic AS reply_owner_profile
                     FROM twitter_replies r
                     JOIN twitter_users u ON r.user_id = u.id
@@ -2321,7 +2376,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
             $html .= "<div class='single_reply'>
                         <div style='display: flex;'>
                             <div class='post-user-info'>
-                                <img src='$reply_profile_pic' alt='Reply' height='35px' style='border-radius: 50%'>
+                                <img src='$reply_profile_pic' alt='Reply' height='50px' width='50px' style='border-radius: 50%'>
                             </div>
                             <div>
                                 <p style='margin-top: 5px;'>
@@ -2329,13 +2384,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
                                     <span class='username_d'>@$reply->reply_owner_username</span>
                                     <span class='time' title='$reply_title'>· $reply_print</span>
                                 </p>
-                                <p class='post-content' onclick='show_reply(`$reply->reply_id`)'>$reply->reply</p>
+                                <p class='post-content' onclick='show_reply(`$reply->reply_id`)' style='overflow-wrap: anywhere; padding: 0 20px;'>$reply->reply</p>
                                 <div class='post_details'>
                                     <p class='icons'>
-                                        <span class='comment-icon open_nested_replies_modal' data-reply-id='{$reply->reply_id}' data-comment-id='{$comment->comment_id}'>
+                                        <span class='comment-icon open_nested_replies_modal' data-reply-id='{$reply->reply_id}' 
+                                        data-comment-id='{$comment->comment_id}' data-parent-id='{$reply->parent_id}'>
                                             <img src='images/chat.png' height='15px' title='Reply'>
                                         </span>
-                                        <span class='comment-count'>$nested_count</span>
+                                        <span class='comment-count' id='reply_count_{$reply->reply_id}'>$nested_count</span>
                                         <span class='reply-like-icon' id='replies_comment_id' data-reply-id='{$reply->reply_id}' data-comment-id='{$comment->comment_id}'>
                                             <i class='heart-icon fa fa-heart $nested_liked' title='Like'></i>
                                         </span>
@@ -2365,7 +2421,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
     $user = $user_result->fetch_object();
     $user_id = $user->id;
 
-    // Get parent reply (original comment) details
+    // Get parent reply details
     $comment_query = "SELECT 
                         r.id AS reply_id, r.reply, r.created_at, r.user_id AS reply_user_id, r.comment_id, r.parent_reply_id as parent_id,
                         u.name AS comment_owner_name, u.username AS comment_owner_username, u.profile_pic AS comment_owner_profile
@@ -2414,7 +2470,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
     $html = "<div class='mydiv'>
                 <div style='display: flex;'>
                     <div class='post-user-info'>
-                        <img src='$profile_pic' alt='Post' height='40px' style='border-radius: 50%'>
+                        <img src='$profile_pic' alt='Post' height='50px' width='50px' style='border-radius: 50%'/>
                     </div>
                     <div>
                         <p style='margin-top: 10px;'>
@@ -2422,15 +2478,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                             <span class='username_d'>@$comment->comment_owner_username</span>
                             <span class='time' title='$title'>· $print</span>
                         </p>
-                        <p class='post-content'>$comment->reply</p>
+                        <p class='post-content' style='overflow-wrap: anywhere; padding: 0 20px;'>$comment->reply</p>
                     </div>
                 </div>
                 <div class='post_details'>
                     <p class='icons'>
                         <span class='comment-icon open_nested_replies_modal' data-comment-id='{$comment_id}' data-reply-id='{$reply_id}'>
-                            <img src='images/chat.png' height='17px' title='Reply'>
+                            <img src='images/chat.png' height='17px' title='Reply'/>
                         </span>
-                        <span class='comment-count'>$total_replies</span>
+                        <span class='comment-count' id='reply_count_{$reply_id}'>$total_replies</span>
                         <span class='replies-like-icon' data-comment-id='{$comment_id}'  data-reply-id='{$reply_id}'>
                             <i class='heart-icon fa fa-heart $liked' title='Like'></i>
                         </span>
@@ -2443,10 +2499,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                     <input type='hidden' id='comment_id' name='comment_id' value='{$comment_id}'>
                     <div class='parent_div'>
                         <div class='profile_profile_pic'>
-                            <img src='$current_user_profile' alt='' height='40px' style='border-radius: 50%;' class='profile_pics'>
+                            <img src='$current_user_profile' alt='' height='50px' width='50' style='border-radius: 50%;' class='profile_pics'/>
                         </div>
                         <div>
-                            <input type='text' name='comment_input_foryou' id='replies_input_p' placeholder='Post your reply' maxlength='500'>
+                            <input type='text' name='comment_input_foryou' id='replies_input_p' placeholder='Post your reply' maxlength='500'/>
                             <span class='replies_span'>500</span>
                             <p class='replies-err-msg error'></p>
                             <p class='replies_btn' data-reply-id='{$reply_id}' data-comment-id='{$comment_id}'>Reply</p>
@@ -2455,7 +2511,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                 </form>
             </div>";
 
-    // Get nested replies (and fetch comment_id also!)
+    // Get nested replies 
     $nested_query = "SELECT 
                         r.id AS reply_id, r.reply, r.created_at, r.comment_id,
                         u.name AS reply_owner_name, u.username AS reply_owner_username, u.profile_pic AS reply_owner_profile
@@ -2466,7 +2522,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
 
     $nested_result = $conn->query($nested_query);
     if ($nested_result && $nested_result->num_rows > 0) {
-        $html .= "<div class='replies_section'>";
+        $html .= "<div id='nested_reply_container_{$reply_id}' class='replies_section'>";
         while ($reply = $nested_result->fetch_object()) {
             $reply_date = new DateTime($reply->created_at);
             $reply_diff = $reply_date->diff($today);
@@ -2496,7 +2552,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
             $html .= "<div class='single_reply'>
                         <div style='display: flex;'>
                             <div class='post-user-info'>
-                                <img src='$reply_pic' height='35px' style='border-radius: 50%'>
+                                <img src='$reply_pic' height='50px' width='50px' style='border-radius: 50%'/>
                             </div>
                             <div>
                                 <p style='margin-top: 5px;'>
@@ -2504,15 +2560,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                                     <span class='username_d'>@$reply->reply_owner_username</span>
                                     <span class='time' title='$reply_title'>· $reply_print</span>
                                 </p>
-                                <p class='post-content' onclick='show_reply(`$reply->reply_id`)'>$reply->reply</p>
+                                <p class='post-content' onclick='show_reply(`$reply->reply_id`)' style='overflow-wrap: anywhere; padding: 0 20px;'>$reply->reply</p>
                                 <div class='post_details'>
                                     <p class='icons'>
                                         <span class='comment-icon open_nested_replies_modal' 
                                               data-reply-id='{$reply->reply_id}' 
                                               data-comment-id='{$reply->comment_id}' data-parent-id='{$comment->parent_id}'>
-                                            <img src='images/chat.png' height='15px' title='Reply'>
+                                            <img src='images/chat.png' height='15px' title='Reply'/>
                                         </span>
-                                        <span class='comment-count'>$nested_reply_count</span>
+                                        <span class='comment-count' id='reply_count_{$reply->reply_id}'>$nested_reply_count</span>
                                         <span class='replies-like-icon' data-reply-id='{$reply->reply_id}'>
                                             <i class='heart-icon fa fa-heart $is_liked' title='Like'></i>
                                         </span>
@@ -2528,6 +2584,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
 
     echo $html;
 }
+
 
 
 
@@ -2573,38 +2630,40 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_back') {
 // -------------------------------------Insert Replies---------------------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'insert_repliess') {
 
+
     $username = $_SESSION['username'];
     $reply_id = $_POST['reply_id'];
     $reply = trim($_POST['reply']);
     $comment_id = $_POST['comment_id'];
-    echo $comment_id;
+    $parent_id = isset($_POST['parent_id']) && $_POST['parent_id'] !== '' ? $_POST['parent_id'] : 0;
 
     if (empty($reply)) {
         echo "Reply cannot be empty.";
         exit;
     }
 
-    // Get logged-in user
+    // Get user ID
     $u_query = "SELECT id FROM twitter_users WHERE username = '$username'";
     $u_result = $conn->query($u_query);
     $u_data = $u_result->fetch_object();
     $user_id = $u_data->id;
 
-    // Get original comment's user
+    // Get comment owner ID
     $get_user_query = "SELECT user_id FROM twitter_comments WHERE id = '$comment_id'";
     $get_result = $conn->query($get_user_query);
     $get_data = $get_result->fetch_object();
     $comment_owner_id = $get_data->user_id;
+    echo $parent_id;
 
-    // Insert nested reply
+    // Insert reply
     $insert = "INSERT INTO twitter_replies (user_id, parent_reply_id, comment_id, reply) 
                VALUES ('$user_id', '$reply_id', '$comment_id', '$reply')";
     $result = $conn->query($insert);
 
     if (!$result) {
-        echo "Error: " . $conn->error;
+        echo "Insert Error: " . $conn->error;
     } else {
-        // Add notification if not self-reply
+        // Send notification (only if not self-reply)
         if ($user_id != $comment_owner_id) {
             $msg = "@$username replied to your comment.";
             $insert_notification = "INSERT INTO twitter_notifications(
@@ -2615,6 +2674,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_repliess') {
             $conn->query($insert_notification);
         }
 
-        echo "Reply added";
+        echo "Reply added successfully.";
     }
+}
+
+//-------------------- Reply count---------------------//
+if (isset($_POST['action']) && $_POST['action'] == 'get_reply_count') {
+    $reply_id = $_POST['reply_id'];
+    $query = "SELECT COUNT(*) as total FROM twitter_replies WHERE parent_reply_id = $reply_id";
+    $res = $conn->query($query);
+    $count = $res->fetch_object()->total;
+    echo $count;
+    exit;
 }

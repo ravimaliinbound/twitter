@@ -25,7 +25,8 @@
                     <input type="hidden" id="comment_id" value="0">
                     <div class="parent_div">
                         <div class="comment_profile_pic">
-                            <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;" class="profile_pics">
+                            <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
+                                class="profile_pics">
                         </div>
                         <div class="comment_user">
                             <p>
@@ -35,7 +36,8 @@
                         </div>
                     </div>
                     <div>
-                        <input type="text" name="comment_input_foryou" id="replies_input_p" placeholder="Post your reply" maxlength="500">
+                        <input type="text" name="comment_input_foryou" id="replies_input_p"
+                            placeholder="Post your reply" maxlength="500">
                         <span class="replies_span">500</span>
                         <p class="replies-err-msg error"></p>
                     </div>
@@ -67,16 +69,19 @@
                     <input type="hidden" id="parent_id_input">
                     <input type="hidden" id="comment_id_input">
                     <div class="parent_div d-flex mb-2">
-                        <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;" class="me-2">
+                        <div style="height: 50px; width: 50px;">
+                            <img src="images/profile_pic.png" alt="" height="50px" width="50px"
+                                style="border-radius: 50%;" class="profile_pics">
+                        </div>
                         <div>
-                            <p class="mb-0">
+                            <p class="mb-0" style="margin-top: 5px; margin-left: 10px;">
                                 <span><?php echo $_SESSION['name']; ?></span>
                                 <span style="color: grey;">@<?php echo $_SESSION['username']; ?></span>
                             </p>
                         </div>
                     </div>
                     <div class="mb-2">
-                        <input type="text"  id="nested_reply_input" placeholder="Post your reply" maxlength="500">
+                        <input type="text" id="nested_reply_input" placeholder="Post your reply" maxlength="500">
                         <small class="text-muted"><span class="nested_reply_char_count">500</span> </small>
                         <p class="error nested_reply_error mt-1"></p>
                     </div>
@@ -86,7 +91,7 @@
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="nested_reply_submit_btn">Reply</button>
-            </div> 
+            </div>
         </div>
     </div>
 </div>
@@ -95,8 +100,8 @@
 
 <?php
 // Determine which ID is set in URL
-$comment_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$reply_id = isset($_GET['reply_id']) ? (int)$_GET['reply_id'] : 0;
+$comment_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$reply_id = isset($_GET['reply_id']) ? (int) $_GET['reply_id'] : 0;
 ?>
 
 <script>
@@ -108,7 +113,7 @@ $reply_id = isset($_GET['reply_id']) ? (int)$_GET['reply_id'] : 0;
                 action: 'comment_details',
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 $(".user_comment").html(data);
             }
         });
@@ -122,13 +127,13 @@ $reply_id = isset($_GET['reply_id']) ? (int)$_GET['reply_id'] : 0;
                 action: 'reply_details',
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 $(".user_comment").html(data);
             }
         });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         const commentId = <?= $comment_id ?>;
         const replyId = <?= $reply_id ?>;
 
