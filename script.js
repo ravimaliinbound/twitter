@@ -21,6 +21,7 @@ function comments_details(id) {
         type: 'post',
         data: { 'action': 'comments_details', 'id': id },
         success: function (data) {
+            console.log(data)
             if (data) {
                 $(".user_comment").html(data)
             }
@@ -271,8 +272,43 @@ function delete_comment(id, post_id) {
             type: "post",
             data: { "action": "delete_comment", "id": id },
             success: function (data) {
+                console.log(data)
                 if (data) {
                     show_comments();
+                    post_details(post_id)
+                }
+            }
+        });
+    }
+}
+/*------------------- Delete Reply-----------------*/
+function delete_reply(reply_id, comment_id) {
+    var conf = confirm("Do you really want to delete this reply?");
+    if (conf == true) {
+        console.log('aaaaaaaaaaaaaaa')
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "action": "delete_reply", "reply_id": reply_id },
+            success: function (data) {
+                comments_details(comment_id)
+            }
+        });
+    }
+}
+/*------------------- Delete Reply-----------------*/
+function delete_replyy(reply_id, parent_id, comment_id) {
+    var conf = confirm("Do you really want to delete this reply?");
+    if (conf == true) {
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "action": "delete_reply", "reply_id": reply_id },
+            success: function (data) {
+                if (parent_id != 0) {
+                    reply_details(parent_id)
+                } else {
+                    comments_details(comment_id)
                 }
             }
         });
@@ -358,7 +394,7 @@ function insert_post() {
             count_posts();
             $(".post-btn a").css('background-color', 'grey');
             $(".index_input_span").text('500');
-            $(".index_input_span").css('color','black');
+            $(".index_input_span").css('color', 'black');
             show_foryou_post();
         }
     });
@@ -522,7 +558,7 @@ function edit_profile() {
                 $(".profile_pics").attr('src', 'profile_pic/' + profile);
                 $(".profile_pics").css({
                     'width': '100%',
-                    'height' : '100%'
+                    'height': '100%'
                 });
             }
             if (cover == "") {
@@ -560,10 +596,15 @@ function before_deletes(id) {
     $('#deletesModal').modal('show');
     $("#hidden").val(id);
 }
+function before_delete_self(id) {
+    $('#delete_post_modal').modal('show');
+    $("#hidden_val_for_post_del").val(id);
+}
 
 //-------------Post Details-------------//
-function post_details(id) {
-    window.location.href = 'post_details.php?id=' + id;
+function post_details(id, element) {
+    var context = $(element).data('context')
+    window.location.href = 'post_details.php?id=' + id + '&&context=' + context;
 }
 
 //-------------Before Delete Notification-------------//
@@ -577,15 +618,22 @@ function delete_post() {
     var conf = confirm("Do you really want to delete this post?");
     if (conf == true) {
         var id = $("#hidden").val();
+        var context = $("#post_context").val();
+        console.log(context)
+
         $.ajax({
             url: "action.php",
             type: "post",
             data: { 'action': 'delete_post', 'post_id': id },
             success: function (data) {
                 $('#deleteModal').modal('hide');
-                show_media();
-                count_posts();
-                show_post();
+                if (context === 'profile') {
+                    window.location = 'profile.php';
+                } else if (context === 'index') {
+                    window.location = 'index.php';
+                } else {
+                    window.location = 'index.php';
+                }
             }
         });
     }
@@ -594,16 +642,46 @@ function delete_posts() {
     var conf = confirm("Do you really want to delete this post?");
     if (conf == true) {
         var id = $("#hidden").val();
+        var context = $("#post_context").val();
+        console.log(context)
+
         $.ajax({
             url: "action.php",
             type: "post",
             data: { 'action': 'delete_posts', 'post_id': id },
             success: function (data) {
                 $('#deletesModal').modal('hide');
-                show_media();
-                count_posts();
-                show_post();
-                show_foryou_post();
+                if (context === 'profile') {
+                    window.location = 'profile.php';
+                } else if (context === 'index') {
+                    window.location = 'index.php';
+                } else {
+                    window.location = 'index.php';
+                }
+            }
+        });
+    }
+}
+function delete_post_self() {
+    var conf = confirm("Do you really want to delete this post?");
+    if (conf == true) {
+        var id = $("#hidden_val_for_post_del").val();
+        var context = $("#post_context").val();
+        console.log(context)
+        console.log(id)
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { 'action': 'delete_posts', 'post_id': id },
+            success: function (data) {
+                console.log(data)
+                if (context === 'profile') {
+                    window.location = 'profile.php';
+                } else if (context === 'index') {
+                    window.location = 'index.php';
+                } else {
+                    window.location = 'index.php';
+                }
             }
         });
     }
@@ -1053,6 +1131,14 @@ $(document).ready(function () {
         $(".username-span, .name-span").text("15");
         $(".bio-span").text("150");
         $(".username-span, .name-span, .bio-span").css("color", "black");
+    });
+
+    //--------------------To redirect on the same page after delete post
+    $(document).on('click', '#profilee_post', function () {
+        $('#post_context').val("profile");
+    });
+    $(document).on('click', '#for_youu', function () {
+        $('#post_context').val("index");
     });
 
     /*----------Profile Pic---------*/

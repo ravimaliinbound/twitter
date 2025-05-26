@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 04:00 PM
+-- Generation Time: May 26, 2025 at 05:19 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -104,7 +104,6 @@ INSERT INTO `twitter_comments` (`id`, `user_id`, `post_id`, `comment`, `created_
 (167, 9, 286, 'dc', '2025-05-20 08:16:52', '2025-05-20 08:16:52'),
 (168, 9, 286, 'qdwcdcdcdwcdc', '2025-05-20 15:54:05', '2025-05-20 15:54:05'),
 (169, 9, 46, 'sdcsdcdsc', '2025-05-20 16:55:42', '2025-05-20 16:55:42'),
-(170, 9, 46, 'wcdwcdc', '2025-05-20 16:55:50', '2025-05-20 16:55:50'),
 (171, 15, 289, 'Good Morning', '2025-05-21 03:09:23', '2025-05-21 03:09:23'),
 (172, 9, 290, 'qwdqwdqwdqwd', '2025-05-21 03:12:16', '2025-05-21 03:12:16'),
 (173, 9, 254, 'sdc', '2025-05-21 05:49:15', '2025-05-21 05:49:15'),
@@ -192,7 +191,6 @@ INSERT INTO `twitter_comments` (`id`, `user_id`, `post_id`, `comment`, `created_
 (281, 9, 302, 'j', '2025-05-23 06:48:28', '2025-05-23 06:48:28'),
 (283, 16, 310, 'What is this?', '2025-05-23 08:52:04', '2025-05-23 08:52:04'),
 (284, 15, 317, 'Such a nice car', '2025-05-23 12:48:57', '2025-05-23 12:48:57'),
-(285, 16, 317, 'Amazing...!', '2025-05-23 12:57:54', '2025-05-23 12:57:54'),
 (286, 16, 240, 'Woww', '2025-05-23 13:06:59', '2025-05-23 13:06:59');
 
 -- --------------------------------------------------------
@@ -757,7 +755,9 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (1817, 9, 288, 'comment', '2025-05-23 19:01:53', '2025-05-23 19:01:53'),
 (1818, 9, 430, 'reply', '2025-05-23 19:02:50', '2025-05-23 19:02:50'),
 (1819, 9, 431, 'reply', '2025-05-23 19:08:41', '2025-05-23 19:08:41'),
-(1820, 9, 433, 'reply', '2025-05-23 19:08:42', '2025-05-23 19:08:42');
+(1820, 9, 433, 'reply', '2025-05-23 19:08:42', '2025-05-23 19:08:42'),
+(1821, 9, 449, 'reply', '2025-05-26 07:44:57', '2025-05-26 07:44:57'),
+(1822, 9, 305, 'comment', '2025-05-26 07:45:02', '2025-05-26 07:45:02');
 
 -- --------------------------------------------------------
 
@@ -1269,7 +1269,15 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (1233, 14, 22, 384, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:32:09', '2025-05-23 18:32:09'),
 (1235, 19, 22, 391, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:32:16', '2025-05-23 18:32:16'),
 (1237, 15, 22, 357, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:34:34', '2025-05-23 18:34:34'),
-(1238, 15, 22, 359, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:34:36', '2025-05-23 18:34:36');
+(1238, 15, 22, 359, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:34:36', '2025-05-23 18:34:36'),
+(1245, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'csdvv', '2025-05-26 07:17:05', '2025-05-26 08:21:54'),
+(1246, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'wsxsxsx', '2025-05-26 07:21:28', '2025-05-26 08:21:54'),
+(1247, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'scsdcdc', '2025-05-26 07:40:49', '2025-05-26 08:21:54'),
+(1248, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'sddcsdcsc', '2025-05-26 07:51:16', '2025-05-26 08:21:54'),
+(1249, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'sdscsdcsdcsdc', '2025-05-26 08:01:10', '2025-05-26 08:21:54'),
+(1250, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'aaaaaaaaaaaaaa', '2025-05-26 08:04:28', '2025-05-26 08:21:54'),
+(1251, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '2025-05-26 08:08:34', '2025-05-26 08:21:54'),
+(1252, 22, 9, 317, 'comment', '@ravi commented on your post.', 0, 'dcsddcsdc', '2025-05-26 08:29:52', '2025-05-26 08:29:52');
 
 -- --------------------------------------------------------
 
@@ -1362,8 +1370,6 @@ INSERT INTO `twitter_posts` (`id`, `user_id`, `content`, `media`, `created_at`, 
 (301, 17, 'dc', NULL, '2025-05-22 12:08:10', '2025-05-22 12:08:10'),
 (302, 17, 'sdc', NULL, '2025-05-22 12:08:12', '2025-05-22 12:08:12'),
 (310, 9, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, maiores fuga? Quod quas quisquam possimus repudiandae excepturi laborum, sapiente eligendi.', NULL, '2025-05-23 08:51:43', '2025-05-23 08:51:43'),
-(311, 9, 'ipsum dolor sit amet consectetur, adipisicing elit. Illum, maiores fuga? Quod quas quisquam possimus repudiandae excepturi laborum,ipsum dolor sit amet consectetur, adipisicing elit. Illum, maiores fuga? Quod quas quisquam possimus repudiandae excepturi l', NULL, '2025-05-23 08:58:22', '2025-05-23 08:58:22'),
-(312, 9, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, maiores fuga? Quod quas quisquam possimus repudiandae excepturi laborum, sapiente eligendiLorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, maiores fuga? Quod quas quisquam po', NULL, '2025-05-23 09:00:12', '2025-05-23 09:00:12'),
 (317, 22, 'The Audi RSQ8 Performance SUV was launched in India in March 2025, starting at a price or Rs 2.49 crore (ex-showroom). It is available as one fully loaded model in 8 standard and 9 exclusive colour options.', 'audi_rsq81747999470.jpg', '2025-05-23 11:24:30', '2025-05-23 11:24:30');
 
 -- --------------------------------------------------------
@@ -1642,10 +1648,10 @@ INSERT INTO `twitter_replies` (`id`, `user_id`, `post_id`, `comment_id`, `reply`
 (409, 9, 0, 277, 'csdc', 408, '2025-05-23 10:30:30', '2025-05-23 10:30:30'),
 (410, 9, 0, 277, 'sd', 408, '2025-05-23 10:30:33', '2025-05-23 10:30:33'),
 (411, 9, 0, 277, 'sdd', 406, '2025-05-23 10:30:34', '2025-05-23 10:30:34'),
-(412, 9, 302, 280, 'asx', NULL, '2025-05-23 10:34:35', '2025-05-23 10:34:35'),
-(413, 9, 302, 280, 'asx', NULL, '2025-05-23 10:34:39', '2025-05-23 10:34:39'),
-(414, 9, 0, 280, 'ad', NULL, '2025-05-23 10:34:43', '2025-05-23 10:34:43'),
-(415, 9, 0, 280, 'asd', NULL, '2025-05-23 10:34:45', '2025-05-23 10:34:45'),
+(412, 9, 302, 280, 'asx', 411, '2025-05-23 10:34:35', '2025-05-26 08:08:16'),
+(413, 9, 302, 280, 'asx', 412, '2025-05-23 10:34:39', '2025-05-26 08:08:10'),
+(414, 9, 0, 280, 'ad', 413, '2025-05-23 10:34:43', '2025-05-26 08:08:01'),
+(415, 9, 0, 280, 'asd', 414, '2025-05-23 10:34:45', '2025-05-26 08:07:53'),
 (416, 9, 0, 280, 'sd', 415, '2025-05-23 10:34:49', '2025-05-23 10:34:49'),
 (417, 9, 0, 280, 'ds', 415, '2025-05-23 10:34:51', '2025-05-23 10:34:51'),
 (418, 9, 0, 280, 'sd', 415, '2025-05-23 10:34:55', '2025-05-23 10:34:55'),
@@ -1659,7 +1665,7 @@ INSERT INTO `twitter_replies` (`id`, `user_id`, `post_id`, `comment_id`, `reply`
 (426, 9, 0, 280, 'sd', 423, '2025-05-23 10:35:09', '2025-05-23 10:35:09'),
 (427, 9, 0, 280, 'vfg', 426, '2025-05-23 11:39:18', '2025-05-23 11:39:18'),
 (428, 9, 0, 280, 'fgg', 427, '2025-05-23 11:41:36', '2025-05-23 11:41:36'),
-(429, 16, 317, 284, 'True', NULL, '2025-05-23 18:30:32', '2025-05-23 18:30:32');
+(429, 16, 317, 284, 'True', 428, '2025-05-23 18:30:32', '2025-05-26 08:07:43');
 
 -- --------------------------------------------------------
 
@@ -1764,7 +1770,7 @@ ALTER TABLE `twitter_users`
 -- AUTO_INCREMENT for table `twitter_comments`
 --
 ALTER TABLE `twitter_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=290;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 
 --
 -- AUTO_INCREMENT for table `twitter_followers`
@@ -1776,25 +1782,25 @@ ALTER TABLE `twitter_followers`
 -- AUTO_INCREMENT for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1821;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1823;
 
 --
 -- AUTO_INCREMENT for table `twitter_notifications`
 --
 ALTER TABLE `twitter_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1245;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1253;
 
 --
 -- AUTO_INCREMENT for table `twitter_posts`
 --
 ALTER TABLE `twitter_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
 
 --
 -- AUTO_INCREMENT for table `twitter_replies`
 --
 ALTER TABLE `twitter_replies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=441;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=483;
 
 --
 -- AUTO_INCREMENT for table `twitter_users`

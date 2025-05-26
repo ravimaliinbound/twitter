@@ -13,7 +13,48 @@ include_once 'headers.php';
 <?php
 include_once 'footers.php';
 ?>
-
+<!-- Delete Post Modal -->
+<div class="modal" id="delete_post_modal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <ul class="models-ul">
+                <input type='hidden' id='post_context' value=''>
+                    <li onclick="delete_post_self()">
+                    <input type='hidden' id='hidden_val_for_post_del' value='0'>
+                        <i class="fa-solid fa-trash text-danger"></i>
+                        <a href="#" class="text-danger" id="delete-modal">Delete Post</a>
+                    </li>
+                    <li>
+                        <img src="images/pin.png" alt="" height="20px">
+                        <a href="#">Pin to your profile</a>
+                    </li>
+                    <li>
+                        <img src="images/comment.png" alt="" height="20px">
+                        <a href="#">Change who can reply</a>
+                    </li>
+                    <li>
+                        <img src="images/graph.png" alt="" height="20px">
+                        <a href="#">View post engagements</a>
+                    </li>
+                    <li>
+                        <img src="images/link.png" alt="" height="20px">
+                        <a href="#">Embed post</a>
+                    </li>
+                    <li>
+                        <img src="images/graph.png" alt="" height="20px">
+                        <a href="#">View post analytics</a>
+                    </li>
+                    <li>
+                        <img src="images/marketing.png" alt="" height="20px">
+                        <a href="#">Request community notes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <!--------------------Comment Modal--------------------->
 
 <div class="modal" id="modal_comment">
@@ -59,7 +100,7 @@ include_once 'footers.php';
 
 <!--------------------Reply Modal--------------------->
 <?php
-    include_once 'reply_modal.php';
+include_once 'reply_modal.php';
 ?>
 
 <?php
@@ -67,16 +108,21 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $_SESSION['id'] = $id;
 }
+if (isset($_GET['context'])) {
+    $context = $_GET['context'];
+}
 $id = $_SESSION['id'];
 ?>
 <script>
-
     function post_details(id) {
         $.ajax({
             url: 'action.php',
             type: 'post',
-            data: { 'action': 'post_details', 'id': id },
-            success: function (data) {
+            data: {
+                'action': 'post_details',
+                'id': id
+            },
+            success: function(data) {
                 if (data == "") {
                     $(".post_data").html("<h4 class='no'>No comments yet.<h4>")
                 } else {
@@ -85,8 +131,16 @@ $id = $_SESSION['id'];
             }
         });
     }
-    $(document).ready(function () {
+
+    function before_delete_self(id) {
+        $('#delete_post_modal').modal('show');
+        $("#hidden_val_for_post_del").val(id);
+    }
+    $(document).ready(function() {
         var id = '<?php echo $id; ?>';
+        var context = '<?php echo $context; ?>';
+        $("#post_context").val(context)
+        console.log($("#post_context").val())
         post_details(id);
     });
 </script>

@@ -2,10 +2,20 @@
 $conn = new mysqli('localhost', 'root', '', 'twitter');
 session_start();
 
+// Get user ID
+$username = $_SESSION['username'];
+$get_user = "SELECT id FROM twitter_users WHERE username = '$username'";
+$run_user = $conn->query($get_user);
+$user_id = 0;
+
+if ($run_user->num_rows > 0) {
+    $user = $run_user->fetch_object();
+    $user_id = $user->id;
+}
+
 //----------------Fetch Data For Particular Logged in User---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
-    $username = $_SESSION['username'];
-    $sel = "SELECT * FROM twitter_users WHERE username = '$username'";
+    $sel = "SELECT * FROM twitter_users WHERE id = '$user_id'";
     $run = $conn->query($sel);
 
     $data = [];
@@ -25,20 +35,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
 }
 //-----------Notification Mark as read-------------//
 if (isset($_POST['action']) && $_POST['action'] == 'mark_read') {
-    $username = $_SESSION['username'];
-
-    // Get user ID
-    $get_user = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run_user = $conn->query($get_user);
-    $uid = 0;
-
-    if ($run_user->num_rows > 0) {
-        $user = $run_user->fetch_object();
-        $uid = $user->id;
-    }
-
     //  Mark all notifications as read
-    $update = "UPDATE twitter_notifications SET is_read = 1 WHERE user_id = '$uid'";
+    $update = "UPDATE twitter_notifications SET is_read = 1 WHERE user_id = '$user_id'";
     $run = $conn->query($update);
     if (!$run) {
         echo json_encode(['error' => 'User query failed: ' . $conn->error]);
@@ -48,27 +46,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'mark_read') {
 }
 //------------Fetch Notifications------------------??
 if (isset($_POST['action']) && $_POST['action'] == 'check') {
-    $username = $_SESSION['username'];
-
-    // Get user ID
-    $user_q = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $user_run = $conn->query($user_q);
-
-    if (!$user_run) {
-        echo json_encode(['error' => 'User query failed: ' . $conn->error]);
-        exit;
-    }
-
-    if ($user_run->num_rows > 0) {
-        $user = $user_run->fetch_object();
-        $uid = $user->id;
-    } else {
-        echo json_encode(['error' => 'User not found']);
-        exit;
-    }
 
     // Notification count
-    $q = "SELECT COUNT(*) AS total FROM twitter_notifications WHERE user_id = '$uid' AND is_read = 0";
+    $q = "SELECT COUNT(*) AS total FROM twitter_notifications WHERE user_id = '$user_id' AND is_read = 0";
     $run = $conn->query($q);
 
     if (!$run) {
@@ -95,19 +75,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'profile_pic') {
 //----------------Delete Comment---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'delete_comment') {
     $id = $_POST['id'];
+    echo $id;
     $delete_comments = "DELETE FROM twitter_comments WHERE id = '$id'";
     $run = $conn->query($delete_comments);
-    $data = $run->fetch_object();
+}
+//----------------Delete Reply---------------//
+if (isset($_POST['action']) && $_POST['action'] == 'delete_reply') {
+    $reply_id = $_POST['reply_id'];
+    $delete_reply = "DELETE FROM twitter_replies WHERE id = '$reply_id'";
+    $run = $conn->query($delete_reply);
 }
 
 //----------------Follow Unfollow---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'follow_unfollow') {
-    $current_user = $_SESSION['username'];
     $other_user = $_POST['other_user'];
-    $sel_id = "SELECT id FROM twitter_users WHERE username = '$current_user'";
-    $run_id = $conn->query($sel_id);
-    $user_data = $run_id->fetch_object();
-    $follower_id = $user_data->id;
+    $follower_id = $user_id;
 
     $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$other_user'";
     $run_other_id = $conn->query($sel_other_id);
@@ -133,12 +115,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_unfollow') {
 }
 //----------------Unfollow---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
-    $current_user = $_SESSION['username'];
     $other_user = $_POST['other_user'];
-    $sel_id = "SELECT id FROM twitter_users WHERE username = '$current_user'";
-    $run_id = $conn->query($sel_id);
-    $user_data = $run_id->fetch_object();
-    $follower_id = $user_data->id;
+    $follower_id = $user_id;
 
     $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$other_user'";
     $run_other_id = $conn->query($sel_other_id);
@@ -158,12 +136,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
 }
 //----------------Check if already followed other user---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'follow_check') {
-    $current_user = $_SESSION['username'];
     $other_user = $_POST['other_user'];
-    $sel_id = "SELECT id FROM twitter_users WHERE username = '$current_user'";
-    $run_id = $conn->query($sel_id);
-    $user_data = $run_id->fetch_object();
-    $follower_id = $user_data->id;
+    $follower_id = $user_id;
 
     $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$other_user'";
     $run_other_id = $conn->query($sel_other_id);
@@ -178,7 +152,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_check') {
         $check = "SELECT * FROM twitter_followers WHERE follower_id = '$following_id' AND following_id= '$follower_id'";
         $check_result = $conn->query($check);
         $followed = $check_result->num_rows > 0 ? 'Back' : 'No';
-
     }
     echo $followed;
 }
@@ -231,10 +204,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch_following') {
 /*-------------- Fetch Follower Count For Current Logged in User----------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'follower') {
     $username = $_SESSION['username'];
-    $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run_other_id = $conn->query($sel_other_id);
-    $other_user_data = $run_other_id->fetch_object();
-    $following_id = $other_user_data->id;
+    $following_id = $user_id;
 
     $get_followers = "SELECT COUNT(*) AS total_followers 
           FROM twitter_followers 
@@ -253,10 +223,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'follower') {
 /*-------------- Fetch Following Count For Current Logged in User----------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'following') {
     $username = $_SESSION['username'];
-    $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run_other_id = $conn->query($sel_other_id);
-    $other_user_data = $run_other_id->fetch_object();
-    $follower_id = $other_user_data->id;
+    $follower_id = $user_id;
 
     $get_following = "SELECT COUNT(*) AS total_following 
           FROM twitter_followers 
@@ -276,11 +243,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'following') {
 
 //--------------------Edit User--------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
-    $username_chk = $_SESSION['username'];
 
     //-------------Get Old Profile and Cover Pics Before Delete--------------//
 
-    $get_img = "SELECT * FROM twitter_users WHERE username = '$username_chk'";
+    $get_img = "SELECT * FROM twitter_users WHERE id = '$user_id'";
     $run_query = $conn->query($get_img);
 
     $fetch = $run_query->fetch_object();
@@ -345,20 +311,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
 
 //--------------------- Footer who to follow-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'footer') {
-    $username = $_SESSION['username'];
+    $follower_id = $user_id;
 
-    //------------Get current user's ID---------------------
-    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run = $conn->query($fetch_id_query);
-    if (!$run) {
-        echo "Data fetch error: " . $conn->error;
-        exit;
-    }
-
-    $dataa = $run->fetch_object();
-    $follower_id = $dataa->id;
-
-    $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username' ORDER BY rand()";
+    $sel_footer = "SELECT * FROM twitter_users WHERE id != '$user_id' ORDER BY rand()";
     $run_footer = $conn->query($sel_footer);
     $count = $run_footer->num_rows;
     $arr_footer = "";
@@ -592,20 +547,9 @@ if (isset($_POST['action']) && $_POST['action'] == "logout") {
 
 //---------------------Show More-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
-    $username = $_SESSION['username'];
+    $follower_id = $user_id;
 
-    //------------Get current user's ID---------------------
-    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run = $conn->query($fetch_id_query);
-    if (!$run) {
-        echo "Data fetch error: " . $conn->error;
-        exit;
-    }
-
-    $dataa = $run->fetch_object();
-    $follower_id = $dataa->id;
-
-    $sel_footer = "SELECT * FROM twitter_users  WHERE username != '$username' ORDER BY rand() LIMIT 0,50";
+    $sel_footer = "SELECT * FROM twitter_users  WHERE id != '$user_id' ORDER BY rand() LIMIT 0,50";
     $run_footer = $conn->query($sel_footer);
     $arr_footer = "";
     while ($data = $run_footer->fetch_object()) {
@@ -791,7 +735,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                                         <i class='fa-solid fa-ellipsis' onclick='before_delete($data->id)'></i>
                                     </span>
                                 </p>
-                                <div class='for_posts' onclick='post_details(`$data->id`)'>
+                                <div class='for_posts' id='profilee_post' onclick='post_details(`$data->id`, this)' data-context='profile'>
                                     <p class='post-content'>$data->content</p>
                                     <div class='post-img'>
                                         <img src='posts/$data->media' alt='Post Image'>
@@ -825,7 +769,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
                                         <i class='fa-solid fa-ellipsis' onclick='before_delete($data->id)'></i>
                                     </span>
                                 </p>
-                                <div class='for_posts' onclick='post_details(`$data->id`)'>
+                                <div class='for_posts' id='profilee_post' onclick='post_details(`$data->id`, this)' data-context='profile'>
                                     <p class='post-content'>$data->content</p>
                                 </div>
                                 <p class='icons'>
@@ -1011,16 +955,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_like') {
 
     $username = $_SESSION['username'];
 
-    // Get user ID
-    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run = $conn->query($fetch_id_query);
-    if (!$run) {
-        echo "Data fetch error: " . $conn->error;
-        exit;
-    }
-
-    $data = $run->fetch_object();
-    $user_id = $data->id;
     $comment_id = isset($_POST['comment_id']) ? $_POST['comment_id'] : '';
     $type = $_POST['type'];
 
@@ -1083,16 +1017,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
 
     $username = $_SESSION['username'];
 
-    // Get user ID
-    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $run = $conn->query($fetch_id_query);
-    if (!$run) {
-        echo json_encode(['status' => 'error', 'message' => 'Data fetch error: ' . $conn->error]);
-        exit;
-    }
 
-    $data = $run->fetch_object();
-    $user_id = $data->id;
     $reply_id = (int) $_POST['reply_id'];
     $type = $_POST['type']; // should be 'reply'
 
@@ -1180,12 +1105,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
         echo "Comment cannot be empty.";
         exit;
     }
-
-    // Get logged-in user
-    $u_query = "SELECT id FROM twitter_users WHERE username = '$username'";
-    $u_result = $conn->query($u_query);
-    $u_data = $u_result->fetch_object();
-    $user_id = $u_data->id;
 
     // Ensure post exists
     $get_user_query = "SELECT user_id FROM twitter_posts WHERE id = $post_id";
@@ -1512,7 +1431,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                                     <span class='time' title='$title'>· $print</span>
                                     $del
                                 </p>
-                                <div class='for_posts' onclick='post_details(`$data->id`)'>
+                                <div class='for_posts' id='for_youu' onclick='post_details(`$data->id`, this)' data-context='foryou'>
                                     <p class='post-content'>$data->content</p>
                                     <div class='post-img'>
                                         <img src='posts/$data->media' alt='Post Image'>
@@ -1545,7 +1464,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
                                     <span class='time' title='$title'>· $print</span>
                                     $del
                                 </p>
-                                 <div class='for_posts' onclick='post_details(`$data->id`)'>
+                                 <div class='for_posts' id='for_youu' onclick='post_details(`$data->id`, this)' data-context='foryou'>
                                     <p class='post-content'>$data->content</p>
                                 </div>
                                 <p class='icons'>
@@ -2069,6 +1988,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
     date_default_timezone_set("Asia/Kolkata");
     $post_date = new DateTime($post->created_at);
     $diff = $post_date->diff($today);
+
     $title = $post_date->format('h:i A - M j, Y');
     if ($diff->format('%i') < 1)
         $print = $diff->format('%s') . 's';
@@ -2098,6 +2018,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
     $comment_q = "SELECT COUNT(*) AS total_comments FROM twitter_comments WHERE post_id = $post->id";
     $comments = $conn->query($comment_q)->fetch_assoc();
     $total_comments = $comments['total_comments'] ?: '';
+    $post_owner_id = $post->post_user_id;
+
+    // Condition check for ellipsis menu(post delete)
+    $del = "";
+    if ($post->post_user_id == $user_id) {
+        $del = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='before_delete_self($post_id)'></i>
+                    </span>";
+    }
     $html = "";
     $html .= "<div class='mydiv'>
                 <div style='display: flex;'>
@@ -2109,6 +2038,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
                             <span class='name_d'>$post->post_owner_name </span>
                             <span class='username_d'>@$post->post_owner_username</span>
                             <span class='time' title='$title'>· $print</span>
+                            <span>· $del</span>
                         </p>
                         <p class='post-content' style='overflow-wrap: anywhere; padding: 0 20px;'>$post->content</p>
                         <div class='comment_media'>$media</div>
@@ -2171,6 +2101,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
 
         $c_pic = $comment->profile_pic ? 'profile_pic/' . $comment->profile_pic : 'images/profile_pic.png';
 
+        // Condition check for ellipsis menu(comment delete)
+        $del_cmt = "";
+        if ($comment->user_id == $user_id || $post_owner_id == $user_id) {
+            $del_cmt = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='delete_comment($comment->comment_id, $post_id)'></i>
+                    </span>";
+        } else {
+            $del_cmt = "";
+        }
+
+
         // comment like count
         $query = "SELECT COUNT(*) AS total_likes FROM twitter_likes WHERE liked_id = $comment->comment_id AND likeable_type = 'comment'";
         $likes = $conn->query($query)->fetch_assoc();
@@ -2189,10 +2130,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
                         <img src='$c_pic' alt='' height='50px' width='50px' style='border-radius: 50%;'>
                     </div>
                     <div>
-                        <p style='margin-top: 10px;' onclick='show_user(`$comment->username`)'>
-                            <span class='name_d'>$comment->name </span>
-                            <span class='username_d'>@$comment->username</span>
+                        <p style='margin-top: 10px;'>
+                            <span class='name_d'  onclick='show_user(`$comment->username`)'>$comment->name </span>
+                            <span class='username_d'  onclick='show_user(`$comment->username`)'>@$comment->username</span>
                             <span class='time'>· $print</span>
+                            <span> $del_cmt</span>                            
                         </p>
                         <div onclick='show_comment(`$comment->comment_id`)'>
                             <p class='comment_content' style='overflow-wrap: anywhere; padding: 0 20px;'>$comment->comment</p>
@@ -2235,12 +2177,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
 
     // Get comment details
     $comment_query = "SELECT 
-                        c.id AS comment_id, c.comment, c.created_at, c.user_id AS comment_user_id,
-                        u.name AS comment_owner_name, u.username AS comment_owner_username, u.profile_pic AS comment_owner_profile
+                        c.id AS comment_id, 
+                        c.comment, 
+                        c.created_at, 
+                        c.user_id AS comment_user_id,
+                        c.post_id,
+
+                        u.name AS comment_owner_name, 
+                        u.username AS comment_owner_username, 
+                        u.profile_pic AS comment_owner_profile,
+
+                        p.user_id AS post_owner_id 
                     FROM twitter_comments c
                     JOIN twitter_users u ON c.user_id = u.id
+                    JOIN twitter_posts p ON c.post_id = p.id
                     WHERE c.id = '$comment_id'
-                    LIMIT 1";
+                    LIMIT 1
+                    ";
 
     $comment_result = $conn->query($comment_query);
     if (!$comment_result || $comment_result->num_rows == 0) {
@@ -2283,6 +2236,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
     $replies = $conn->query($replies_q)->fetch_assoc();
     $total_replies = $replies['total_replies'] ?: '';
 
+    // Condition check for ellipsis menu(comment delete)
+    $del_cmt = "";
+    if ($comment->comment_user_id == $user_id || $user_id == $comment->post_owner_id) {
+        $del_cmt = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='delete_comment($comment->comment_id, $comment->post_id)'></i>
+                    </span>";
+    } else {
+        $del_cmt = "";
+    }
+
     // Start HTML output
     $html = "<div class='mydiv'>
                 <div style='display: flex;'>
@@ -2294,6 +2257,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
                             <span class='name_d'>$comment->comment_owner_name </span>
                             <span class='username_d'>@$comment->comment_owner_username</span>
                             <span class='time' title='$title'>· $print</span>
+                            <span> $del_cmt</span>
                         </p>
                         <p class='post-content' style='overflow-wrap: anywhere; padding: 0 20px;'>$comment->comment</p>
                         <div class='comment_media'></div>
@@ -2331,7 +2295,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
 
     // Fetch all replies for the comment
     $reply_query = "SELECT 
-                        r.id AS reply_id, r.parent_reply_id AS parent_id, r.reply, r.created_at,
+                        r.id AS reply_id, r.parent_reply_id AS parent_id, r.reply, r.created_at,r.user_id,
                         u.name AS reply_owner_name, u.username AS reply_owner_username, u.profile_pic AS reply_owner_profile
                     FROM twitter_replies r
                     JOIN twitter_users u ON r.user_id = u.id
@@ -2373,6 +2337,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
             $check_nested_like = "SELECT * FROM twitter_likes WHERE user_id = $user_id AND liked_id = $reply->reply_id AND likeable_type = 'reply'";
             $nested_liked = $conn->query($check_nested_like)->num_rows > 0 ? 'liked' : '';
 
+            // Condition check for ellipsis menu(reply delete)
+            $del_reply = "";
+            if ($reply->user_id == $user_id || $user_id == $comment->post_owner_id) {
+                $del_reply = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='delete_reply($reply->reply_id, $comment->comment_id)'></i>
+                    </span>";
+            } else {
+                $del_reply = "";
+            }
+
             $html .= "<div class='single_reply'>
                         <div style='display: flex;'>
                             <div class='post-user-info'>
@@ -2383,6 +2357,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
                                     <span class='name_d'>$reply->reply_owner_name</span>
                                     <span class='username_d'>@$reply->reply_owner_username</span>
                                     <span class='time' title='$reply_title'>· $reply_print</span>
+                                    <span> $del_reply</span>
                                 </p>
                                 <p class='post-content' onclick='show_reply(`$reply->reply_id`)' style='overflow-wrap: anywhere; padding: 0 20px;'>$reply->reply</p>
                                 <div class='post_details'>
@@ -2423,12 +2398,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
 
     // Get parent reply details
     $comment_query = "SELECT 
-                        r.id AS reply_id, r.reply, r.created_at, r.user_id AS reply_user_id, r.comment_id, r.parent_reply_id as parent_id,
-                        u.name AS comment_owner_name, u.username AS comment_owner_username, u.profile_pic AS comment_owner_profile
-                      FROM twitter_replies r
-                      JOIN twitter_users u ON r.user_id = u.id
-                      WHERE r.id = $reply_id
-                      LIMIT 1";
+                        r.id AS reply_id, 
+                        r.reply, 
+                        r.created_at, 
+                        r.user_id AS reply_user_id, 
+                        r.comment_id, 
+                        r.parent_reply_id AS parent_id,
+
+                        u.name AS comment_owner_name, 
+                        u.username AS comment_owner_username, 
+                        u.profile_pic AS comment_owner_profile,
+
+                        p.user_id AS post_owner_id 
+                    FROM twitter_replies r
+                    JOIN twitter_users u ON r.user_id = u.id
+                    JOIN twitter_comments c ON r.comment_id = c.id
+                    JOIN twitter_posts p ON c.post_id = p.id
+                    WHERE r.id = $reply_id
+                    LIMIT 1";
 
     $comment_result = $conn->query($comment_query);
     if (!$comment_result || $comment_result->num_rows === 0) {
@@ -2438,6 +2425,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
 
     $comment = $comment_result->fetch_object();
     $comment_id = $comment->comment_id;
+    $parent_id = isset($comment->parent_id) ? $comment->parent_id : 0;
     date_default_timezone_set("Asia/Kolkata");
     $today = new DateTime();
     $comment_date = new DateTime($comment->created_at);
@@ -2466,6 +2454,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
     $replies = $conn->query("SELECT COUNT(*) AS total_replies FROM twitter_replies WHERE parent_reply_id = $reply_id")->fetch_assoc();
     $total_replies = $replies['total_replies'] ?: '';
 
+    // Condition check for ellipsis menu(reply delete)
+    $del_reply = "";
+    if ($comment->reply_user_id == $user_id || $user_id == $comment->post_owner_id) {
+        $del_reply = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='delete_replyy($comment->reply_id, $parent_id, $comment_id)'></i>
+                    </span>";
+    } else {
+        $del_reply = "";
+    }
+
     // Start output
     $html = "<div class='mydiv'>
                 <div style='display: flex;'>
@@ -2477,6 +2475,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                             <span class='name_d'>$comment->comment_owner_name</span>
                             <span class='username_d'>@$comment->comment_owner_username</span>
                             <span class='time' title='$title'>· $print</span>
+                            <span> $del_reply</span>
                         </p>
                         <p class='post-content' style='overflow-wrap: anywhere; padding: 0 20px;'>$comment->reply</p>
                     </div>
@@ -2513,7 +2512,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
 
     // Get nested replies 
     $nested_query = "SELECT 
-                        r.id AS reply_id, r.reply, r.created_at, r.comment_id,
+                        r.id AS reply_id, r.reply, r.created_at, r.comment_id,r.user_id AS reply_user_id, r.parent_reply_id AS parent_id,
                         u.name AS reply_owner_name, u.username AS reply_owner_username, u.profile_pic AS reply_owner_profile
                      FROM twitter_replies r
                      JOIN twitter_users u ON r.user_id = u.id
@@ -2548,6 +2547,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
 
             $nested_count = $conn->query("SELECT COUNT(*) AS total FROM twitter_replies WHERE parent_reply_id = $reply->reply_id")->fetch_assoc();
             $nested_reply_count = $nested_count['total'] ?: '';
+            // Condition check for ellipsis menu(reply delete)
+            $del_reply = "";
+            if ($reply->reply_user_id == $user_id || $user_id == $comment->post_owner_id) {
+                $del_reply = "<span class='post-delete-icon'>
+                        <i class='fa-solid fa-ellipsis' onclick='delete_replyy($reply->reply_id, $reply->parent_id)'></i>
+                    </span>";
+            } else {
+                $del_reply = "";
+            }
 
             $html .= "<div class='single_reply'>
                         <div style='display: flex;'>
@@ -2559,6 +2567,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                                     <span class='name_d'>$reply->reply_owner_name</span>
                                     <span class='username_d'>@$reply->reply_owner_username</span>
                                     <span class='time' title='$reply_title'>· $reply_print</span>
+                                    <span> $del_reply</span>
                                 </p>
                                 <p class='post-content' onclick='show_reply(`$reply->reply_id`)' style='overflow-wrap: anywhere; padding: 0 20px;'>$reply->reply</p>
                                 <div class='post_details'>

@@ -111,9 +111,9 @@ $reply_id = isset($_GET['reply_id']) ? (int) $_GET['reply_id'] : 0;
             type: 'post',
             data: {
                 action: 'comment_details',
-                id: id
+                'id': id
             },
-            success: function (data) {
+            success: function (data) {  
                 $(".user_comment").html(data);
             }
         });
@@ -128,6 +128,7 @@ $reply_id = isset($_GET['reply_id']) ? (int) $_GET['reply_id'] : 0;
                 id: id
             },
             success: function (data) {
+                console.log(data)
                 $(".user_comment").html(data);
             }
         });
