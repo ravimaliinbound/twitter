@@ -388,6 +388,7 @@ function insert_post() {
         contentType: false,
         processData: false,
         success: function (data) {
+            console.log(data)
             $('#content_form')[0].reset();
             $('#media_form')[0].reset();
             show_post();
@@ -417,6 +418,7 @@ function insert_post_modal() {
         contentType: false,
         processData: false,
         success: function (data) {
+            console.log(data)
             $('#post_content_form')[0].reset();
             $('#post_media_form')[0].reset();
             if (data == "") {
@@ -556,29 +558,35 @@ function edit_profile() {
                 $(".profile_pics").attr('src', 'images/profile_pic.png');
             } else {
                 $(".profile_pics").attr('src', 'profile_pic/' + profile);
-                $(".profile_pics").css({
-                    'width': '100%',
-                    'height': '100%'
-                });
             }
+            $(".profile_pics").css({
+                'width': '100%',
+                'height': '100%'
+            });
             if (cover == "") {
                 $(".cover").css('background', 'url(cover_pic/cover.png)');
                 $(".covers").css({
                     'background': 'url(cover_pic/cover.png)',
                     'width': '100%',
+                    'border': ' 1px solid #ced4da',
+                    'background-repeat': 'no-repeat'
+
                 });
             } else {
                 var imageUrl = 'cover_pic/' + cover;
                 $(".cover").css({
                     'background': 'url(' + imageUrl + ')',
-                    'background-size': '800px 250px',
+                    'background-size': '750px 350px',
                     'width': '100%',
+                    'border': '1px solid rgb(223, 223, 223)',
+                    'background-repeat': 'no-repeat'
                 });
                 $(".covers").css({
                     'background': 'url(' + imageUrl + ')',
-                    'background-size': '450px 150px',
+                    'background-size': '462px 150px',
                     'width': '100%',
                     'height': '100%',
+                    'border': ' 1px solid #ced4da',
                     'background-repeat': 'no-repeat'
                 });
             }
@@ -618,22 +626,13 @@ function delete_post() {
     var conf = confirm("Do you really want to delete this post?");
     if (conf == true) {
         var id = $("#hidden").val();
-        var context = $("#post_context").val();
-        console.log(context)
-
         $.ajax({
             url: "action.php",
             type: "post",
             data: { 'action': 'delete_post', 'post_id': id },
             success: function (data) {
                 $('#deleteModal').modal('hide');
-                if (context === 'profile') {
-                    window.location = 'profile.php';
-                } else if (context === 'index') {
-                    window.location = 'index.php';
-                } else {
-                    window.location = 'index.php';
-                }
+                show_post();
             }
         });
     }
@@ -1108,23 +1107,7 @@ $(document).ready(function () {
     follower();
     show_notifications();
 
-    //------------Fetch Notifications----------//
-    setInterval(function () {
-        $.ajax({
-            url: "action.php",
-            type: "POST",
-            data: { 'action': "check" },
-            success: function (res) {
-                var data = JSON.parse(res);
-                if (data.unread > 0) {
-                    $("#notifDot").css('display', 'inline-block');
-                    // show_notifications();
-                } else {
-                    $("#notifDot").css('display', 'none');
-                }
-            }
-        });
-    }, 100);
+
 
     $(document).on('click', '.edit', function () {
         $('.error').text("");

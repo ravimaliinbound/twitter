@@ -2,20 +2,10 @@
 $conn = new mysqli('localhost', 'root', '', 'twitter');
 session_start();
 
-// Get user ID
-$username = $_SESSION['username'];
-$get_user = "SELECT id FROM twitter_users WHERE username = '$username'";
-$run_user = $conn->query($get_user);
-$user_id = 0;
-
-if ($run_user->num_rows > 0) {
-    $user = $run_user->fetch_object();
-    $user_id = $user->id;
-}
-
 //----------------Fetch Data For Particular Logged in User---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
-    $sel = "SELECT * FROM twitter_users WHERE id = '$user_id'";
+    $username = $_SESSION['username'];
+    $sel = "SELECT * FROM twitter_users WHERE username = '$username'";
     $run = $conn->query($sel);
 
     $data = [];
@@ -31,12 +21,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
         "dob" => $data->dob,
         "joined_date" => $data->joined_date
     );
+    $_SESSION['profile_pic'] = isset($data->profile_pic) ? $data->profile_pic : '';
     echo json_encode($arr);
 }
 //-----------Notification Mark as read-------------//
 if (isset($_POST['action']) && $_POST['action'] == 'mark_read') {
+    $username = $_SESSION['username'];
+
+    // Get user ID
+    $get_user = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run_user = $conn->query($get_user);
+    $uid = 0;
+
+    if ($run_user->num_rows > 0) {
+        $user = $run_user->fetch_object();
+        $uid = $user->id;
+    }
+
     //  Mark all notifications as read
-    $update = "UPDATE twitter_notifications SET is_read = 1 WHERE user_id = '$user_id'";
+    $update = "UPDATE twitter_notifications SET is_read = 1 WHERE user_id = '$uid'";
     $run = $conn->query($update);
     if (!$run) {
         echo json_encode(['error' => 'User query failed: ' . $conn->error]);
@@ -46,9 +49,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'mark_read') {
 }
 //------------Fetch Notifications------------------??
 if (isset($_POST['action']) && $_POST['action'] == 'check') {
+    $username = $_SESSION['username'];
+
+    // Get user ID
+    $user_q = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $user_run = $conn->query($user_q);
+
+    if (!$user_run) {
+        echo json_encode(['error' => 'User query failed: ' . $conn->error]);
+        exit;
+    }
+
+    if ($user_run->num_rows > 0) {
+        $user = $user_run->fetch_object();
+        $uid = $user->id;
+    } else {
+        echo json_encode(['error' => 'User not found']);
+        exit;
+    }
 
     // Notification count
-    $q = "SELECT COUNT(*) AS total FROM twitter_notifications WHERE user_id = '$user_id' AND is_read = 0";
+    $q = "SELECT COUNT(*) AS total FROM twitter_notifications WHERE user_id = '$uid' AND is_read = 0";
     $run = $conn->query($q);
 
     if (!$run) {
@@ -88,8 +109,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_reply') {
 
 //----------------Follow Unfollow---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'follow_unfollow') {
+    $current_user = $_SESSION['username'];
     $other_user = $_POST['other_user'];
-    $follower_id = $user_id;
+    $sel_id = "SELECT id FROM twitter_users WHERE username = '$current_user'";
+    $run_id = $conn->query($sel_id);
+    $user_data = $run_id->fetch_object();
+    $follower_id = $user_data->id;
 
     $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$other_user'";
     $run_other_id = $conn->query($sel_other_id);
@@ -115,8 +140,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_unfollow') {
 }
 //----------------Unfollow---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
+    $current_user = $_SESSION['username'];
     $other_user = $_POST['other_user'];
-    $follower_id = $user_id;
+    $sel_id = "SELECT id FROM twitter_users WHERE username = '$current_user'";
+    $run_id = $conn->query($sel_id);
+    $user_data = $run_id->fetch_object();
+    $follower_id = $user_data->id;
 
     $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$other_user'";
     $run_other_id = $conn->query($sel_other_id);
@@ -136,8 +165,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
 }
 //----------------Check if already followed other user---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'follow_check') {
+    $current_user = $_SESSION['username'];
     $other_user = $_POST['other_user'];
-    $follower_id = $user_id;
+    $sel_id = "SELECT id FROM twitter_users WHERE username = '$current_user'";
+    $run_id = $conn->query($sel_id);
+    $user_data = $run_id->fetch_object();
+    $follower_id = $user_data->id;
 
     $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$other_user'";
     $run_other_id = $conn->query($sel_other_id);
@@ -204,7 +237,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch_following') {
 /*-------------- Fetch Follower Count For Current Logged in User----------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'follower') {
     $username = $_SESSION['username'];
-    $following_id = $user_id;
+    $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run_other_id = $conn->query($sel_other_id);
+    $other_user_data = $run_other_id->fetch_object();
+    $following_id = $other_user_data->id;
 
     $get_followers = "SELECT COUNT(*) AS total_followers 
           FROM twitter_followers 
@@ -223,7 +259,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'follower') {
 /*-------------- Fetch Following Count For Current Logged in User----------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'following') {
     $username = $_SESSION['username'];
-    $follower_id = $user_id;
+    $sel_other_id = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run_other_id = $conn->query($sel_other_id);
+    $other_user_data = $run_other_id->fetch_object();
+    $follower_id = $other_user_data->id;
 
     $get_following = "SELECT COUNT(*) AS total_following 
           FROM twitter_followers 
@@ -243,10 +282,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'following') {
 
 //--------------------Edit User--------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
+    $username_chk = $_SESSION['username'];
 
     //-------------Get Old Profile and Cover Pics Before Delete--------------//
 
-    $get_img = "SELECT * FROM twitter_users WHERE id = '$user_id'";
+    $get_img = "SELECT * FROM twitter_users WHERE username = '$username_chk'";
     $run_query = $conn->query($get_img);
 
     $fetch = $run_query->fetch_object();
@@ -311,9 +351,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
 
 //--------------------- Footer who to follow-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'footer') {
-    $follower_id = $user_id;
+    $username = $_SESSION['username'];
 
-    $sel_footer = "SELECT * FROM twitter_users WHERE id != '$user_id' ORDER BY rand()";
+    //------------Get current user's ID---------------------
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "Data fetch error: " . $conn->error;
+        exit;
+    }
+
+    $dataa = $run->fetch_object();
+    $follower_id = $dataa->id;
+
+    $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username' ORDER BY rand()";
     $run_footer = $conn->query($sel_footer);
     $count = $run_footer->num_rows;
     $arr_footer = "";
@@ -342,7 +393,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
             " <div style = 'display: flex;' class='background'>
                 <div class='show-img' style='margin-top: 6px;' href='user_profile.php'  onclick='show_user(`$data->username`)'>
                     <a onclick='show_user(`$data->username`)'>
-                        <img src=$profile height='50px' width='50px' style='border-radius: 50%'>
+                        <img src=$profile height='50px' width='50px' style='border-radius: 50%; margin-top:-5px; background-color: #ddf4ff'>
                     </a>
                 </div>
                 <div class='show-to-follow-data' href='user_profile.php'  onclick='show_user(`$data->username`)'>
@@ -541,15 +592,27 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
 if (isset($_POST['action']) && $_POST['action'] == "logout") {
     unset($_SESSION['login']);
     unset($_SESSION['username']);
+    unset($_SESSION['profile_pic']);
     // unset($_SESSION['firstname']);
     unset($_SESSION['count']);
 }
 
 //---------------------Show More-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
-    $follower_id = $user_id;
+    $username = $_SESSION['username'];
 
-    $sel_footer = "SELECT * FROM twitter_users  WHERE id != '$user_id' ORDER BY rand() LIMIT 0,50";
+    //------------Get current user's ID---------------------
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "Data fetch error: " . $conn->error;
+        exit;
+    }
+
+    $dataa = $run->fetch_object();
+    $follower_id = $dataa->id;
+
+    $sel_footer = "SELECT * FROM twitter_users  WHERE username != '$username' ORDER BY rand() LIMIT 0,50";
     $run_footer = $conn->query($sel_footer);
     $arr_footer = "";
     while ($data = $run_footer->fetch_object()) {
@@ -560,6 +623,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
         $check_follow = "SELECT * FROM twitter_followers WHERE follower_id = '$follower_id' AND following_id = '$data->id'";
         $run_check = $conn->query($check_follow);
         $is_following = $run_check->num_rows > 0;
+        if ($is_following) {
+            continue;
+        }
 
         // Check if this user is already following logged-in user
         $check_follow = "SELECT * FROM twitter_followers WHERE follower_id = '$data->id' AND following_id = '$follower_id'";
@@ -572,7 +638,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_more') {
         $arr_footer .=
             " <div style = 'display: flex;' class= 'background-follow'>
                 <div class='showw-img' style='margin-top: 6px;'   onclick='show_user(`$data->username`)'>
-                    <a ><img src=$profile height='50px' width='50px' style='border-radius: 50%'>
+                    <a ><img src=$profile height='50px' width='50px' style='border-radius: 50%; background-color: #ddf4ff'>
                     </a>
                 </div>
                 <div class='show-to-followw-data' style='width:50%' onclick='show_user(`$data->username`)'>
@@ -722,7 +788,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
 
             $post_data .= "<div class='user-post'>
                             <div class='post-user-info' onclick='show_user(`$data->username`)'>
-                                <img src=$profile alt='Post' height='40px' style='border-radius: 50%; width : 50px'>
+                                <img src=$profile alt='Post' height='50px' width='50px' style='border-radius: 50%;'>
                             </div>
                             <div class='postuser-name'>
                                 <p>
@@ -756,7 +822,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
         } else {
             $post_data .= "<div class='user-post'>
                             <div class='post-user-info' onclick='show_user(`$data->username`)'>
-                                <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                                <img src=$profile alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                             </div>
                             <div class='postuser-name'>
                                 <p>
@@ -955,6 +1021,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_like') {
 
     $username = $_SESSION['username'];
 
+    // Get user ID
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo "Data fetch error: " . $conn->error;
+        exit;
+    }
+
+    $data = $run->fetch_object();
+    $user_id = $data->id;
     $comment_id = isset($_POST['comment_id']) ? $_POST['comment_id'] : '';
     $type = $_POST['type'];
 
@@ -1017,7 +1093,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
 
     $username = $_SESSION['username'];
 
+    // Get user ID
+    $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $run = $conn->query($fetch_id_query);
+    if (!$run) {
+        echo json_encode(['status' => 'error', 'message' => 'Data fetch error: ' . $conn->error]);
+        exit;
+    }
 
+    $data = $run->fetch_object();
+    $user_id = $data->id;
     $reply_id = (int) $_POST['reply_id'];
     $type = $_POST['type']; // should be 'reply'
 
@@ -1105,6 +1190,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
         echo "Comment cannot be empty.";
         exit;
     }
+
+    // Get logged-in user
+    $u_query = "SELECT id FROM twitter_users WHERE username = '$username'";
+    $u_result = $conn->query($u_query);
+    $u_data = $u_result->fetch_object();
+    $user_id = $u_data->id;
 
     // Ensure post exists
     $get_user_query = "SELECT user_id FROM twitter_posts WHERE id = $post_id";
@@ -1274,7 +1365,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_notifications') {
         //------------- Append HTML with time display ------------------
         $notifications .= "<div class='n_parent'>
             <div class='n_img' onclick='show_user(`$users_data->username`)'>
-                <img src='$profile' alt='' height='40px'>
+                <img src='$profile' alt='' height='50px' width='50px'>
             </div>
             <div class='n_userdata'>
                 <p>
@@ -1557,7 +1648,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_user_post") {
         $post_data .= "
             <div class='user-post'>
                 <div class='post-user-info' onclick='show_user(`$data->username`)'>
-                    <img src='$profile' alt='Post' height='40px' style='border-radius: 50%'>
+                    <img src='$profile' alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                 </div>
                 <div class='postuser-name'>
                     <p>
@@ -1694,16 +1785,14 @@ if (isset($_POST['action']) && $_POST['action'] == "following_post") {
             </div>
         </div>";
     }
-
     echo $post_data;
 }
-
 
 //---------------------Search User-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'search') {
     $search = $_POST['search'];
     $username = $_SESSION['username'];
-    $sel_footer = "SELECT * FROM twitter_users  WHERE (username LIKE '%$search%' OR name LIKE '%$search%') AND username != '$username' ";
+    $sel_footer = "SELECT * FROM twitter_users  WHERE (username LIKE '%$search%' OR name LIKE '%$search%') AND username != '$username'";
     $run_footer = $conn->query($sel_footer);
     $search = "";
     while ($data = $run_footer->fetch_object()) {
@@ -1711,10 +1800,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'search') {
 
         $search .= "<div class='search_user' onclick='show_user(`$data->username`)'>
                         <div class='post-user-info' style='margin-top: 10px'>
-                            <img src=$profile alt='Post' height='40px' style='border-radius: 50%'>
+                            <img src=$profile alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                         </div>
                         <div class='serach_data' style='margin-top: 10px'>
-                            <p>
                                 <span class='post-name'>$data->name</span><br>
                                 <span class='post-username'>@$data->username</span>
                             </p>
@@ -1780,7 +1868,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_following') {
 
         $search .= "<div class='search_user'>
                         <div class='post-user-info' style='margin-top: 10px; width :10%' onclick='show_user(`$data->username`)'>
-                            <img src='$profile' alt='Post' height='40px' style='border-radius: 50%'>
+                            <img src='$profile' alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                         </div>
                         <div class='serach_data' style='margin-top: 10px; width: 55%' onclick='show_user(`$data->username`)'>
                             <p>
@@ -1856,7 +1944,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_followers') {
 
         $search .= "<div class='search_user'>
                         <div class='post-user-info' style='margin-top: 10px; width: 10%;' onclick='show_user(`$data->username`)'>
-                            <img src='$profile' alt='Post' height='40px' style='border-radius: 50%'>
+                            <img src='$profile' alt='Post' height='50px' width='50px' style='border-radius: 50%'>
                         </div>
                         <div class='serach_data' style='margin-top: 10px; width: 55%;' onclick='show_user(`$data->username`)' >
                             <p>
@@ -1922,7 +2010,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_comments') {
 
         $search .= "<div class='c_user_data'>
                         <div class='u_user_img' onclick='show_user(`$data->post_owner_username`)'>
-                            <img src=$post_owner_profile alt='' height='40px' style='border-radius: 50%;'>
+                            <img src=$post_owner_profile alt='' height='50px' width='50px' style='border-radius: 50%;'>
                         </div>
                         <div class='c_usernames'>
                             <p>
@@ -1941,7 +2029,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_comments') {
                    
                     <div class='c_user_data' onclick='show_user(`$data->commentator_username`)'>
                         <div class='u_user_img'>
-                            <img src=$commentator_profile alt='' height='40px' style='border-radius: 50%;'>
+                            <img src=$commentator_profile alt='' height='50px' width='50px' style='border-radius: 50%;'>
                         </div>
                         <div class='c_usernames'>
                             <p>
@@ -2105,7 +2193,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
         $del_cmt = "";
         if ($comment->user_id == $user_id || $post_owner_id == $user_id) {
             $del_cmt = "<span class='post-delete-icon'>
-                        <i class='fa-solid fa-ellipsis' onclick='delete_comment($comment->comment_id, $post_id)'></i>
+                        <i class='fa-solid fa-trash del_trash' onclick='delete_comment($comment->comment_id, $post_id)'></i>
                     </span>";
         } else {
             $del_cmt = "";
@@ -2240,7 +2328,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
     $del_cmt = "";
     if ($comment->comment_user_id == $user_id || $user_id == $comment->post_owner_id) {
         $del_cmt = "<span class='post-delete-icon'>
-                        <i class='fa-solid fa-ellipsis' onclick='delete_comment($comment->comment_id, $comment->post_id)'></i>
+                        <i class='fa-solid fa-trash del_trash' onclick='delete_comment($comment->comment_id, $comment->post_id)'></i>
                     </span>";
     } else {
         $del_cmt = "";
@@ -2341,7 +2429,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_details') {
             $del_reply = "";
             if ($reply->user_id == $user_id || $user_id == $comment->post_owner_id) {
                 $del_reply = "<span class='post-delete-icon'>
-                        <i class='fa-solid fa-ellipsis' onclick='delete_reply($reply->reply_id, $comment->comment_id)'></i>
+                        <i class='fa-solid fa-trash del_trash' onclick='delete_reply($reply->reply_id, $comment->comment_id)'></i>
                     </span>";
             } else {
                 $del_reply = "";
@@ -2458,7 +2546,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
     $del_reply = "";
     if ($comment->reply_user_id == $user_id || $user_id == $comment->post_owner_id) {
         $del_reply = "<span class='post-delete-icon'>
-                        <i class='fa-solid fa-ellipsis' onclick='delete_replyy($comment->reply_id, $parent_id, $comment_id)'></i>
+                        <i class='fa-solid fa-trash del_trash' onclick='delete_replyy($comment->reply_id, $parent_id, $comment_id)'></i>
                     </span>";
     } else {
         $del_reply = "";
@@ -2498,7 +2586,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
                     <input type='hidden' id='comment_id' name='comment_id' value='{$comment_id}'>
                     <div class='parent_div'>
                         <div class='profile_profile_pic'>
-                            <img src='$current_user_profile' alt='' height='50px' width='50' style='border-radius: 50%;' class='profile_pics'/>
+                            <img src='$current_user_profile' alt='' height='50px' width='50px' style='border-radius: 50%;' class='profile_pics'/>
                         </div>
                         <div>
                             <input type='text' name='comment_input_foryou' id='replies_input_p' placeholder='Post your reply' maxlength='500'/>
@@ -2551,7 +2639,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
             $del_reply = "";
             if ($reply->reply_user_id == $user_id || $user_id == $comment->post_owner_id) {
                 $del_reply = "<span class='post-delete-icon'>
-                        <i class='fa-solid fa-ellipsis' onclick='delete_replyy($reply->reply_id, $reply->parent_id)'></i>
+                        <i class='fa-solid fa-trash del_trash' onclick='delete_replyy($reply->reply_id, $reply->parent_id)'></i>
                     </span>";
             } else {
                 $del_reply = "";

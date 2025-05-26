@@ -149,8 +149,17 @@ include_once 'headers.php'
                 <form action="" id="comment_form">
                     <div class="parent_div">
                         <div class="comment_profile_pic">
-                            <img src="images/profile_pic.png" alt="" height="40px" style="border-radius: 50%;"
-                                class="comment_dp">
+                            
+                            <?php
+                            if (isset($_SESSION['profile_pic'])) {
+                                $sess = $_SESSION['profile_pic'];
+                                echo "<img src='profile_pic/$sess'  height='40px'
+                                    style='border-radius: 50%; height: 50px; width: 50px' class='profile_pics'>";
+                            } else {
+                                echo '<img src="images/profile_pic.png" alt="" height="50px" width="50px" style="border-radius: 50%;"
+                                class="comment_dp">';
+                            }
+                            ?>
                         </div>
                         <div class="comment_user">
                             <p>

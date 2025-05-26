@@ -33,6 +33,23 @@ if (!isset($_SESSION['login'])) {
             footer();
             edit_profile();
         });
+        //------------Fetch Notifications----------//
+        setInterval(function () {
+            $.ajax({
+                url: "action.php",
+                type: "POST",
+                data: { 'action': "check" },
+                success: function (res) {
+                    var data = JSON.parse(res);
+                    if (data.unread > 0) {
+                        $("#notifDot").css('display', 'inline-block');
+                        // show_notifications();
+                    } else {
+                        $("#notifDot").css('display', 'none');
+                    }
+                }
+            });
+        }, 100);
     </script>
 
 <body>

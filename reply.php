@@ -128,15 +128,14 @@ $reply_id = isset($_GET['reply_id']) ? (int) $_GET['reply_id'] : 0;
                 id: id
             },
             success: function (data) {
-                console.log(data)
                 $(".user_comment").html(data);
             }
         });
     }
 
     $(document).ready(function () {
-        const commentId = <?= $comment_id ?>;
-        const replyId = <?= $reply_id ?>;
+        var commentId = <?= $comment_id ?>;
+        var replyId = <?= $reply_id ?>;
 
         if (commentId > 0) {
             comments_details(commentId);

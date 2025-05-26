@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2025 at 05:19 AM
+-- Generation Time: May 26, 2025 at 04:01 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -188,10 +188,11 @@ INSERT INTO `twitter_comments` (`id`, `user_id`, `post_id`, `comment`, `created_
 (278, 9, 302, 'asx', '2025-05-23 05:04:25', '2025-05-23 05:04:25'),
 (279, 9, 302, 'asx', '2025-05-23 05:04:28', '2025-05-23 05:04:28'),
 (280, 9, 302, 'asx', '2025-05-23 05:04:29', '2025-05-23 05:04:29'),
-(281, 9, 302, 'j', '2025-05-23 06:48:28', '2025-05-23 06:48:28'),
 (283, 16, 310, 'What is this?', '2025-05-23 08:52:04', '2025-05-23 08:52:04'),
 (284, 15, 317, 'Such a nice car', '2025-05-23 12:48:57', '2025-05-23 12:48:57'),
-(286, 16, 240, 'Woww', '2025-05-23 13:06:59', '2025-05-23 13:06:59');
+(286, 16, 240, 'Woww', '2025-05-23 13:06:59', '2025-05-23 13:06:59'),
+(320, 21, 240, 'Nice', '2025-05-26 12:33:53', '2025-05-26 12:33:53'),
+(321, 21, 356, 'What is this?', '2025-05-26 12:54:12', '2025-05-26 12:54:12');
 
 -- --------------------------------------------------------
 
@@ -233,8 +234,18 @@ INSERT INTO `twitter_followers` (`id`, `follower_id`, `following_id`, `created_a
 (679, 9, 19, '2025-05-23 05:59:41', '2025-05-23 05:59:41'),
 (686, 22, 14, '2025-05-23 12:08:21', '2025-05-23 12:08:21'),
 (687, 16, 22, '2025-05-23 12:15:07', '2025-05-23 12:15:07'),
-(688, 22, 9, '2025-05-23 12:15:28', '2025-05-23 12:15:28'),
-(690, 15, 22, '2025-05-23 12:21:27', '2025-05-23 12:21:27');
+(690, 15, 22, '2025-05-23 12:21:27', '2025-05-23 12:21:27'),
+(708, 9, 14, '2025-05-26 10:05:43', '2025-05-26 10:05:43'),
+(711, 9, 16, '2025-05-26 10:05:47', '2025-05-26 10:05:47'),
+(712, 22, 19, '2025-05-26 10:09:08', '2025-05-26 10:09:08'),
+(713, 22, 9, '2025-05-26 10:13:08', '2025-05-26 10:13:08'),
+(718, 16, 9, '2025-05-26 10:55:55', '2025-05-26 10:55:55'),
+(719, 16, 19, '2025-05-26 10:55:57', '2025-05-26 10:55:57'),
+(725, 21, 19, '2025-05-26 11:46:25', '2025-05-26 11:46:25'),
+(726, 21, 15, '2025-05-26 11:46:28', '2025-05-26 11:46:28'),
+(727, 21, 17, '2025-05-26 11:46:38', '2025-05-26 11:46:38'),
+(728, 21, 14, '2025-05-26 11:46:38', '2025-05-26 11:46:38'),
+(730, 21, 16, '2025-05-26 12:36:56', '2025-05-26 12:36:56');
 
 -- --------------------------------------------------------
 
@@ -570,7 +581,6 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (1331, 9, 298, 'post', '2025-05-21 21:37:44', '2025-05-21 21:37:44'),
 (1333, 9, 273, 'reply', '2025-05-21 21:53:56', '2025-05-21 21:53:56'),
 (1334, 9, 284, 'reply', '2025-05-21 22:22:15', '2025-05-21 22:22:15'),
-(1335, 9, 274, 'post', '2025-05-21 22:32:30', '2025-05-21 22:32:30'),
 (1336, 9, 295, 'post', '2025-05-21 22:37:11', '2025-05-21 22:37:11'),
 (1337, 9, 244, 'comment', '2025-05-21 22:44:58', '2025-05-21 22:44:58'),
 (1339, 15, 320, 'reply', '2025-05-22 12:17:36', '2025-05-22 12:17:36'),
@@ -697,7 +707,6 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (1700, 21, 317, 'reply', '2025-05-22 18:48:18', '2025-05-22 18:48:18'),
 (1701, 21, 369, 'reply', '2025-05-22 18:53:41', '2025-05-22 18:53:41'),
 (1702, 9, 301, 'post', '2025-05-23 10:25:45', '2025-05-23 10:25:45'),
-(1703, 9, 277, 'comment', '2025-05-23 10:25:55', '2025-05-23 10:25:55'),
 (1704, 9, 394, 'reply', '2025-05-23 10:26:01', '2025-05-23 10:26:01'),
 (1705, 9, 397, 'reply', '2025-05-23 10:26:47', '2025-05-23 10:26:47'),
 (1710, 9, 398, 'reply', '2025-05-23 10:26:54', '2025-05-23 10:26:54'),
@@ -734,7 +743,6 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (1766, 22, 292, 'post', '2025-05-23 17:35:32', '2025-05-23 17:35:32'),
 (1767, 22, 293, 'post', '2025-05-23 17:35:34', '2025-05-23 17:35:34'),
 (1768, 22, 291, 'post', '2025-05-23 17:35:36', '2025-05-23 17:35:36'),
-(1769, 16, 317, 'post', '2025-05-23 17:50:39', '2025-05-23 17:50:39'),
 (1770, 15, 317, 'post', '2025-05-23 17:51:04', '2025-05-23 17:51:04'),
 (1771, 22, 428, 'reply', '2025-05-23 18:04:35', '2025-05-23 18:04:35'),
 (1772, 15, 315, 'post', '2025-05-23 18:18:45', '2025-05-23 18:18:45'),
@@ -749,7 +757,6 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (1796, 22, 391, 'reply', '2025-05-23 18:32:16', '2025-05-23 18:32:16'),
 (1798, 22, 357, 'reply', '2025-05-23 18:34:34', '2025-05-23 18:34:34'),
 (1799, 22, 359, 'reply', '2025-05-23 18:34:36', '2025-05-23 18:34:36'),
-(1809, 16, 286, 'comment', '2025-05-23 18:37:20', '2025-05-23 18:37:20'),
 (1810, 16, 240, 'post', '2025-05-23 18:37:24', '2025-05-23 18:37:24'),
 (1816, 9, 321, 'post', '2025-05-23 19:01:06', '2025-05-23 19:01:06'),
 (1817, 9, 288, 'comment', '2025-05-23 19:01:53', '2025-05-23 19:01:53'),
@@ -757,7 +764,25 @@ INSERT INTO `twitter_likes` (`id`, `user_id`, `liked_id`, `likeable_type`, `crea
 (1819, 9, 431, 'reply', '2025-05-23 19:08:41', '2025-05-23 19:08:41'),
 (1820, 9, 433, 'reply', '2025-05-23 19:08:42', '2025-05-23 19:08:42'),
 (1821, 9, 449, 'reply', '2025-05-26 07:44:57', '2025-05-26 07:44:57'),
-(1822, 9, 305, 'comment', '2025-05-26 07:45:02', '2025-05-26 07:45:02');
+(1822, 9, 305, 'comment', '2025-05-26 07:45:02', '2025-05-26 07:45:02'),
+(1824, 9, 277, 'post', '2025-05-26 15:09:54', '2025-05-26 15:09:54'),
+(1825, 9, 274, 'post', '2025-05-26 15:09:56', '2025-05-26 15:09:56'),
+(1826, 9, 429, 'reply', '2025-05-26 15:38:50', '2025-05-26 15:38:50'),
+(1833, 16, 317, 'post', '2025-05-26 16:20:57', '2025-05-26 16:20:57'),
+(1834, 22, 240, 'post', '2025-05-26 16:22:46', '2025-05-26 16:22:46'),
+(1838, 21, 240, 'post', '2025-05-26 17:18:08', '2025-05-26 17:18:08'),
+(1839, 21, 355, 'post', '2025-05-26 18:10:49', '2025-05-26 18:10:49'),
+(1840, 16, 355, 'post', '2025-05-26 18:11:17', '2025-05-26 18:11:17'),
+(1842, 21, 299, 'post', '2025-05-26 18:13:03', '2025-05-26 18:13:03'),
+(1843, 16, 356, 'post', '2025-05-26 18:14:10', '2025-05-26 18:14:10'),
+(1844, 21, 356, 'post', '2025-05-26 18:14:13', '2025-05-26 18:14:13'),
+(1846, 16, 286, 'post', '2025-05-26 18:17:19', '2025-05-26 18:17:19'),
+(1847, 16, 55, 'reply', '2025-05-26 18:17:37', '2025-05-26 18:17:37'),
+(1848, 21, 357, 'post', '2025-05-26 18:17:58', '2025-05-26 18:17:58'),
+(1851, 16, 321, 'comment', '2025-05-26 18:50:55', '2025-05-26 18:50:55'),
+(1852, 20, 299, 'post', '2025-05-26 19:19:09', '2025-05-26 19:19:09'),
+(1853, 20, 290, 'post', '2025-05-26 19:19:17', '2025-05-26 19:19:17'),
+(1854, 20, 231, 'post', '2025-05-26 19:19:21', '2025-05-26 19:19:21');
 
 -- --------------------------------------------------------
 
@@ -833,23 +858,23 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (200, 16, 14, NULL, 'follow', '@vishal started to following you.', 1, NULL, '2025-05-19 09:49:05', '2025-05-21 10:01:56'),
 (201, 9, 14, NULL, 'follow', '@vishal started to following you.', 1, NULL, '2025-05-19 09:51:48', '2025-05-21 08:38:05'),
 (226, 17, 9, 277, 'comment', '@ravi commented on your post.', 1, 'dfvdfv', '2025-05-19 10:48:28', '2025-05-22 14:55:07'),
-(349, 20, 9, 256, 'like', '@ravi liked your post.', 0, NULL, '2025-05-19 11:53:45', '2025-05-19 11:53:45'),
+(349, 20, 9, 256, 'like', '@ravi liked your post.', 1, NULL, '2025-05-19 11:53:45', '2025-05-26 19:14:09'),
 (350, 9, 15, 285, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:54:14', '2025-05-21 08:38:05'),
 (351, 9, 15, 278, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:54:15', '2025-05-21 08:38:05'),
 (352, 9, 15, 261, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:54:16', '2025-05-21 08:38:05'),
 (353, 9, 15, 225, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:54:18', '2025-05-21 08:38:05'),
-(355, 20, 15, 258, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:00', '2025-05-19 11:55:00'),
-(356, 20, 15, 257, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:04', '2025-05-19 11:55:04'),
-(357, 20, 15, 256, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:16', '2025-05-19 11:55:16'),
-(358, 20, 15, 255, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:18', '2025-05-19 11:55:18'),
-(359, 20, 15, 254, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:21', '2025-05-19 11:55:21'),
-(360, 20, 15, 253, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:30', '2025-05-19 11:55:30'),
-(361, 20, 15, 221, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:31', '2025-05-19 11:55:31'),
-(362, 20, 15, 220, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:32', '2025-05-19 11:55:32'),
-(363, 20, 15, 219, 'like', '@kamlesh liked your post.', 0, NULL, '2025-05-19 11:55:33', '2025-05-19 11:55:33'),
-(364, 20, 9, 219, 'comment', '@ravi commented on your post.', 0, 'YJTY', '2025-05-19 11:55:46', '2025-05-19 11:55:46'),
-(365, 20, 9, 219, 'comment', '@ravi commented on your post.', 0, 'DRTUDRTUDJH', '2025-05-19 11:55:52', '2025-05-19 11:55:52'),
-(366, 20, 9, 258, 'comment', '@ravi commented on your post.', 0, 'DTFHDFTJHT', '2025-05-19 11:56:07', '2025-05-19 11:56:07'),
+(355, 20, 15, 258, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:00', '2025-05-26 19:14:09'),
+(356, 20, 15, 257, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:04', '2025-05-26 19:14:09'),
+(357, 20, 15, 256, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:16', '2025-05-26 19:14:09'),
+(358, 20, 15, 255, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:18', '2025-05-26 19:14:09'),
+(359, 20, 15, 254, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:21', '2025-05-26 19:14:09'),
+(360, 20, 15, 253, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:30', '2025-05-26 19:14:09'),
+(361, 20, 15, 221, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:31', '2025-05-26 19:14:09'),
+(362, 20, 15, 220, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:32', '2025-05-26 19:14:09'),
+(363, 20, 15, 219, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-19 11:55:33', '2025-05-26 19:14:09'),
+(364, 20, 9, 219, 'comment', '@ravi commented on your post.', 1, 'YJTY', '2025-05-19 11:55:46', '2025-05-26 19:14:09'),
+(365, 20, 9, 219, 'comment', '@ravi commented on your post.', 1, 'DRTUDRTUDJH', '2025-05-19 11:55:52', '2025-05-26 19:14:09'),
+(366, 20, 9, 258, 'comment', '@ravi commented on your post.', 1, 'DTFHDFTJHT', '2025-05-19 11:56:07', '2025-05-26 19:14:09'),
 (367, 9, 15, 286, 'comment', '@kamlesh commented on your post.', 1, 'rfr', '2025-05-19 12:35:42', '2025-05-21 08:38:05'),
 (377, 14, 9, 235, 'comment', '@ravi commented on your post.', 1, 'dddd', '2025-05-19 15:01:06', '2025-05-21 18:28:21'),
 (381, 21, 9, 259, 'like', '@ravi liked your post.', 1, NULL, '2025-05-19 15:39:20', '2025-05-21 14:38:29'),
@@ -860,7 +885,6 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (431, 9, 14, 136, 'like', '@vishal liked your comment.', 1, NULL, '2025-05-19 17:57:48', '2025-05-21 08:38:05'),
 (432, 9, 14, 135, 'like', '@vishal liked your comment.', 1, NULL, '2025-05-19 17:57:58', '2025-05-21 08:38:05'),
 (433, 9, 14, 134, 'like', '@vishal liked your comment.', 1, NULL, '2025-05-19 17:57:59', '2025-05-21 08:38:05'),
-(436, 9, 16, 286, 'like', '@vikram liked your post.', 1, NULL, '2025-05-19 17:58:20', '2025-05-21 08:38:05'),
 (437, 9, 16, 138, 'like', '@vikram liked your comment.', 1, NULL, '2025-05-19 17:58:21', '2025-05-21 08:38:05'),
 (438, 14, 16, 137, 'like', '@vikram liked your comment.', 1, NULL, '2025-05-19 17:58:22', '2025-05-21 18:28:21'),
 (439, 9, 16, 136, 'like', '@vikram liked your comment.', 1, NULL, '2025-05-19 17:58:23', '2025-05-21 08:38:05'),
@@ -922,13 +946,13 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (549, 9, 16, 47, 'like', '@vikram liked your comment.', 1, NULL, '2025-05-21 10:12:09', '2025-05-21 10:12:20'),
 (551, 9, 16, 289, 'like', '@vikram liked your post.', 1, NULL, '2025-05-21 10:16:42', '2025-05-21 10:16:55'),
 (552, 15, 9, 124, 'like', '@ravi liked your comment.', 1, NULL, '2025-05-21 10:19:37', '2025-05-21 13:39:54'),
-(553, 20, 9, 258, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 11:19:07', '2025-05-21 11:19:07'),
-(555, 20, 9, 254, 'comment', '@ravi commented on your post.', 0, 'sdc', '2025-05-21 11:19:15', '2025-05-21 11:19:15'),
-(556, 20, 9, 254, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 11:19:16', '2025-05-21 11:19:16'),
-(557, 20, 9, 254, 'comment', '@ravi commented on your post.', 0, 'sc', '2025-05-21 11:19:20', '2025-05-21 11:19:20'),
-(558, 20, 9, 220, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 11:19:23', '2025-05-21 11:19:23'),
-(559, 20, 9, 221, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 11:19:24', '2025-05-21 11:19:24'),
-(560, 20, 9, 253, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 11:19:25', '2025-05-21 11:19:25'),
+(553, 20, 9, 258, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 11:19:07', '2025-05-26 19:14:09'),
+(555, 20, 9, 254, 'comment', '@ravi commented on your post.', 1, 'sdc', '2025-05-21 11:19:15', '2025-05-26 19:14:09'),
+(556, 20, 9, 254, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 11:19:16', '2025-05-26 19:14:09'),
+(557, 20, 9, 254, 'comment', '@ravi commented on your post.', 1, 'sc', '2025-05-21 11:19:20', '2025-05-26 19:14:09'),
+(558, 20, 9, 220, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 11:19:23', '2025-05-26 19:14:09'),
+(559, 20, 9, 221, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 11:19:24', '2025-05-26 19:14:09'),
+(560, 20, 9, 253, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 11:19:25', '2025-05-26 19:14:09'),
 (566, 15, 9, 290, 'comment', '@ravi commented on your post.', 1, 'dscdc', '2025-05-21 11:48:20', '2025-05-21 13:39:54'),
 (568, 15, 9, 290, 'comment', '@ravi commented on your post.', 1, 'qwdd', '2025-05-21 11:48:25', '2025-05-21 13:39:54'),
 (569, 15, 9, 290, 'comment', '@ravi commented on your post.', 1, 'sdcdc', '2025-05-21 11:48:30', '2025-05-21 13:39:54'),
@@ -991,7 +1015,7 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (681, 9, 16, 0, '', '@vikram replied to your comment.', 1, 'sdcsdc', '2025-05-21 14:29:10', '2025-05-21 14:38:37'),
 (682, 9, 16, 0, '', '@vikram replied to your comment.', 1, 'sddcsdcsdc', '2025-05-21 14:29:14', '2025-05-21 14:38:37'),
 (684, 16, 9, 188, 'like', '@ravi liked your reply.', 1, NULL, '2025-05-21 14:30:34', '2025-05-21 14:30:35'),
-(688, 20, 21, 257, 'like', '@suresh liked your post.', 0, NULL, '2025-05-21 14:38:41', '2025-05-21 14:38:41'),
+(688, 20, 21, 257, 'like', '@suresh liked your post.', 1, NULL, '2025-05-21 14:38:41', '2025-05-26 19:14:09'),
 (689, 17, 21, 72, 'like', '@suresh liked your comment.', 1, NULL, '2025-05-21 14:38:53', '2025-05-22 14:55:07'),
 (691, 9, 21, 289, 'like', '@suresh liked your post.', 1, NULL, '2025-05-21 14:39:19', '2025-05-21 14:43:36'),
 (695, 9, 21, 294, 'like', '@suresh liked your post.', 1, NULL, '2025-05-21 14:41:36', '2025-05-21 14:43:36'),
@@ -1036,8 +1060,8 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (759, 9, 15, 224, 'like', '@kamlesh liked your comment.', 1, NULL, '2025-05-21 16:52:47', '2025-05-21 17:00:22'),
 (760, 21, 15, 296, 'comment', '@kamlesh commented on your post.', 1, 'fbfgbgbb', '2025-05-21 16:52:50', '2025-05-21 19:09:11'),
 (761, 9, 15, 293, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-21 16:53:19', '2025-05-21 17:00:22'),
-(762, 20, 9, 255, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 16:55:17', '2025-05-21 16:55:17'),
-(763, 20, 9, 255, 'comment', '@ravi commented on your post.', 0, 'sdsdc', '2025-05-21 16:55:21', '2025-05-21 16:55:21'),
+(762, 20, 9, 255, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 16:55:17', '2025-05-26 19:14:09'),
+(763, 20, 9, 255, 'comment', '@ravi commented on your post.', 1, 'sdsdc', '2025-05-21 16:55:21', '2025-05-26 19:14:09'),
 (764, 15, 9, 225, 'like', '@ravi liked your comment.', 1, NULL, '2025-05-21 17:00:09', '2025-05-21 17:15:18'),
 (765, 15, 9, 0, '', '@ravi replied to your comment.', 1, 'vvf', '2025-05-21 17:00:12', '2025-05-21 17:15:18'),
 (766, 15, 9, 0, '', '@ravi replied to your comment.', 1, 'fvvffv', '2025-05-21 17:00:16', '2025-05-21 17:15:18'),
@@ -1070,8 +1094,8 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (823, 16, 9, 203, 'like', '@ravi liked your comment.', 1, NULL, '2025-05-21 17:54:47', '2025-05-21 19:28:34'),
 (825, 21, 9, 203, 'like', '@ravi liked your reply.', 1, NULL, '2025-05-21 17:54:56', '2025-05-21 19:09:11'),
 (827, 9, 15, 168, 'like', '@kamlesh liked your reply.', 1, NULL, '2025-05-21 18:18:19', '2025-05-21 18:18:22'),
-(829, 20, 9, 257, 'like', '@ravi liked your post.', 0, NULL, '2025-05-21 18:24:25', '2025-05-21 18:24:25'),
-(830, 20, 9, 257, 'comment', '@ravi commented on your post.', 0, 'sdcdc', '2025-05-21 18:24:30', '2025-05-21 18:24:30'),
+(829, 20, 9, 257, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 18:24:25', '2025-05-26 19:14:09'),
+(830, 20, 9, 257, 'comment', '@ravi commented on your post.', 1, 'sdcdc', '2025-05-21 18:24:30', '2025-05-26 19:14:09'),
 (831, 9, 14, 298, 'like', '@vishal liked your post.', 1, NULL, '2025-05-21 18:27:45', '2025-05-21 22:35:06'),
 (832, 21, 14, 296, 'like', '@vishal liked your post.', 1, NULL, '2025-05-21 18:27:46', '2025-05-21 19:09:11'),
 (833, 9, 14, 236, 'like', '@vishal liked your comment.', 1, NULL, '2025-05-21 18:28:38', '2025-05-21 22:35:06'),
@@ -1113,7 +1137,6 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (914, 21, 14, 259, 'comment', '@vishal commented on your post.', 1, 'sdcsdc', '2025-05-21 19:23:22', '2025-05-21 19:23:33'),
 (916, 21, 14, 85, 'like', '@vishal liked your comment.', 1, NULL, '2025-05-21 19:24:02', '2025-05-21 19:24:05'),
 (921, 14, 16, 240, 'like', '@vikram liked your comment.', 1, NULL, '2025-05-21 19:28:01', '2025-05-22 15:52:52'),
-(926, 16, 9, 274, 'like', '@ravi liked your post.', 1, NULL, '2025-05-21 22:32:30', '2025-05-23 11:42:17'),
 (927, 14, 15, 0, '', '@kamlesh replied to your comment.', 1, 'sdc', '2025-05-22 12:03:24', '2025-05-22 15:52:52'),
 (928, 14, 15, NULL, '', '@kamlesh replied to your comment.', 1, 'sdc', '2025-05-22 12:03:27', '2025-05-22 15:52:52'),
 (929, 14, 15, NULL, '', '@kamlesh replied to your comment.', 1, 'sdcsdc', '2025-05-22 12:03:31', '2025-05-22 15:52:52'),
@@ -1128,14 +1151,14 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (938, 9, 15, 292, 'comment', '@kamlesh commented on your post.', 1, 'sdcsc', '2025-05-22 12:17:20', '2025-05-23 10:27:08'),
 (939, 14, 15, 235, 'comment', '@kamlesh commented on your post.', 1, 'asxax', '2025-05-22 12:18:20', '2025-05-22 15:52:52'),
 (940, 14, 15, 235, 'comment', '@kamlesh commented on your post.', 1, 'sdcsc', '2025-05-22 12:18:37', '2025-05-22 15:52:52'),
-(941, 20, 15, 258, 'comment', '@kamlesh commented on your post.', 0, 'sc', '2025-05-22 12:18:43', '2025-05-22 12:18:43'),
-(942, 20, 15, 258, 'comment', '@kamlesh commented on your post.', 0, 'sdvsv', '2025-05-22 12:18:48', '2025-05-22 12:18:48'),
+(941, 20, 15, 258, 'comment', '@kamlesh commented on your post.', 1, 'sc', '2025-05-22 12:18:43', '2025-05-26 19:14:09'),
+(942, 20, 15, 258, 'comment', '@kamlesh commented on your post.', 1, 'sdvsv', '2025-05-22 12:18:48', '2025-05-26 19:14:09'),
 (1003, 9, 15, 298, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-22 14:06:34', '2025-05-23 10:27:08'),
 (1004, 21, 15, 216, 'like', '@kamlesh liked your comment.', 1, NULL, '2025-05-22 14:08:39', '2025-05-22 18:21:15'),
 (1005, 9, 15, 227, 'like', '@kamlesh liked your reply.', 1, NULL, '2025-05-22 14:08:41', '2025-05-23 10:27:08'),
 (1007, 21, 15, NULL, '', '@kamlesh replied to your comment.', 1, 'sd', '2025-05-22 14:08:53', '2025-05-22 18:21:15'),
 (1011, 9, 15, 226, 'like', '@kamlesh liked your reply.', 1, NULL, '2025-05-22 14:10:08', '2025-05-23 10:27:08'),
-(1018, 20, 15, 258, 'comment', '@kamlesh commented on your post.', 0, 'dfgdg', '2025-05-22 14:22:51', '2025-05-22 14:22:51'),
+(1018, 20, 15, 258, 'comment', '@kamlesh commented on your post.', 1, 'dfgdg', '2025-05-22 14:22:51', '2025-05-26 19:14:09'),
 (1026, 19, 15, NULL, 'follow', '@kamlesh started to following you.', 1, NULL, '2025-05-22 14:47:25', '2025-05-22 17:40:51'),
 (1029, 17, 15, NULL, 'follow', '@kamlesh started to following you.', 1, NULL, '2025-05-22 14:47:38', '2025-05-22 14:55:07'),
 (1032, 15, 17, 335, 'like', '@jagdish liked your reply.', 1, NULL, '2025-05-22 14:58:44', '2025-05-23 18:11:04'),
@@ -1217,10 +1240,10 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (1141, 15, 19, NULL, '', '@kishanlal replied to your comment.', 1, 'dfg', '2025-05-22 18:55:27', '2025-05-23 18:11:04'),
 (1142, 17, 9, 301, 'comment', '@ravi commented on your post.', 0, 'dfvdfv', '2025-05-23 10:25:40', '2025-05-23 10:25:40'),
 (1143, 17, 9, 301, 'comment', '@ravi commented on your post.', 0, 'dfvdfv', '2025-05-23 10:25:42', '2025-05-23 10:25:42'),
-(1144, 17, 9, 301, 'comment', '@ravi commented on your post.', 0, 'dfv', '2025-05-23 10:25:44', '2025-05-23 10:25:44');
-INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`, `type`, `message`, `is_read`, `comment_content`, `created_at`, `updated_at`) VALUES
+(1144, 17, 9, 301, 'comment', '@ravi commented on your post.', 0, 'dfv', '2025-05-23 10:25:44', '2025-05-23 10:25:44'),
 (1145, 17, 9, 301, 'like', '@ravi liked your post.', 0, NULL, '2025-05-23 10:25:45', '2025-05-23 10:25:45'),
-(1146, 17, 9, 301, 'comment', '@ravi commented on your post.', 0, 'dfvdfv', '2025-05-23 10:25:48', '2025-05-23 10:25:48'),
+(1146, 17, 9, 301, 'comment', '@ravi commented on your post.', 0, 'dfvdfv', '2025-05-23 10:25:48', '2025-05-23 10:25:48');
+INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`, `type`, `message`, `is_read`, `comment_content`, `created_at`, `updated_at`) VALUES
 (1149, 15, 9, 299, 'like', '@ravi liked your post.', 1, NULL, '2025-05-23 10:31:16', '2025-05-23 18:11:04'),
 (1151, 17, 9, 302, 'like', '@ravi liked your post.', 0, NULL, '2025-05-23 10:34:23', '2025-05-23 10:34:23'),
 (1152, 17, 9, 302, 'comment', '@ravi commented on your post.', 0, 'asx', '2025-05-23 10:34:25', '2025-05-23 10:34:25'),
@@ -1251,8 +1274,6 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (1199, 9, 22, 291, 'like', '@audiofficial liked your post.', 1, NULL, '2025-05-23 17:35:36', '2025-05-23 18:43:02'),
 (1202, 14, 22, NULL, 'follow', '@audiofficial started to following you.', 0, NULL, '2025-05-23 17:38:21', '2025-05-23 17:38:21'),
 (1203, 22, 16, NULL, 'follow', '@vikram started to following you.', 1, NULL, '2025-05-23 17:45:07', '2025-05-23 17:45:09'),
-(1204, 9, 22, NULL, 'follow', '@audiofficial started to following you.', 1, NULL, '2025-05-23 17:45:28', '2025-05-23 18:43:02'),
-(1206, 22, 16, 317, 'like', '@vikram liked your post.', 1, NULL, '2025-05-23 17:50:39', '2025-05-23 17:50:43'),
 (1207, 22, 15, 317, 'like', '@kamlesh liked your post.', 1, NULL, '2025-05-23 17:51:04', '2025-05-23 17:52:57'),
 (1208, 22, 15, NULL, 'follow', '@kamlesh started to following you.', 1, NULL, '2025-05-23 17:51:27', '2025-05-23 17:52:57'),
 (1209, 9, 22, 428, 'like', '@audiofficial liked your reply.', 1, NULL, '2025-05-23 18:04:35', '2025-05-23 18:43:02'),
@@ -1262,22 +1283,60 @@ INSERT INTO `twitter_notifications` (`id`, `user_id`, `from_user_id`, `post_id`,
 (1214, 15, 22, 290, 'like', '@audiofficial liked your post.', 1, NULL, '2025-05-23 18:26:55', '2025-05-23 18:27:11'),
 (1216, 22, 16, 317, 'comment', '@vikram commented on your post.', 1, 'Amazing...!', '2025-05-23 18:27:54', '2025-05-23 18:27:59'),
 (1217, 16, 22, 285, 'like', '@audiofficial liked your comment.', 1, NULL, '2025-05-23 18:28:04', '2025-05-23 18:28:08'),
-(1218, 15, 22, 284, 'like', '@audiofficial liked your comment.', 0, NULL, '2025-05-23 18:28:05', '2025-05-23 18:28:05'),
-(1219, 15, 16, 317, '', '@vikram replied to your comment.', 0, 'True', '2025-05-23 18:30:32', '2025-05-23 18:30:32'),
-(1221, 15, 16, 284, 'like', '@vikram liked your comment.', 0, NULL, '2025-05-23 18:31:32', '2025-05-23 18:31:32'),
-(1226, 15, 22, 299, 'like', '@audiofficial liked your post.', 0, NULL, '2025-05-23 18:31:51', '2025-05-23 18:31:51'),
+(1218, 15, 22, 284, 'like', '@audiofficial liked your comment.', 1, NULL, '2025-05-23 18:28:05', '2025-05-26 19:15:06'),
+(1219, 15, 16, 317, '', '@vikram replied to your comment.', 1, 'True', '2025-05-23 18:30:32', '2025-05-26 19:15:06'),
+(1221, 15, 16, 284, 'like', '@vikram liked your comment.', 1, NULL, '2025-05-23 18:31:32', '2025-05-26 19:15:06'),
+(1226, 15, 22, 299, 'like', '@audiofficial liked your post.', 1, NULL, '2025-05-23 18:31:51', '2025-05-26 19:15:06'),
 (1233, 14, 22, 384, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:32:09', '2025-05-23 18:32:09'),
 (1235, 19, 22, 391, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:32:16', '2025-05-23 18:32:16'),
-(1237, 15, 22, 357, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:34:34', '2025-05-23 18:34:34'),
-(1238, 15, 22, 359, 'like', '@audiofficial liked your reply.', 0, NULL, '2025-05-23 18:34:36', '2025-05-23 18:34:36'),
-(1245, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'csdvv', '2025-05-26 07:17:05', '2025-05-26 08:21:54'),
-(1246, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'wsxsxsx', '2025-05-26 07:21:28', '2025-05-26 08:21:54'),
-(1247, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'scsdcdc', '2025-05-26 07:40:49', '2025-05-26 08:21:54'),
-(1248, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'sddcsdcsc', '2025-05-26 07:51:16', '2025-05-26 08:21:54'),
-(1249, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'sdscsdcsdcsdc', '2025-05-26 08:01:10', '2025-05-26 08:21:54'),
-(1250, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'aaaaaaaaaaaaaa', '2025-05-26 08:04:28', '2025-05-26 08:21:54'),
-(1251, 22, 9, 317, 'comment', '@ravi commented on your post.', 1, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '2025-05-26 08:08:34', '2025-05-26 08:21:54'),
-(1252, 22, 9, 317, 'comment', '@ravi commented on your post.', 0, 'dcsddcsdc', '2025-05-26 08:29:52', '2025-05-26 08:29:52');
+(1237, 15, 22, 357, 'like', '@audiofficial liked your reply.', 1, NULL, '2025-05-23 18:34:34', '2025-05-26 19:15:06'),
+(1238, 15, 22, 359, 'like', '@audiofficial liked your reply.', 1, NULL, '2025-05-23 18:34:36', '2025-05-26 19:15:06'),
+(1254, 16, 9, 0, '', '@ravi replied to your comment.', 1, 'sdc', '2025-05-26 14:13:56', '2025-05-26 15:43:49'),
+(1255, 19, 9, 250, 'comment', '@ravi commented on your post.', 0, 'sd', '2025-05-26 14:28:56', '2025-05-26 14:28:56'),
+(1256, 19, 9, 250, 'comment', '@ravi commented on your post.', 0, 'sdfsd', '2025-05-26 14:29:01', '2025-05-26 14:29:01'),
+(1257, 19, 9, 250, 'comment', '@ravi commented on your post.', 0, 'sdc', '2025-05-26 14:30:12', '2025-05-26 14:30:12'),
+(1258, 19, 9, 250, 'comment', '@ravi commented on your post.', 0, 'sd', '2025-05-26 14:30:18', '2025-05-26 14:30:18'),
+(1259, 16, 9, 310, '', '@ravi replied to your comment.', 1, 'sdf', '2025-05-26 14:32:12', '2025-05-26 15:43:49'),
+(1260, 16, 9, NULL, '', '@ravi replied to your comment.', 1, 'sdcsdc', '2025-05-26 14:32:32', '2025-05-26 15:43:49'),
+(1261, 16, 9, 0, '', '@ravi replied to your comment.', 1, 'sdsc', '2025-05-26 14:32:40', '2025-05-26 15:43:49'),
+(1262, 16, 9, NULL, '', '@ravi replied to your comment.', 1, 'sdc', '2025-05-26 14:32:43', '2025-05-26 15:43:49'),
+(1263, 15, 9, 0, '', '@ravi replied to your comment.', 1, 'dfv', '2025-05-26 14:33:12', '2025-05-26 19:15:06'),
+(1269, 17, 9, 277, 'like', '@ravi liked your post.', 0, NULL, '2025-05-26 15:09:54', '2025-05-26 15:09:54'),
+(1270, 16, 9, 274, 'like', '@ravi liked your post.', 1, NULL, '2025-05-26 15:09:56', '2025-05-26 15:43:49'),
+(1284, 14, 9, NULL, 'follow', '@ravi started to following you.', 0, NULL, '2025-05-26 15:35:43', '2025-05-26 15:35:43'),
+(1287, 16, 9, NULL, 'follow', '@ravi started to following you.', 1, NULL, '2025-05-26 15:35:47', '2025-05-26 15:43:49'),
+(1288, 15, 9, NULL, '', '@ravi replied to your comment.', 1, 'dfv', '2025-05-26 15:38:14', '2025-05-26 19:15:06'),
+(1289, 15, 9, NULL, '', '@ravi replied to your comment.', 1, 'dsc', '2025-05-26 15:38:37', '2025-05-26 19:15:06'),
+(1290, 15, 9, NULL, '', '@ravi replied to your comment.', 1, 'sdc', '2025-05-26 15:38:42', '2025-05-26 19:15:06'),
+(1291, 15, 9, NULL, '', '@ravi replied to your comment.', 1, 'dc', '2025-05-26 15:38:43', '2025-05-26 19:15:06'),
+(1292, 16, 9, 429, 'like', '@ravi liked your reply.', 1, NULL, '2025-05-26 15:38:50', '2025-05-26 15:43:49'),
+(1294, 19, 22, NULL, 'follow', '@audiofficial started to following you.', 0, NULL, '2025-05-26 15:39:08', '2025-05-26 15:39:08'),
+(1295, 9, 22, NULL, 'follow', '@audiofficial started to following you.', 1, NULL, '2025-05-26 15:43:08', '2025-05-26 19:30:42'),
+(1298, 22, 16, 317, 'like', '@vikram liked your post.', 1, NULL, '2025-05-26 16:20:57', '2025-05-26 16:20:59'),
+(1299, 16, 22, 240, 'like', '@audiofficial liked your post.', 1, NULL, '2025-05-26 16:22:46', '2025-05-26 16:22:49'),
+(1302, 9, 16, NULL, 'follow', '@vikram started to following you.', 1, NULL, '2025-05-26 16:25:55', '2025-05-26 19:30:42'),
+(1303, 19, 16, NULL, 'follow', '@vikram started to following you.', 0, NULL, '2025-05-26 16:25:57', '2025-05-26 16:25:57'),
+(1309, 19, 21, NULL, 'follow', '@suresh started to following you.', 0, NULL, '2025-05-26 17:16:25', '2025-05-26 17:16:25'),
+(1310, 15, 21, NULL, 'follow', '@suresh started to following you.', 1, NULL, '2025-05-26 17:16:28', '2025-05-26 19:15:06'),
+(1311, 17, 21, NULL, 'follow', '@suresh started to following you.', 0, NULL, '2025-05-26 17:16:38', '2025-05-26 17:16:38'),
+(1312, 14, 21, NULL, 'follow', '@suresh started to following you.', 0, NULL, '2025-05-26 17:16:38', '2025-05-26 17:16:38'),
+(1317, 16, 21, 240, 'like', '@suresh liked your post.', 1, NULL, '2025-05-26 17:18:08', '2025-05-26 17:18:10'),
+(1318, 14, 16, 235, 'comment', '@vikram commented on your post.', 0, 'ds', '2025-05-26 17:22:42', '2025-05-26 17:22:42'),
+(1319, 14, 16, 235, 'comment', '@vikram commented on your post.', 0, 'sd', '2025-05-26 17:22:46', '2025-05-26 17:22:46'),
+(1320, 16, 21, 240, 'comment', '@suresh commented on your post.', 1, 'Nice', '2025-05-26 18:03:53', '2025-05-26 18:03:56'),
+(1321, 16, 21, NULL, 'follow', '@suresh started to following you.', 1, NULL, '2025-05-26 18:06:56', '2025-05-26 18:08:16'),
+(1322, 21, 16, 355, 'like', '@vikram liked your post.', 1, NULL, '2025-05-26 18:11:17', '2025-05-26 18:11:21'),
+(1324, 15, 21, 299, 'like', '@suresh liked your post.', 1, NULL, '2025-05-26 18:13:03', '2025-05-26 19:15:06'),
+(1325, 16, 21, 356, 'like', '@suresh liked your post.', 1, NULL, '2025-05-26 18:14:13', '2025-05-26 18:14:14'),
+(1327, 9, 16, 286, 'like', '@vikram liked your post.', 1, NULL, '2025-05-26 18:17:19', '2025-05-26 19:30:42'),
+(1328, 9, 16, 55, 'like', '@vikram liked your reply.', 1, NULL, '2025-05-26 18:17:37', '2025-05-26 19:30:42'),
+(1329, 16, 21, 357, 'like', '@suresh liked your post.', 1, NULL, '2025-05-26 18:17:58', '2025-05-26 18:18:43'),
+(1330, 16, 21, 356, 'comment', '@suresh commented on your post.', 1, 'What is this?', '2025-05-26 18:24:12', '2025-05-26 18:24:19'),
+(1334, 21, 16, 321, 'like', '@vikram liked your comment.', 0, NULL, '2025-05-26 18:50:55', '2025-05-26 18:50:55'),
+(1335, 22, 20, 317, 'comment', '@ravimali commented on your post.', 0, 'dc', '2025-05-26 19:14:35', '2025-05-26 19:14:35'),
+(1336, 15, 20, 299, 'like', '@ravimali liked your post.', 1, NULL, '2025-05-26 19:19:09', '2025-05-26 19:19:11'),
+(1337, 15, 20, 290, 'like', '@ravimali liked your post.', 1, NULL, '2025-05-26 19:19:17', '2025-05-26 19:19:18'),
+(1338, 15, 20, 231, 'like', '@ravimali liked your post.', 1, NULL, '2025-05-26 19:19:21', '2025-05-26 19:19:22');
 
 -- --------------------------------------------------------
 
@@ -1370,7 +1429,9 @@ INSERT INTO `twitter_posts` (`id`, `user_id`, `content`, `media`, `created_at`, 
 (301, 17, 'dc', NULL, '2025-05-22 12:08:10', '2025-05-22 12:08:10'),
 (302, 17, 'sdc', NULL, '2025-05-22 12:08:12', '2025-05-22 12:08:12'),
 (310, 9, 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, maiores fuga? Quod quas quisquam possimus repudiandae excepturi laborum, sapiente eligendi.', NULL, '2025-05-23 08:51:43', '2025-05-23 08:51:43'),
-(317, 22, 'The Audi RSQ8 Performance SUV was launched in India in March 2025, starting at a price or Rs 2.49 crore (ex-showroom). It is available as one fully loaded model in 8 standard and 9 exclusive colour options.', 'audi_rsq81747999470.jpg', '2025-05-23 11:24:30', '2025-05-23 11:24:30');
+(317, 22, 'The Audi RSQ8 Performance SUV was launched in India in March 2025, starting at a price or Rs 2.49 crore (ex-showroom). It is available as one fully loaded model in 8 standard and 9 exclusive colour options.', 'audi_rsq81747999470.jpg', '2025-05-23 11:24:30', '2025-05-23 11:24:30'),
+(355, 21, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nemo blanditiis laudantium doloribus eum     quam eos rerum iure exercitationem dolore, vitae praesentium omnis incidunt harum corporis accusantium aliquid     nostrum! Ducimus distinctio,', NULL, '2025-05-26 12:40:46', '2025-05-26 12:40:46'),
+(356, 16, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nemo blanditiis laudantium doloribus eum     quam eos rerum iure exercitationem dolore, vitae praesentium omnis incidunt harum corporis accusantium aliquid     nostrum! Ducimus distinctio,', NULL, '2025-05-26 12:44:08', '2025-05-26 12:44:08');
 
 -- --------------------------------------------------------
 
@@ -1665,7 +1726,9 @@ INSERT INTO `twitter_replies` (`id`, `user_id`, `post_id`, `comment_id`, `reply`
 (426, 9, 0, 280, 'sd', 423, '2025-05-23 10:35:09', '2025-05-23 10:35:09'),
 (427, 9, 0, 280, 'vfg', 426, '2025-05-23 11:39:18', '2025-05-23 11:39:18'),
 (428, 9, 0, 280, 'fgg', 427, '2025-05-23 11:41:36', '2025-05-23 11:41:36'),
-(429, 16, 317, 284, 'True', 428, '2025-05-23 18:30:32', '2025-05-26 08:07:43');
+(429, 16, 317, 284, 'True', 428, '2025-05-23 18:30:32', '2025-05-26 08:07:43'),
+(512, 16, 0, 286, 'sdc', NULL, '2025-05-26 17:04:44', '2025-05-26 17:04:44'),
+(513, 16, 0, 286, 'sd', 512, '2025-05-26 17:04:48', '2025-05-26 17:04:48');
 
 -- --------------------------------------------------------
 
@@ -1696,10 +1759,10 @@ INSERT INTO `twitter_users` (`id`, `name`, `username`, `email`, `password`, `dob
 (9, 'Ravi', 'ravi', 'ravi@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', 'Web Developer', 'bag1747816776.png', 'Capture1747475194.PNG', 'May 2025', '2025-05-07 12:33:11', '2025-05-07 12:33:11'),
 (14, 'Vishal Mali', 'vishal', 'vishal@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2000-01-05', '', 'iphone151747054065.png', 'audi1747054065.png', 'May 2025', '2025-05-09 05:43:41', '2025-05-09 05:43:41'),
 (15, 'Kamlesh Mali', 'kamlesh', 'kamlesh@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1999-11-13', 'Shree Krishna bless us all', 'user1747054348.jpg', 'Capture1747054348.PNG', 'May 2025', '2025-05-09 05:44:20', '2025-05-09 05:44:20'),
-(16, 'Vikram Mali', 'vikram', 'vikram@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2002-05-10', '', 'user1747835977.jpg', 'Capture1747054575.PNG', 'May 2025', '2025-05-09 05:44:51', '2025-05-09 05:44:51'),
+(16, 'Vikram Mali', 'vikram', 'vikram@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2002-05-10', '', 'x1748263114.avif', 'audi1748257271.png', 'May 2025', '2025-05-09 05:44:51', '2025-05-09 05:44:51'),
 (17, 'Jagdish Mali', 'jagdish', 'jagdish@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1998-01-01', 'Agrawal Kitchen Solutions', 'x1747909165.avif', 'Capture1747915570.PNG', 'May 2025', '2025-05-09 05:45:26', '2025-05-09 05:45:26'),
 (19, 'Kishan Lal', 'kishanlal', 'kishanlal@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1975-01-01', '', 'bag1747663162.png', 'Capture1747054706.PNG', 'May 2025', '2025-05-09 05:46:56', '2025-05-09 05:46:56'),
-(20, 'Ravi Mali', 'ravimali', 'ravimali@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', 'BCA Gold Medalist, Science day 1st Rank on district level ', 'user1746769874.jpg', 'Capture1746769812.PNG', 'May 2025', '2025-05-09 05:47:58', '2025-05-09 05:47:58'),
+(20, 'Ravi Mali', 'ravimali', 'ravimali@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2003-04-02', 'BCA Gold Medalist, Science day 1st Rank on district level', 'user1746769874.jpg', 'Capture1748267457.PNG', 'May 2025', '2025-05-09 05:47:58', '2025-05-09 05:47:58'),
 (21, 'Suresh Mali', 'suresh', 'suresh@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '2000-01-01', '', '', 'x1747818806.avif', 'May 2025', '2025-05-13 05:59:33', '2025-05-13 05:59:33'),
 (22, 'Audi', 'audiofficial', 'audiofficial@gmail.com', 'dd4b21e9ef71e1291183a46b913ae6f2', '1985-11-19', 'Official account of Audi', 'audi_rsq81748001114.jpg', 'audi1747999706.jpg', 'May 2025', '2025-05-23 10:26:28', '2025-05-23 10:26:28');
 
@@ -1770,37 +1833,37 @@ ALTER TABLE `twitter_users`
 -- AUTO_INCREMENT for table `twitter_comments`
 --
 ALTER TABLE `twitter_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
 
 --
 -- AUTO_INCREMENT for table `twitter_followers`
 --
 ALTER TABLE `twitter_followers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=691;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=731;
 
 --
 -- AUTO_INCREMENT for table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1823;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1855;
 
 --
 -- AUTO_INCREMENT for table `twitter_notifications`
 --
 ALTER TABLE `twitter_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1253;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1339;
 
 --
 -- AUTO_INCREMENT for table `twitter_posts`
 --
 ALTER TABLE `twitter_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=372;
 
 --
 -- AUTO_INCREMENT for table `twitter_replies`
 --
 ALTER TABLE `twitter_replies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=483;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=518;
 
 --
 -- AUTO_INCREMENT for table `twitter_users`

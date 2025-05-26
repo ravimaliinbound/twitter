@@ -22,11 +22,9 @@ $current_user = $_SESSION['username'];
         fetch_follower(username);
         fetch_following(username);
 
-
         /*------------- See User's Following----------------*/
         $(document).on('click', '.see_user_following', function () {
             see_user_following(username);
-            console.log(username)
         });
         /*------------- See User's Followers----------------*/
         $(document).on('click', '.see_user_followers', function () {
@@ -52,17 +50,21 @@ $current_user = $_SESSION['username'];
                 } else {
                     $(".user_profile_pics").attr('src', 'profile_pic/' + data.profile);
                 }
+                $('.user_profile_pics').css({
+                    'width': '100%',
+                    'height': '100%'
+                })
 
                 if (data.cover == "") {
                     $(".user_cover").css({
                         'background': 'url(cover_pic/cover.png)',
-                        'background-size': '800px 250px',
+                        'background-size': '750px 350px',
                         'width': '100%'
                     });
                 } else {
                     $(".user_cover").css({
                         'background': 'url(cover_pic/' + data.cover + ')',
-                        'background-size': '800px 250px',
+                        'background-size': '750px 350px',
                         'width': '100%'
                     });
                 }
@@ -79,8 +81,22 @@ $current_user = $_SESSION['username'];
                         type: "post",
                         data: { "action": "unfollow", 'other_user': username },
                         success: function (data) {
-                            console.log(data)
-                            $(".follow").text('Follow')
+                            if (data) {
+                                $.ajax({
+                                    url: 'action.php',
+                                    type: 'post',
+                                    data: { 'action': 'follow_back', 'other_user': username },
+                                    success: function (dataa) {
+                                        if (dataa == 1) {
+                                            $('.follow').text("Follow Back");
+                                        } else {
+                                            $('.follow').text("Follow");
+                                        }
+                                        fetch_following(username);
+                                        fetch_follower(username);
+                                    }
+                                })
+                            }
                             $('.follow').css({
                                 'background-color': 'black',
                                 'color': 'white'
@@ -91,13 +107,12 @@ $current_user = $_SESSION['username'];
                     });
                 }
             }
-            if ($(this).text() == 'Follow') {
+            if ($(this).text() == 'Follow' || $(this).text() == 'Follow Back') {
                 $.ajax({
                     url: "action.php",
                     type: "post",
                     data: { "action": "follow_unfollow", 'other_user': username },
                     success: function (data) {
-                        console.log(data)
                         following_post();
                         fetch_following(username);
                         fetch_follower(username);
@@ -111,8 +126,6 @@ $current_user = $_SESSION['username'];
             });
             $(this).text("Following")
         });
-
-
 
         /*--------------------Show Unfollow Option on Mouseenter-----------------------*/
         $(document).on('mouseenter', '.follow', function () {

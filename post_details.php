@@ -140,7 +140,6 @@ $id = $_SESSION['id'];
         var id = '<?php echo $id; ?>';
         var context = '<?php echo $context; ?>';
         $("#post_context").val(context)
-        console.log($("#post_context").val())
         post_details(id);
     });
 </script>
