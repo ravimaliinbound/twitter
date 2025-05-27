@@ -125,7 +125,8 @@
 
 .google:hover,
 .apple:hover {
-    background-color: rgb(220, 233, 238);
+    background-color: aliceblue;
+    cursor: pointer;
 }
 
 .create-account:hover {
@@ -140,6 +141,7 @@
 
 .sign-in:hover {
     background-color: aliceblue;
+    cursor: pointer;
 }
 
 .footer {
@@ -504,6 +506,10 @@
 
 .hover:hover {
     background-color: rgb(231, 231, 232);
+}
+
+.hoverr:hover {
+    cursor: pointer;
 }
 
 .post-icons:hover,
@@ -1332,6 +1338,8 @@
     height: 30px;
     margin-left: 35px;
     margin-top: -80px;
+    background-color: rgb(255, 249, 249, 0.3);
+    border-radius: 50%;
 }
 
 .myeditpic:hover {
@@ -1343,6 +1351,9 @@
     top: 50%;
     margin-left: 230px;
     transform: translate(-50%, -50%);
+    background-color: rgb(255, 249, 249, 0.3);
+    border-radius: 50%;
+    padding: 5px;
 }
 
 .edit-icon img {

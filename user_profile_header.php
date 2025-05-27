@@ -44,5 +44,3 @@ include_once 'headers.php'
             <a href="user_followers.php" class="follower_followers see_user_followers">Follower</a>
         </p>
     </div>
-
-

@@ -213,3 +213,6 @@ $current_user = $_SESSION['username'];
         <a href="#" class="f-anchor"> © <?php echo date('Y') ?> X Corp.</a>
     </div>
 </div>
+<?php
+include_once 'footers.php';
+?>

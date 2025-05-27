@@ -108,7 +108,7 @@ if (!isset($_SESSION['login'])) {
                 </a>
                 <a href="#">
                     <li>
-                        <i class="fa-solid fa-briefcase"></i><span id="job">Jobs</span>
+                       <i class="fa-solid fa-briefcase"></i><span id="job">Jobs</span>
                     </li>
                 </a>
                 <a href="#">
@@ -231,22 +231,3 @@ if (!isset($_SESSION['login'])) {
         ?>
 
         <!-- </div>  -->
-
-
-
-
-
-        <!-- ------------------------Remove Follower Modal-------------------- -->
-        <!-- <div class="modal" id="remove_follower">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <ul class="models-ul">
-                            <li onclick="remove()">
-                                <a href="#" class="text-danger" id="delete-modal">Remove Follower</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div> -->

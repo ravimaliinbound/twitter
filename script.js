@@ -21,7 +21,6 @@ function comments_details(id) {
         type: 'post',
         data: { 'action': 'comments_details', 'id': id },
         success: function (data) {
-            console.log(data)
             if (data) {
                 $(".user_comment").html(data)
             }
@@ -272,10 +271,12 @@ function delete_comment(id, post_id) {
             type: "post",
             data: { "action": "delete_comment", "id": id },
             success: function (data) {
-                console.log(data)
                 if (data) {
-                    show_comments();
-                    post_details(post_id)
+                    if (post_id) {
+                        post_details(post_id)
+                    } else {
+                        show_comments();
+                    }
                 }
             }
         });
@@ -285,7 +286,6 @@ function delete_comment(id, post_id) {
 function delete_reply(reply_id, comment_id) {
     var conf = confirm("Do you really want to delete this reply?");
     if (conf == true) {
-        console.log('aaaaaaaaaaaaaaa')
         $.ajax({
             url: "action.php",
             type: "post",
@@ -388,7 +388,6 @@ function insert_post() {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log(data)
             $('#content_form')[0].reset();
             $('#media_form')[0].reset();
             show_post();
@@ -418,7 +417,6 @@ function insert_post_modal() {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log(data)
             $('#post_content_form')[0].reset();
             $('#post_media_form')[0].reset();
             if (data == "") {
@@ -438,6 +436,7 @@ function edit_user() {
     var form = $("#edit-user-form")[0];
     var formData = new FormData(form);
     formData.append('action', 'edit_user');
+
     if (!validate_edit()) {
         return false;
     }
@@ -488,24 +487,15 @@ function validate_edit(e) {
         isValid = false;
     }
     //------------ Image Validation-----------
-    if (!imgPattern.test(profile)) {
+    if (!imgPattern.test(profile) && profile != "") {
         $("#err-profile").text("Profile image is not valid");
         isValid = false;
     }
-
-    if (profile == "") {
-        $("#err-profile").text("");
-        isValid = true;
-    }
-    if (!imgPattern.test(cover)) {
+    if (!imgPattern.test(cover) && cover != "") {
         $("#err-cover").text("Cover image is not valid");
         isValid = false;
     }
 
-    if (cover == "") {
-        $("#err-cover").text("");
-        isValid = true;
-    }
     // ----------- Email Validation ------------
     if (email == "") {
         $("#err-editemail").text("Email can't be blank");
@@ -642,21 +632,14 @@ function delete_posts() {
     if (conf == true) {
         var id = $("#hidden").val();
         var context = $("#post_context").val();
-        console.log(context)
-
         $.ajax({
             url: "action.php",
             type: "post",
             data: { 'action': 'delete_posts', 'post_id': id },
             success: function (data) {
                 $('#deletesModal').modal('hide');
-                if (context === 'profile') {
-                    window.location = 'profile.php';
-                } else if (context === 'index') {
-                    window.location = 'index.php';
-                } else {
-                    window.location = 'index.php';
-                }
+                show_post();
+                show_foryou_post();
             }
         });
     }
@@ -666,14 +649,11 @@ function delete_post_self() {
     if (conf == true) {
         var id = $("#hidden_val_for_post_del").val();
         var context = $("#post_context").val();
-        console.log(context)
-        console.log(id)
         $.ajax({
             url: "action.php",
             type: "post",
             data: { 'action': 'delete_posts', 'post_id': id },
             success: function (data) {
-                console.log(data)
                 if (context === 'profile') {
                     window.location = 'profile.php';
                 } else if (context === 'index') {
@@ -1230,7 +1210,6 @@ $(document).ready(function () {
                         });
 
                         following_post();
-                        show_more();
                         show_followers();
                         following();
                         follower();
@@ -1437,8 +1416,6 @@ $(document).ready(function () {
                 parent_id: parent_id //Send parent_id
             },
             success: function (data) {
-                console.log('Reply Insert Response:', data);
-
                 $('#modal_nested_replies').modal('hide');
                 $('#nested_reply_input').val('');
                 $('.nested_reply_error').text('');
@@ -1546,6 +1523,9 @@ $(document).ready(function () {
     /*-------------- Open Comment Modal----------------------*/
     $(document).on('click', '.open_comment_modal', function () {
         $("#comment-modal").modal("show");
+        setTimeout(function () {
+            $('#comment_input').focus();
+        }, 100);
         var post_id = $(this).data('post-id');
         $("#commented").val(post_id);
         $(".comment-err-msg").text("");
@@ -1642,16 +1622,12 @@ $(document).ready(function () {
             type: 'POST',
             data: { "reply_id": reply_id, "action": "reply_like", "type": "reply" },
             success: function (response) {
-                try {
-                    var res = JSON.parse(response);
-                    if (res.status === 'success') {
-                        // Update heart icon
-                        heartIcon.toggleClass('liked', res.liked);
-                        // Update like count
-                        likeSpan.text(res.new_like_count > 0 ? res.new_like_count : '');
-                    }
-                } catch (e) {
-                    console.error("Like response error: ", e, response);
+                var res = JSON.parse(response);
+                if (res.status === 'success') {
+                    // Update heart icon
+                    heartIcon.toggleClass('liked', res.liked);
+                    // Update like count
+                    likeSpan.text(res.new_like_count > 0 ? res.new_like_count : '');
                 }
             }
         });
@@ -1841,7 +1817,7 @@ $(document).ready(function () {
     });
 
     //-----------Name Validation------------//
-    $("#name").blur(function (e) {
+    $("#name").on("keyup blur",function (e) {
         var isValid = true;
         var name_val = $("#name").val().trim();
         var namePattern = /^[a-zA-Z ]{3,15}$/;
@@ -1901,13 +1877,31 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+    $("#username").keyup(function () {
+        var name_val = $("#username").val().trim();
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "username": name_val, "action": "email_check" },
+            success: function (response) {
+                var data = JSON.parse(response);
+                if (data.status == 'failed') {
+                    $("#username_check").val(1);
+                    $("#errusername").text("Username has already been taken");
+                } else {
+                    $("#username_check").val(0);
+                    $("#errusername").text("");
+                }
+            }
+        });
+    });
     $("#username").focus(function () {
         $("#errusername").text("");
     })
 
     //------------Email Validation----------------//
 
-    $("#email").blur(function (e) {
+    $("#email").on("blur",function (e) {
         var isValid = true;
         var mail = $("#email").val();
         var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
@@ -1940,6 +1934,25 @@ $(document).ready(function () {
         if (!isValid) {
             e.preventDefault();
         }
+    });
+     $("#email").on("keyup",function () {
+        var mail = $("#email").val();
+        $.ajax({
+            url: "action.php",
+            type: "post",
+            data: { "email": mail, "action": "email_check" },
+            success: function (response) {
+                var data = JSON.parse(response);
+                if (data.status == 'failed') {
+                    $("#email_check").val(1);
+                    $("#erremail").text("Email has already been taken");
+                } else {
+                    $("#email_check").val(0);
+                    $("#erremail").text("");
+                }
+            }
+        });
+        
     });
     $("#email").focus(function () {
         $("#erremail").text("");
