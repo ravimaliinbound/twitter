@@ -17,7 +17,7 @@ include_once 'footers.php';
 <div class="modal" id="delete_post_modal">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
-            <!-- Modal body -->
+            <!-- Modal body  -->
             <div class="modal-body">
                 <ul class="models-ul">
                 <input type='hidden' id='post_context' value=''>

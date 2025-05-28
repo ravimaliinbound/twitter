@@ -181,7 +181,6 @@
 
 .items li:hover {
     background-color: rgb(231, 231, 232);
-    /* padding: 10px; */
     border-radius: 20px;
 }
 
@@ -198,7 +197,7 @@
 .items i {
     font-size: 20px;
 }
-
+ 
 .post {
     border-radius: 25px;
     width: fit-content;
@@ -925,7 +924,7 @@
 
 .cover {
     margin-top: -8px;
-    height: 350px;
+    height: 250px;
     /* background: rgb(207, 217, 222); */
     /* background: url('images/Capture.PNG'); */
     background-size: 700px 200px;

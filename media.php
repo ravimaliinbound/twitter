@@ -27,7 +27,7 @@ include_once 'profile-post.php'
 
 <div class="highlight" style="display: none;">
     <h2>Lights, camera … attachments!</h2>
-    <p style="margin-bottom: 30px;">When you post photos or videos, they will show up here..</p>
+    <p style="margin-bottom: 30px;">When you post photos, they will show up here..</p>
 </div>
 <div class="media">
     <div class='media-flex'>

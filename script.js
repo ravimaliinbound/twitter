@@ -178,6 +178,7 @@ function show_foryou_post() {
         }
     });
 }
+
 /*------------------- Show Other User Post-----------------*/
 function show_user_post(username) {
     $.ajax({
@@ -204,6 +205,7 @@ function show_following() {
         }
     });
 }
+
 /*------------------- Show Followers-----------------*/
 function show_followers() {
     $.ajax({
@@ -248,6 +250,7 @@ function see_user_followers(username) {
         }
     });
 }
+
 /*------------------- Show Comments-----------------*/
 function show_comments() {
     $.ajax({
@@ -262,6 +265,7 @@ function show_comments() {
         }
     });
 }
+
 /*------------------- Delete Comments-----------------*/
 function delete_comment(id, post_id) {
     var conf = confirm("Do you really want to delete this comment?");
@@ -282,6 +286,7 @@ function delete_comment(id, post_id) {
         });
     }
 }
+
 /*------------------- Delete Reply-----------------*/
 function delete_reply(reply_id, comment_id) {
     var conf = confirm("Do you really want to delete this reply?");
@@ -296,6 +301,7 @@ function delete_reply(reply_id, comment_id) {
         });
     }
 }
+
 /*------------------- Delete Reply-----------------*/
 function delete_replyy(reply_id, parent_id, comment_id) {
     var conf = confirm("Do you really want to delete this reply?");
@@ -329,6 +335,7 @@ function show_user_media(username) {
         }
     });
 }
+
 //-------------------- Post Validate----------------//
 function validate_post(e) {
     var isValid = true;
@@ -350,7 +357,6 @@ function validate_post(e) {
     return isValid;
 }
 
-
 //-------------------- Modal Post Validate ----------------//
 function validate_post_modal(e) {
     var isValid = true;
@@ -371,6 +377,7 @@ function validate_post_modal(e) {
     }
     return isValid;
 }
+
 //-----------------Insert Post-------------//
 function insert_post() {
     var input = $(".index_input").val().trim();
@@ -529,7 +536,6 @@ function edit_modal() {
 }
 
 //------------------ Edit Profile Open Form (Modal)-------------------//
-
 function edit_profile() {
     $.ajax({
         url: "action.php",
@@ -566,7 +572,7 @@ function edit_profile() {
                 var imageUrl = 'cover_pic/' + cover;
                 $(".cover").css({
                     'background': 'url(' + imageUrl + ')',
-                    'background-size': '750px 350px',
+                    'background-size': '750px 250px',
                     'width': '100%',
                     'border': '1px solid rgb(223, 223, 223)',
                     'background-repeat': 'no-repeat'
@@ -839,7 +845,6 @@ function signup() {
 }
 
 //-----------------Login-------------------//
-
 function login() {
     var email = $("#login_email").val();
     var password = $("#login_password").val();
@@ -936,7 +941,6 @@ function validate(e) {
     }
 
     //---------------Password Validation--------------//
-
     if (password == "") {
         $("#errpassword").text("Password field is required");
         isValid = false;
@@ -946,7 +950,6 @@ function validate(e) {
     }
 
     //----------DOB Validation-------------//
-
     if (dob == "") {
         $("#errdob").text("Date of birth field is required");
         isValid = false;
@@ -954,9 +957,7 @@ function validate(e) {
     return isValid;
 }
 
-
 //-----------Login Validation-------------//
-
 function loginvalidate(e) {
     let isValid = true;
     var email = $("#login_email").val();
@@ -1008,6 +1009,7 @@ function validate_comment_modal(e) {
     }
     return isValid;
 }
+
 //-------------------- Comment Validate For Modal----------------//
 function validate_comment_p(e) {
     var isValid = true;
@@ -1022,6 +1024,7 @@ function validate_comment_p(e) {
     }
     return isValid;
 }
+
 //-------------------- Comment Reply Validate----------------//
 function validate_reply(e) {
     var isValid = true;
@@ -1036,6 +1039,7 @@ function validate_reply(e) {
     }
     return isValid;
 }
+
 //--------------------  Replies Validate----------------//
 function validate_replies(e) {
     var isValid = true;
@@ -1050,6 +1054,7 @@ function validate_replies(e) {
     }
     return isValid;
 }
+
 //-------------------- Comment Reply Validate----------------//
 function validate_replyy(e) {
     var isValid = true;
@@ -1064,6 +1069,7 @@ function validate_replyy(e) {
     }
     return isValid;
 }
+
 //-------------------- Comment Validate For You----------------//
 function validate_comment_foryou(e) {
     var isValid = true;
@@ -1080,7 +1086,6 @@ function validate_comment_foryou(e) {
 }
 
 //----------------------------------------------Document.ready-------------------------------------------------//
-
 $(document).ready(function () {
     count_posts();
     following();
@@ -1118,7 +1123,6 @@ $(document).ready(function () {
         }
     });
 
-
     /*--------------------Search Users on keyup-----------------------*/
     $(document).on('keyup', '.footer-search-input', function () {
         var search = $(this).val().trim();
@@ -1145,6 +1149,7 @@ $(document).ready(function () {
             $("#searches").modal("hide")
         }
     });
+
     /*--------------------Search Users on focus-----------------------*/
     $(document).on('focus', '.footer-search-input', function () {
         var search = $(this).val().trim();
@@ -1202,7 +1207,7 @@ $(document).ready(function () {
                                 }
                             })
                         }
-                        // Change button text & style after unfollow
+                        //  Change button text & style after unfollow
                         btn.css({
                             "background-color": "black",
                             "color": "#fff",
@@ -1239,20 +1244,20 @@ $(document).ready(function () {
         }
     });
 
-
     /*--------------------Show Unfollow Option on Mouseenter-----------------------*/
     $(document).on('mouseenter', '.n_following, .follow-back-btn, .not_following, .following-btn', function () {
-        if ($(this).text() == 'Following') {
-            $(this).css({
+        var btn = $(this);
+        if (btn.text().trim() == 'Following') {
+            btn.css({
                 'background-color': 'rgb(255, 216, 216)',
                 'border': '1px solid rgb(255, 158, 158)',
                 'color': 'red'
             });
-            $(this).text("Unfollow");
+            btn.text("Unfollow");
         }
     });
     $(document).on('mouseout', '.n_following, .not_following, .follow-back-btn, .following-btn', function () {
-        if ($(this).text() == 'Following') {
+        if ($(this).text().trim() == 'Following') {
             $(this).css({
                 'background-color': 'white',
                 'border': '1px solid black',
@@ -1260,7 +1265,7 @@ $(document).ready(function () {
             });
             $(this).text("Following");
         }
-        if ($(this).text() == 'Unfollow') {
+        if ($(this).text().trim() == 'Unfollow') {
             $(this).css({
                 'background-color': 'white',
                 'border': '1px solid black',
@@ -1446,8 +1451,6 @@ $(document).ready(function () {
         });
     });
 
-
-
     //---------------Insert Reply into reply-------------------//
     $(document).on('click', '.replyy_btn', function () {
         var comment = $("#replyy_input_p").val();
@@ -1520,6 +1523,7 @@ $(document).ready(function () {
             }
         });
     });
+
     /*-------------- Open Comment Modal----------------------*/
     $(document).on('click', '.open_comment_modal', function () {
         $("#comment-modal").modal("show");
@@ -1530,6 +1534,7 @@ $(document).ready(function () {
         $("#commented").val(post_id);
         $(".comment-err-msg").text("");
     });
+
     /*-------------- Open Nested Reply Modal----------------------*/
     $(document).on('click', '.open_modal_nested_reply', function () {
         $("#modal_recomment").modal("show");
@@ -1590,6 +1595,7 @@ $(document).ready(function () {
             }
         });
     });
+
     //---------------Reply Like -------------------//
     $(document).on('click', '.reply-like-icon', function () {
         var reply_id = $(this).data('reply-id');
@@ -1611,6 +1617,7 @@ $(document).ready(function () {
             }
         });
     });
+
     //---------------Reply Like -------------------//
     $(document).on('click', '.replies-like-icon', function () {
         var reply_id = $(this).data('reply-id');
@@ -1671,6 +1678,7 @@ $(document).ready(function () {
             }
         });
     });
+
     //---------------Comments Like -------------------//
     $(document).on('click', '.comments-like-icon', function () {
         var comment_id = $(this).data('comment-id');
@@ -1691,6 +1699,7 @@ $(document).ready(function () {
             }
         });
     });
+
     //---------------Post Like -------------------//
     $(document).on('click', '.post-like-icon', function () {
         var comment_id = $(this).data('comment-id');
@@ -1733,6 +1742,7 @@ $(document).ready(function () {
             }
         });
     });
+
     //--------------- Particular Post Like -------------------//
     $(document).on('click', '.post-like-icon', function () {
         var post_id = $(this).data('post-id');
@@ -1756,7 +1766,6 @@ $(document).ready(function () {
         });
     });
 
-
     /*---------Input Outline None (on focus)---------*/
     $(document).on('focus', "#comment_input, #comment_input_p, " +
         " #reply_input_p, " +
@@ -1769,7 +1778,6 @@ $(document).ready(function () {
         " .index_inputs", function () {
             $(this).css("outline", " none")
         });
-
 
     $(".remove-btn").click(function () {
         $('.remove').text("");
@@ -1806,9 +1814,7 @@ $(document).ready(function () {
         $(".explore-search-div").css("border", "1px solid black");
     });
 
-
     //------------------->> Validation <<----------------------//
-
     $("input").focus(function () {
         var inp_id = $(this).attr('id');
         if ($(this).val() == "") {
@@ -1817,7 +1823,7 @@ $(document).ready(function () {
     });
 
     //-----------Name Validation------------//
-    $("#name").on("keyup blur",function (e) {
+    $("#name").on("keyup blur", function (e) {
         var isValid = true;
         var name_val = $("#name").val().trim();
         var namePattern = /^[a-zA-Z ]{3,15}$/;
@@ -1900,8 +1906,7 @@ $(document).ready(function () {
     })
 
     //------------Email Validation----------------//
-
-    $("#email").on("blur",function (e) {
+    $("#email").on("blur", function (e) {
         var isValid = true;
         var mail = $("#email").val();
         var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
@@ -1935,7 +1940,7 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
-     $("#email").on("keyup",function () {
+    $("#email").on("keyup", function () {
         var mail = $("#email").val();
         $.ajax({
             url: "action.php",
@@ -1952,14 +1957,13 @@ $(document).ready(function () {
                 }
             }
         });
-        
+
     });
     $("#email").focus(function () {
         $("#erremail").text("");
     })
 
     //----------------------- Password Validation----------------------->>
-
     $("#password").blur(function (e) {
         var isValid = true;
         var pass = $("#password").val();
@@ -2003,7 +2007,6 @@ $(document).ready(function () {
     });
 
     //----------------Login Validation---------------//
-
     $("#login_email").blur(function () {
         if ($(this).val() == "") {
             $("#errlogin_email").text("This field is required");
@@ -2017,7 +2020,6 @@ $(document).ready(function () {
             $("#errlogin_password").text("Only spaces are not allowed");
         }
     });
-
 
     //---------------Hide post button and show logout----------------//
     $(".user_profile").click(function () {
@@ -2237,7 +2239,6 @@ $(document).ready(function () {
         }
     });
 
-
     //---------------------- Validation For Edit---------------------------//
     //-----------Name Validation------------//
     $("#edit-name").keyup(function () {
@@ -2281,9 +2282,7 @@ $(document).ready(function () {
         }
     });
 
-
     //------------Email Validation----------------//
-
     $("#edit-email").keyup(function () {
         var mail = $("#edit-email").val();
         var emailPattern = /^[a-zA-Z0-9.]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
@@ -2313,6 +2312,7 @@ $(document).ready(function () {
             }
         });
     });
+
     //--------------------- Date of Birth Validation----------------------//
     $("#edit-dob").keyup(function () {
         if ($(this).val() == "") {
@@ -2323,9 +2323,7 @@ $(document).ready(function () {
         }
     });
 
-
     //------------------------------------- Post Validation----------------------------//
-
     $("#index-image").change(function () {
         var image = $("#index-image").val();
         var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
@@ -2351,7 +2349,6 @@ $(document).ready(function () {
     });
 
     //------------ Image Validation-----------
-
     $("#edit-profile-pic").change(function () {
         var profile = $("#edit-profile-pic").val();
         var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
@@ -2378,7 +2375,6 @@ $(document).ready(function () {
     });
 
     /*------------------------------------- Modal Post Validation----------------------------*/
-
     $("#index-images").change(function () {
         var image = $("#index-images").val();
         var imgPattern = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|PNG|avif|AVIF)$/;
@@ -2404,7 +2400,6 @@ $(document).ready(function () {
     });
 
     /*-----------------Disable Post Button-------------*/
-
     if ($(".index_input").val() == "") {
         $(".post-btn a").css('background-color', 'grey')
     }

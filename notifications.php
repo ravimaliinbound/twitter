@@ -20,6 +20,6 @@ include_once 'headers.php';
                         $("#notifDot").css('display', 'none'); // Make notifications mark as read
                     }
                 })
-                $("#notification").addClass("active_class"); // Add active class
+                $("#notification").addClass("active_class"); //  Add active class
             });
         </script> 

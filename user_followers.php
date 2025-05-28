@@ -20,8 +20,6 @@ include_once 'headers.php'
     <div class="user_followers_list">
 
     </div>
-
-
 </div>
 <div class="footers">
     <div class="follow_footer">

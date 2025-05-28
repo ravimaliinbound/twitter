@@ -24,6 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch') {
     $_SESSION['profile_pic'] = isset($data->profile_pic) ? $data->profile_pic : '';
     echo json_encode($arr);
 }
+
 //-----------Notification Mark as read-------------//
 if (isset($_POST['action']) && $_POST['action'] == 'mark_read') {
     $username = $_SESSION['username'];
@@ -47,6 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'mark_read') {
     }
     echo $uid;
 }
+
 //------------Fetch Notifications------------------??
 if (isset($_POST['action']) && $_POST['action'] == 'check') {
     $username = $_SESSION['username'];
@@ -99,6 +101,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_comment') {
     $delete_comments = "DELETE FROM twitter_comments WHERE id = '$id'";
     $run = $conn->query($delete_comments);
 }
+
 //----------------Delete Reply---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'delete_reply') {
     $reply_id = $_POST['reply_id'];
@@ -137,6 +140,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_unfollow') {
         }
     }
 }
+
 //----------------Unfollow---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
     $current_user = $_SESSION['username'];
@@ -162,6 +166,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'unfollow') {
         }
     }
 }
+
 //----------------Check if already followed other user---------------//
 if (isset($_POST['action']) && $_POST['action'] == 'follow_check') {
     $current_user = $_SESSION['username'];
@@ -210,6 +215,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetch_follower') {
         echo "Error: " . $conn->error;
     }
 }
+
 /*-------------- Fetch Following Count----------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'fetch_following') {
     $username = $_POST['username'];
@@ -255,6 +261,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'follower') {
         echo "Error: " . $conn->error;
     }
 }
+
 /*-------------- Fetch Following Count For Current Logged in User----------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'following') {
     $username = $_SESSION['username'];
@@ -350,7 +357,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_user') {
 //--------------------- Footer who to follow-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'footer') {
     $username = $_SESSION['username'];
-    $other_user = $_SESSION['other_user'];
+    $other_user = isset($_SESSION['other_user']) ? $_SESSION['other_user'] : "";
 
     //------------Get current user's ID---------------------
     $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
@@ -363,7 +370,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
     $dataa = $run->fetch_object();
     $follower_id = $dataa->id;
 
-    $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username'  AND username != '$other_user' ORDER BY rand()";
+    if (isset($_SESSION['other_user'])) {
+        $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username'  AND username != '$other_user' ORDER BY rand()";
+    } else {
+        $sel_footer = "SELECT * FROM twitter_users WHERE username != '$username' ORDER BY rand()";
+    }
     $run_footer = $conn->query($sel_footer);
     $count = $run_footer->num_rows;
     $arr_footer = "";
@@ -417,7 +428,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'footer') {
 }
 
 //---------------Signup-------------------//
-
 if (isset($_POST['action']) && $_POST['action'] == 'signup') {
     $name = isset($_POST['name']) ? trim($_POST['name']) : "";
     $username = isset($_POST['username']) ? trim($_POST['username']) : "";
@@ -425,7 +435,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'signup') {
     $password = isset($_POST['password']) ? md5(trim($_POST['password'])) : "";
     $dob = isset($_POST['dob']) ? trim($_POST['dob']) : "";
     $joined_date = date('F Y');
-    $insert = "INSERT INTO twitter_users (name, username, email, password, dob, joined_date, profile_pic, cover_pic) 
+    $insert = "INSERT INTO twitter_users (name, username, email, password, dob, joined_date, profile_pic, cover_pic)  
     VALUES ('$name','$username','$email','$password','$dob', '$joined_date', '', '')";
     $run = $conn->query($insert);
 
@@ -499,7 +509,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit_profile') {
 }
 
 //-----------------Already Exists----------------//
-
 if (isset($_POST['action']) && $_POST['action'] == 'email_check') {
     $email = isset($_POST['email']) ? trim($_POST['email']) : "";
     $username = isset($_POST['username']) ? trim($_POST['username']) : "";
@@ -517,7 +526,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'email_check') {
 }
 
 //-----------------Already Exists For Edit Username----------------//
-
 if (isset($_POST['action']) && $_POST['action'] == 'edit_username_check') {
     $username_check = $_SESSION['username'];
     $email = isset($_POST['email']) ? trim($_POST['email']) : "";
@@ -551,14 +559,13 @@ if (isset($_POST['action']) && $_POST['action'] == "edit_email_check") {
         ]);
     }
 }
-//-------------------------Login-------------------------//
 
+//-------------------------Login-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == "login") {
     $email = isset($_POST['email']) ? trim($_POST['email']) : "";
     $password = isset($_POST['password']) ? md5(trim($_POST['password'])) : "";
 
     $sel = "SELECT * FROM twitter_users WHERE (email = '$email' OR username = '$email') AND password = '$password'";
-
     $run = $conn->query($sel);
     $email_check = '';
     $password_check = '';
@@ -590,6 +597,7 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
 if (isset($_POST['action']) && $_POST['action'] == "logout") {
     unset($_SESSION['login']);
     unset($_SESSION['username']);
+    unset($_SESSION['other_user']);
     unset($_SESSION['profile_pic']);
     // unset($_SESSION['firstname']);
     unset($_SESSION['count']);
@@ -826,7 +834,7 @@ if (isset($_POST['action']) && $_POST['action'] == "show_post") {
     ]);
 }
 
-//------------Count Total Posts--------------// 
+// ------------Count Total Posts-------------- // 
 if (isset($_POST['action']) && $_POST['action'] == "count_posts") {
     $username = $_SESSION['username'];
     $show_post_query = "SELECT * FROM twitter_posts JOIN twitter_users ON 
@@ -857,7 +865,6 @@ if (isset($_POST['action']) && $_POST['action'] == "other_user_post_count") {
 }
 
 //----------------------- Delete Post------------------//
-
 if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
     $id = $_POST['post_id'];
     echo $id;
@@ -876,8 +883,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_post') {
         echo 'Deleted';
     }
 }
-//----------------------- Delete Post------------------//
 
+//----------------------- Delete Post------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'delete_posts') {
     $id = $_POST['post_id'];
     echo $id;
@@ -897,9 +904,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_posts') {
     }
 }
 
-
 //----------------------- Delete Post------------------//
-
 if (isset($_POST['action']) && $_POST['action'] == 'delete_notification') {
     $id = $_POST['id'];
 
@@ -908,10 +913,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_notification') {
     echo 'Deleted';
 }
 
-
 //----------------------- Like Post------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'like') {
-
     $username = $_SESSION['username'];
 
     // Get user ID
@@ -981,11 +984,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'like') {
     }
 }
 
-
-
 //----------------------- Like Comment------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'comment_like') {
-
     $username = $_SESSION['username'];
 
     // Get user ID
@@ -1059,7 +1059,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'comment_like') {
 
 //----------------------- Like Reply------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
-
     $username = $_SESSION['username'];
 
     // Get user ID
@@ -1148,7 +1147,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_like') {
     exit;
 }
 
-
 /*----------------------------- Comment Insert-----------------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
     if (!isset($_POST['post_id']) || !is_numeric($_POST['post_id'])) {
@@ -1196,8 +1194,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert_comment') {
         echo "Comment added";
     }
 }
-
-
 
 /*----------------------------- Reply Insert-----------------------*/
 if (isset($_POST['action']) && $_POST['action'] == 'insert_reply') {
@@ -1377,7 +1373,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_user') {
 }
 
 /*------------------------Show For You Posts---------------------*/
-
 if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
     $username = $_SESSION['username'];
     $fetch_id_query = "SELECT id FROM twitter_users WHERE username = '$username'";
@@ -1517,8 +1512,6 @@ if (isset($_POST['action']) && $_POST['action'] == "show_foryou_post") {
     }
     echo $post_data;
 }
-
-
 
 /*------------------------Show Other User Posts---------------------*/
 if (isset($_POST['action']) && $_POST['action'] == "show_user_post") {
@@ -1763,6 +1756,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'search') {
     }
     echo $search;
 }
+
 //---------------------Show Following-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'show_following') {
     $username = isset($_POST['username']) ? $_POST['username'] : $_SESSION['username'];
@@ -2002,7 +1996,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'show_comments') {
     }
     echo $search;
 }
-
 
 //---------------------Show Post Details-------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'post_details') {
@@ -2670,12 +2663,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'reply_details') {
         }
         $html .= "</div>";
     }
-
     echo $html;
 }
-
-
-
 
 //---------------------Follow Back -------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'follow_back') {
@@ -2702,7 +2691,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_back') {
     $current_user_data = $current_user_run->fetch_object();
     $current_user_id = $current_user_data->id;
 
-
     // Check if logged-in user follows this follower
     $check_follow_query = "SELECT * FROM twitter_followers 
                                WHERE follower_id = '$id' AND following_id = '$current_user_id'";
@@ -2718,8 +2706,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'follow_back') {
 
 // -------------------------------------Insert Replies---------------------------------------//
 if (isset($_POST['action']) && $_POST['action'] == 'insert_repliess') {
-
-
     $username = $_SESSION['username'];
     $reply_id = $_POST['reply_id'];
     $reply = trim($_POST['reply']);
